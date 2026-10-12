@@ -4,6 +4,16 @@ Personal site built with [Docusaurus](https://docusaurus.io/) (classic template,
 
 ## Development
 
+With Nix (provides Node 20 + git; `.envrc` works with direnv):
+
+```bash
+nix develop
+npm ci
+npm start
+```
+
+Commands:
+
 ```bash
 npm ci            # install dependencies
 npm start         # local dev server at http://localhost:3000
