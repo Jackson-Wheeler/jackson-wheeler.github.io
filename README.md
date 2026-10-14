@@ -30,7 +30,8 @@ The dev shell runs `npm ci` whenever `node_modules` is missing or `package-lock.
 
 ```
 .
-├── .github/workflows/deploy.yml  # Build + deploy to GitHub Pages
+├── .github/workflows/ci.yml      # Build check on PRs and pushes to master
+├── .github/workflows/deploy.yml  # Build + deploy to GitHub Pages (master only)
 ├── src/pages/index.astro         # Landing page
 ├── astro.config.mjs              # Astro config (site URL)
 ├── flake.nix / flake.lock        # Nix dev shell (Node.js from nixpkgs-unstable)
@@ -40,4 +41,4 @@ The dev shell runs `npm ci` whenever `node_modules` is missing or `package-lock.
 
 ## Deployment
 
-A push to `master` (or a manual `workflow_dispatch`) runs `.github/workflows/deploy.yml`. The workflow installs Nix, builds with `nix develop -c npm run build`, and publishes `./dist` to GitHub Pages. Pull requests against `master` run the build only and never deploy. The repo's Pages source must be set to **GitHub Actions**.
+A push to `master` (or a manual `workflow_dispatch`) runs `.github/workflows/deploy.yml`. The workflow installs Nix, builds with `nix develop -c npm run build`, and publishes `./dist` to GitHub Pages. Separately, `.github/workflows/ci.yml` runs the build on pull requests and pushes to `master`; it never deploys. The repo's Pages source must be set to **GitHub Actions**.
