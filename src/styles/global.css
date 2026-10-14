@@ -13,10 +13,10 @@
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { overflow-x: clip; scroll-behavior: auto; } }
 body {
-  margin: 0; isolation: isolate;
+  margin: 0; isolation: isolate; overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font: 400 1.0625rem/1.65 var(--sans);

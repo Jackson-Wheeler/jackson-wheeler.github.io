@@ -44,6 +44,8 @@ Projects come from `src/data/projects.ts`. Add one entry (`title`, `description`
 ├── astro.config.mjs              # Astro config (site URL)
 ├── flake.nix / flake.lock        # Nix dev shell (Node.js from nixpkgs-unstable)
 ├── package.json / package-lock.json
+├── public/images/                # Hero photo (see CREDITS.md)
+├── CREDITS.md                    # Scripture, photo, and font attributions
 └── tsconfig.json
 ```
 
