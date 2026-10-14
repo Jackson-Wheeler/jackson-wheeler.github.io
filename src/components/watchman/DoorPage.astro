@@ -62,7 +62,7 @@ function yearAnchors(list: Rec[], prefix: string) {
   const { years, ids } = yearAnchors(list, `${g.headingId}-`);
   return (
     <>
-      <nav class="years" aria-label="Jump to year">
+      <nav class="years" aria-label={`Jump to year: ${g.heading}`}>
         {years.map((y) => <a href={`#${`${g.headingId}-`}y${y}`}>{y}</a>)}
       </nav>
       <ol class="items" role="list">
