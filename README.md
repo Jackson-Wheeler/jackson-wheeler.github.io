@@ -37,7 +37,7 @@ Projects come from `src/data/projects.ts`. Add one entry (`title`, `description`
 ├── .github/workflows/ci.yml      # Build check on PRs and pushes to master
 ├── .github/workflows/deploy.yml  # Build + deploy to GitHub Pages (master only)
 ├── src/pages/index.astro         # Landing page
-├── src/components/               # Header, Hero, About, Projects, ProjectCard, Footer
+├── src/components/               # Header, Hero, Projects, ProjectCard, Footer
 ├── src/layouts/Layout.astro      # HTML shell + meta tags
 ├── src/data/projects.ts          # Project list (edit to add cards)
 ├── src/styles/global.css         # Theme + base styles
