@@ -1,0 +1,71 @@
+---
+import WatchmanNav from './WatchmanNav.astro';
+import HighlightCard from './HighlightCard.astro';
+import RecordItem from './RecordItem.astro';
+import type { RecordItem as Rec } from '../../data/watchman/types';
+import { highlights, allNewestFirst } from '../../data/watchman/records';
+
+interface Group {
+  headingId: string;
+  heading: string;
+  records: Rec[];
+}
+
+interface Props {
+  title: string;
+  /** Single jurisdiction (federal/california) or grouped (LA) */
+  records?: Rec[];
+  groups?: Group[];
+}
+const { title, records, groups } = Astro.props;
+
+function shelfAndList(items: Rec[]) {
+  return { shelf: highlights(items), list: allNewestFirst(items) };
+}
+---
+<a class="skip" href="#choose">Skip to content</a>
+<WatchmanNav showUp={true} />
+<header class="hero sm">
+  <div class="hero-in">
+    <p class="kick">Watchman · Record</p>
+    <h1>{title}</h1>
+    <p class="tag">Highlights first, then every item in date order.</p>
+  </div>
+</header>
+<main class="wrap" id="choose">
+  <p class="exnote">All items on this page are EXAMPLE placeholders to show layout. They are not real records.</p>
+  {groups ? (
+    groups.map((g) => {
+      const { shelf, list } = shelfAndList(g.records);
+      return (
+        <section aria-labelledby={g.headingId}>
+          <h2 class="gh" id={g.headingId}>{g.heading}</h2>
+          <h3 class="sh">Highlight shelf</h3>
+          <ul class="shelf" role="list">
+            {shelf.map((item) => <HighlightCard item={item} />)}
+          </ul>
+          <h3 class="sh">All items, newest first</h3>
+          <ol class="items" role="list">
+            {list.map((item) => <RecordItem item={item} />)}
+          </ol>
+        </section>
+      );
+    })
+  ) : (
+    (() => {
+      const { shelf, list } = shelfAndList(records ?? []);
+      return (
+        <>
+          <h2 class="sh">Highlight shelf</h2>
+          <ul class="shelf" role="list">
+            {shelf.map((item) => <HighlightCard item={item} />)}
+          </ul>
+          <h2 class="sh">All items, newest first</h2>
+          <ol class="items" role="list">
+            {list.map((item) => <RecordItem item={item} />)}
+          </ol>
+        </>
+      );
+    })()
+  )}
+</main>
