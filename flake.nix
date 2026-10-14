@@ -18,7 +18,15 @@
         devShells.default = pkgs.mkShell {
           packages = [ pkgs.nodejs_22 ];
           shellHook = ''
-            echo "Node $(node --version) ready. Run: npm install && npm run dev"
+            # Auto-install deps when node_modules is missing or package-lock.json changed.
+            if [ -f package-lock.json ]; then
+              lock_hash=$(sha256sum package-lock.json | cut -d' ' -f1)
+              stamp=node_modules/.package-lock.sha256
+              if [ ! -d node_modules ] || [ "$(cat "$stamp" 2>/dev/null)" != "$lock_hash" ]; then
+                echo "package-lock.json changed or node_modules missing; running npm ci..."
+                npm ci --no-audit --no-fund && echo "$lock_hash" > "$stamp"
+              fi
+            fi
           '';
         };
       });
