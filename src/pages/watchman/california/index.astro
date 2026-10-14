@@ -1,0 +1,15 @@
+---
+import Layout from '../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../components/watchman/WatchmanCredits.astro';
+import { californiaRecords } from '../../../data/watchman/records';
+import '../../../styles/watchman/doors.css';
+
+const title = '2011–2027 California Government — Watchman';
+const description =
+  'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source, such as an executive order, statute, budget, or court ruling. Press releases are labeled, and reversed or enjoined items stay and are marked.';
+---
+<Layout title={title} description={description} noindex={true} preloadHero={true}>
+  <DoorPage title="2011–2027 California Government" records={californiaRecords} />
+  <WatchmanCredits photos={['tower']} />
+</Layout>

@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/WatchmanLayout.astro';
+import WatchmanNav from '../../components/watchman/WatchmanNav.astro';
+import WatchmanHero from '../../components/watchman/WatchmanHero.astro';
+import Lexicon from '../../components/watchman/Lexicon.astro';
+import VerseCard from '../../components/watchman/VerseCard.astro';
+import RecordsDoors from '../../components/watchman/RecordsDoors.astro';
+import WatchmanCredits from '../../components/watchman/WatchmanCredits.astro';
+import { featuredVerse, supportingVerses } from '../../data/watchman/verses';
+import '../../styles/watchman/index.css';
+
+const title = 'Watchman';
+const description =
+  'A plain, sourced record of what government has actually done. Every item is a dated claim tied to its primary source.';
+---
+<Layout title={title} description={description} preloadHero={true}>
+  <a class="skip" href="#w-h">Skip to content</a>
+  <WatchmanNav />
+  <main>
+    <WatchmanHero />
+    <section class="s2" aria-labelledby="w-h">
+      <div class="wrap">
+        <h2 id="w-h" class="kick">The watchman</h2>
+        <div class="grid">
+          <div>
+            <VerseCard verse={featuredVerse} variant="featured" />
+          </div>
+          <Lexicon />
+        </div>
+        <div class="more">
+          {supportingVerses.map((v) => <VerseCard verse={v} />)}
+        </div>
+      </div>
+    </section>
+    <RecordsDoors />
+  </main>
+  <WatchmanCredits nkjv={true} hebrew={true} photos={['tower', 'walls']} />
+</Layout>

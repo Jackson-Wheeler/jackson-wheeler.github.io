@@ -1,0 +1,20 @@
+---
+import { recordDoors } from '../../data/watchman/doors';
+---
+<section class="ch ch4" aria-labelledby="choose-h">
+  <div>
+    <h2 id="choose-h">Records</h2>
+    <p class="doors-intro">Example layout. Records coming soon.</p>
+    <ul class="door-list" role="list">
+      {recordDoors.map((d) => (
+        <li>
+          <a class="door" href={d.href}>
+            <span class="door-t">{d.title}</span>
+            <span class="door-d">{d.description}</span>
+            <span class="door-go" aria-hidden="true">Enter →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

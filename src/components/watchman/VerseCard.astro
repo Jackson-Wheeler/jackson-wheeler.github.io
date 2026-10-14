@@ -1,0 +1,30 @@
+---
+import type { Verse } from '../../data/watchman/types';
+interface Props {
+  verse: Verse;
+  /** Featured blockquote (landing section 2 lead) vs supporting card */
+  variant?: 'featured' | 'card';
+}
+const { verse, variant = 'card' } = Astro.props;
+const lines = verse.poetic ? verse.text.split('\n') : null;
+---
+{variant === 'featured' ? (
+  <blockquote>
+    <p>{verse.text}</p>
+    <cite>{verse.cite}</cite>
+  </blockquote>
+) : (
+  <div>
+    <cite>{verse.cite}</cite>
+    <p>
+      {lines
+        ? lines.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))
+        : verse.text}
+    </p>
+  </div>
+)}
