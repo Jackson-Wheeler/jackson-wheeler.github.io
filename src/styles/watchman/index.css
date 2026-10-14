@@ -79,7 +79,7 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
   line-height: 1.6; color: #d7ccb8; margin: 0;
 }
 .hw-t .he {
-  font-size: .75em; opacity: .75;
+  font-size: .9em; opacity: .9;
   margin-left: .5rem; color: #d9b977;
 }
 
