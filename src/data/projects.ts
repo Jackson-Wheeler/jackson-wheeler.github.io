@@ -13,6 +13,14 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: 'Watchman',
+    // TODO: draft description, pending Jackson's approval.
+    description: 'A plain, sourced record of what government has actually done.',
+    url: '/watchman/',
+    tags: [],
+    status: 'in-progress',
+  },
   // {
   //   title: 'Example',
   //   description: 'One or two sentences about what it does.',
