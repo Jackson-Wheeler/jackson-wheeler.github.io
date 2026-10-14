@@ -1,0 +1,44 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props { project?: Project; placeholder?: boolean }
+const { project, placeholder = false } = Astro.props;
+const statusLabel = { active: 'Active', 'in-progress': 'In progress', archived: 'Archived' } as const;
+---
+{placeholder || !project ? (
+  <li class="card placeholder">
+    <h3>Coming soon</h3>
+    <p>New projects will appear here.</p>
+  </li>
+) : (
+  <li class="card">
+    <div class="meta"><span class="status">{statusLabel[project.status]}</span></div>
+    <h3>
+      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+    </h3>
+    <p>{project.description}</p>
+    {project.tags.length > 0 && (
+      <ul class="tags" aria-label="Tags">
+        {project.tags.map((t) => <li>{t}</li>)}
+      </ul>
+    )}
+  </li>
+)}
+
+<style>
+  .card {
+    display: flex; flex-direction: column; gap: .5rem;
+    min-height: 11rem; padding: 1.5rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  }
+  .card h3 { margin: 0; font-size: 1.125rem; font-weight: 600; letter-spacing: -.01em; }
+  .card h3 a { text-decoration: none; }
+  .card h3 a::after { content: ' ↗'; color: var(--faint); }
+  .card p { margin: 0; color: var(--muted); font-size: .9375rem; }
+  .meta { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: auto 0 0; padding: .5rem 0 0; list-style: none; }
+  .tags li { font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .125rem .625rem; }
+  .placeholder { background: transparent; border-style: dashed; border-color: #3a3940; justify-content: center; align-items: center; text-align: center; }
+  .placeholder h3 { color: var(--muted); font-weight: 500; }
+  .placeholder p { color: var(--faint); }
+</style>
