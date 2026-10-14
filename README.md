@@ -15,8 +15,6 @@ nix develop      # Node.js shell from Nix; runs `npm ci` automatically when need
 npm run dev      # http://localhost:4321
 ```
 
-Without Nix: `npm ci && npm run dev`.
-
 The dev shell runs `npm ci` whenever `node_modules` is missing or `package-lock.json` has changed (it compares against a hash saved in `node_modules/.package-lock.sha256`).
 
 ## Scripts
