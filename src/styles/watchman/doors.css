@@ -143,3 +143,13 @@ h3.sh, .sh {
 }
 .credits ul { padding-left: 1.1rem; }
 .credits a { color: #d8bf8c; }
+
+/* motion-and-detail */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes wm-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .hero-in { animation: wm-rise .8s ease-out both; }
+  .src, .wm-nav a.wm-up { transition: color .2s, opacity .2s; }
+}
+a.src:hover { color: #f6dca3; }
+.it:hover time { opacity: 1; }
+::selection { background: rgba(217, 185, 119, .35); color: #fff8ea; }
