@@ -44,8 +44,11 @@ const statusLabel = { active: 'Active', 'in-progress': 'In progress', archived: 
   /* Whole card is clickable: stretch the title link over the card. */
   .card:not(.placeholder) { position: relative; }
   .card h3 a::before { content: ''; position: absolute; inset: 0; border-radius: inherit; }
-  .card h3 a:focus-visible { outline: none; }
-  .card:has(h3 a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .card h3 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @supports selector(:has(*)) {
+    .card h3 a:focus-visible { outline: none; }
+    .card:has(h3 a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  }
   .card h3 a[href^="http"]::after { content: ' ↗'; color: var(--faint); }
   .card p { margin: 0; color: var(--muted); font-size: .9375rem; }
   .meta { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
