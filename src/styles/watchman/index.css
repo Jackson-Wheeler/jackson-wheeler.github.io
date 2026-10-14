@@ -173,3 +173,19 @@ cite {
 }
 .credits ul { padding-left: 1.1rem; }
 .credits a { color: #d8bf8c; }
+
+/* scripture-presentation: gold reference rule, card frames, lexicon as a quiet panel */
+.s2 blockquote { position: relative; padding-left: 1.5rem; border-left: 2px solid #d9b977; }
+.s2 blockquote cite { color: #d9b977; }
+.s2 cite::before { content: ""; display: inline-block; width: 1.5rem; height: 1px; background: currentColor; vertical-align: middle; margin-right: .6rem; opacity: .7; }
+.s2 .lex {
+  border-left: 0; padding: 1.6rem 1.75rem; align-self: start;
+  background: rgba(217, 185, 119, .05); border: 1px solid #3f3426; border-radius: 4px;
+}
+.lex dt { color: #d9b977; opacity: 1; }
+.s2 .more { border-top: 0; }
+.s2 .more > div {
+  padding: 1.4rem 1.5rem; border: 1px solid #2f281f; border-top: 2px solid #5a4a33;
+  background: #13100d; border-radius: 3px;
+}
+.s2 .more cite { color: #d9b977; }

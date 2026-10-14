@@ -16,6 +16,8 @@ export const supportingVerses: Verse[] = [
     text: 'Woe to those who call evil good, and good evil;\nWho put darkness for light, and light for darkness;\nWho put bitter for sweet, and sweet for bitter!',
     poetic: true,
   },
+  // Third card is a TBD pick. Alternative candidates to weigh (verify NKJV text before swapping):
+  //   Ezekiel 3:17, Habakkuk 2:1, Isaiah 62:6, Proverbs 14:15, 1 Thessalonians 5:21.
   {
     cite: 'Proverbs 18:17 · NKJV',
     text: 'The first one to plead his cause seems right,\nUntil his neighbor comes and examines him.',
