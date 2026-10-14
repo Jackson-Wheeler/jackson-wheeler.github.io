@@ -6,8 +6,7 @@ Built with [Astro](https://astro.build). The dev environment comes from [Nix](ht
 
 ## Prerequisites
 
-- [Nix](https://nixos.org/download) with flakes enabled (`experimental-features = nix-command flakes`). Node.js (currently `nodejs_26`, pinned via `flake.lock`) comes from Nix, both locally and in CI.
-- Without Nix, you need Node.js **22.12+** (`engines` in `package.json`). Astro 7 won't run on Node 20.
+- [Nix](https://nixos.org/download) with flakes enabled (`experimental-features = nix-command flakes`). You do not need to install Node.js yourself; the dev shell and CI get it from Nix (currently `nodejs_26`, pinned via `flake.lock`).
 
 ## Quick start
 
