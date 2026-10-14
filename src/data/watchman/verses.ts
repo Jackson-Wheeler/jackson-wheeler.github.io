@@ -1,9 +1,9 @@
 import type { Verse } from './types';
 
-/** Featured verse on the landing page (NKJV). */
+/** Featured verse on the landing page (NKJV text exact; leading quote dropped as continuing quotation). */
 export const featuredVerse: Verse = {
   cite: 'Ezekiel 33:7 · NKJV',
-  text: '“So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
+  text: 'So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
 };
 
 export const supportingVerses: Verse[] = [
