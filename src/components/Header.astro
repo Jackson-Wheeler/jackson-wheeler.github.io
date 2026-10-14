@@ -1,0 +1,32 @@
+---
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+<header class="site-header">
+  <div class="container bar">
+    <a class="name" href="#top">Jackson Wheeler</a>
+    <nav aria-label="Primary">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgb(11 11 12 / .85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 3.5rem; gap: 1rem; }
+  .name { font-weight: 600; font-size: .9375rem; text-decoration: none; letter-spacing: .01em; }
+  ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+  nav a { font-size: .875rem; color: var(--muted); text-decoration: none; }
+  nav a:hover, nav a:focus-visible { color: var(--accent); }
+  @media (max-width: 420px) { ul { gap: 1rem; } }
+</style>

@@ -1,14 +1,8 @@
 ---
-const title = 'Jackson Wheeler';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <h1>{title}</h1>
-    <p>Site is working</p>
-  </body>
-</html>
+<Layout>
+  <Header />
+  <main id="main"></main>
+</Layout>
