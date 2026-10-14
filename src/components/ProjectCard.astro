@@ -7,6 +7,7 @@ const statusLabel = { active: 'Active', 'in-progress': 'In progress', archived: 
 ---
 {placeholder || !project ? (
   <li class="card placeholder">
+    <span class="flame" aria-hidden="true"></span>
     <h3>Coming soon</h3>
     <p>New projects will appear here.</p>
   </li>
@@ -29,16 +30,24 @@ const statusLabel = { active: 'Active', 'in-progress': 'In progress', archived: 
   .card {
     display: flex; flex-direction: column; gap: .5rem;
     min-height: 11rem; padding: 1.5rem;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    background: linear-gradient(180deg, #151416, var(--surface)); border: 1px solid var(--line); border-radius: 8px;
+    transition: border-color .25s, box-shadow .25s, transform .25s;
   }
-  .card h3 { margin: 0; font-size: 1.125rem; font-weight: 600; letter-spacing: -.01em; }
+  .card:not(.placeholder):hover, .card:not(.placeholder):focus-within {
+    border-color: rgb(224 164 88 / .45);
+    box-shadow: 0 0 0 1px rgb(224 164 88 / .12), 0 18px 50px -20px rgb(224 164 88 / .35);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+  .card h3 { margin: 0; font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
   .card h3 a { text-decoration: none; }
   .card h3 a::after { content: ' ↗'; color: var(--faint); }
   .card p { margin: 0; color: var(--muted); font-size: .9375rem; }
   .meta { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
   .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: auto 0 0; padding: .5rem 0 0; list-style: none; }
   .tags li { font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .125rem .625rem; }
-  .placeholder { background: transparent; border-style: dashed; border-color: #3a3940; justify-content: center; align-items: center; text-align: center; }
+  .placeholder { background: radial-gradient(circle at 50% 40%, rgb(224 164 88 / .07), transparent 70%); border-style: dashed; border-color: #3a3940; justify-content: center; align-items: center; text-align: center; }
+  .flame { width: .375rem; height: .375rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px 4px rgb(224 164 88 / .45); margin-bottom: .5rem; }
   .placeholder h3 { color: var(--muted); font-weight: 500; }
   .placeholder p { color: var(--faint); }
 </style>
