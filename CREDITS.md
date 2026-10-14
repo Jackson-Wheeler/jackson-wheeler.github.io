@@ -8,13 +8,9 @@ Matthew 5:14–16, from the New King James Version (NKJV).
 
 The text was checked against Bible Gateway and Bible Study Tools. The notice wording comes from Bible Gateway's NKJV copyright page.
 
-## Photo
+## Illustration
 
-- **Image:** “like a candle flame” (`public/images/lamp-1920.webp`, `public/images/lamp-960.webp`)
-- **Author:** Andy / Andrew Fogg, from near Cambridge, UK
-- **Source:** https://commons.wikimedia.org/wiki/File:Like_a_candle_flame_(233107630).jpg (originally on Flickr)
-- **License:** [Creative Commons Attribution 2.0 (CC BY 2.0)](https://creativecommons.org/licenses/by/2.0/)
-- **Changes:** resized, converted to WebP, and shown under a dark gradient overlay
+The lamp-on-a-lampstand hero illustration (`src/components/Lampstand.astro`) is an original SVG made for this site. It needs no third-party license.
 
 ## Font
 

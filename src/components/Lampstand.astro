@@ -1,0 +1,66 @@
+---
+// Original illustration: a clay oil lamp on a bronze lampstand, glowing.
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 400 640" role="img" aria-label="An oil lamp burning on a lampstand" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ls-blur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14" /></filter>
+    <radialGradient id="ls-halo" cx="200" cy="118" r="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd38a" stop-opacity=".55" />
+      <stop offset=".18" stop-color="#e0a458" stop-opacity=".28" />
+      <stop offset=".5" stop-color="#b8692a" stop-opacity=".08" />
+      <stop offset="1" stop-color="#b8692a" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="ls-flame" cx="50%" cy="78%" r="70%">
+      <stop offset="0" stop-color="#fffbe8" />
+      <stop offset=".35" stop-color="#ffe2a0" />
+      <stop offset=".75" stop-color="#f3a53c" />
+      <stop offset="1" stop-color="#c8641c" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ls-clay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9894f" />
+      <stop offset=".55" stop-color="#9c4f26" />
+      <stop offset="1" stop-color="#4a2412" />
+    </linearGradient>
+    <linearGradient id="ls-bronze" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3a2a18" />
+      <stop offset=".45" stop-color="#b98a4e" />
+      <stop offset=".6" stop-color="#e3b979" />
+      <stop offset="1" stop-color="#3a2a18" />
+    </linearGradient>
+    <linearGradient id="ls-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0" />
+      <stop offset="1" stop-color="#000" stop-opacity=".55" />
+    </linearGradient>
+  </defs>
+
+
+  <!-- lampstand -->
+  <g fill="url(#ls-bronze)">
+    <ellipse cx="200" cy="168" rx="70" ry="9" />
+    <path d="M150 168 q50 22 100 0 l-8 10 q-42 16 -84 0 z" />
+    <rect x="192" y="176" width="16" height="12" rx="3" />
+    <ellipse cx="200" cy="196" rx="20" ry="8" />
+    <rect x="195" y="200" width="10" height="330" />
+    <ellipse cx="200" cy="300" rx="15" ry="6" />
+    <ellipse cx="200" cy="420" rx="17" ry="7" />
+    <path d="M195 520 C 180 560 140 585 105 606 L 128 612 C 160 592 188 572 200 548 C 212 572 240 592 272 612 L 295 606 C 260 585 220 560 205 520 Z" />
+    <ellipse cx="200" cy="610" rx="110" ry="10" />
+  </g>
+  <rect x="195" y="200" width="10" height="330" fill="url(#ls-shade)" opacity=".5" />
+  <ellipse cx="200" cy="622" rx="150" ry="10" fill="#000" opacity=".5" />
+
+  <!-- clay oil lamp -->
+  <path fill="url(#ls-clay)" d="M118 150 c0-18 28-30 68-30 c30 0 52 6 62 16 l38 -2 c10 0 14 10 6 16 l-30 14 c-14 12 -46 18 -76 18 c-40 0 -68 -14 -68 -32 z" />
+  <path fill="#2a140a" opacity=".7" d="M160 138 c0-6 14-10 30-10 c16 0 30 4 30 10 c0 6 -14 10 -30 10 c-16 0 -30 -4 -30 -10 z" />
+  <path fill="none" stroke="#f0b27a" stroke-opacity=".45" stroke-width="1.5" d="M132 148 c20 -14 90 -18 120 -6" />
+  <path fill="none" stroke="#5a2a12" stroke-width="7" stroke-linecap="round" d="M120 148 c-18 -6 -22 -26 -6 -30" />
+
+  <!-- flame -->
+  <g class="flame">
+    <ellipse cx="282" cy="108" rx="26" ry="38" fill="#ffcf7a" opacity=".55" filter="url(#ls-blur)" />
+    <path fill="url(#ls-flame)" d="M282 146 c-14 0 -20 -12 -16 -26 c4 -16 14 -26 16 -58 c4 22 16 36 18 56 c2 16 -4 28 -18 28 z" />
+    <path fill="#fffdf2" opacity=".9" d="M282 142 c-6 0 -9 -6 -7 -13 c2 -8 6 -12 7 -26 c2 10 7 17 8 26 c1 8 -2 13 -8 13 z" />
+  </g>
+</svg>
