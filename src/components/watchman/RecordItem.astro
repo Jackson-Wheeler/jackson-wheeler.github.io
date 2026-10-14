@@ -1,11 +1,11 @@
 ---
 import type { RecordItem as Rec } from '../../data/watchman/types';
 import { httpsSourceUrl } from '../../data/watchman/types';
-interface Props { item: Rec }
-const { item } = Astro.props;
+interface Props { item: Rec; anchorId?: string }
+const { item, anchorId } = Astro.props;
 const href = !item.isExample ? httpsSourceUrl(item.sourceUrl) : undefined;
 ---
-<li class="it">
+<li class="it" id={anchorId}>
   <time datetime={item.date}>{item.date}</time>
   <div>
     {item.isExample && <span class="ex">EXAMPLE</span>}{' '}
