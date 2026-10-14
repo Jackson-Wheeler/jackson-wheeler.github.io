@@ -65,6 +65,13 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
     linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
     url(/watchman/img/tower-night.webp) 60% 35% / cover;
 }
+@media (max-width: 820px) {
+  .ch1 {
+    background:
+      linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
+      url(/watchman/img/tower-night-1100.webp) 60% 35% / cover;
+  }
+}
 
 .hw { max-width: 38rem; margin-top: 1.55rem; }
 .hw-t {
