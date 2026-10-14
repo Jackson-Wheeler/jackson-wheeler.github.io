@@ -177,7 +177,7 @@ cite {
 /* hero-atmosphere: soft moonlit glow, cooler sky, lighter mid-veil so the walls read */
 .ch1 {
   background:
-    radial-gradient(circle at 40% 9%, rgba(214, 224, 255, .16), rgba(214, 224, 255, 0) 16rem),
+    radial-gradient(circle at 41% 13%, rgba(214, 224, 255, .14), rgba(214, 224, 255, 0) 11rem),
     linear-gradient(180deg, rgba(10, 14, 24, .25), rgba(8, 9, 12, .55) 55%, rgba(8, 9, 12, .9) 85%, #0b0d12),
     url(/watchman/img/tower-night.webp) 60% 35% / cover;
   min-height: 86svh;
@@ -187,9 +187,8 @@ cite {
 @media (max-width: 820px) {
   .ch1 {
     background:
-      radial-gradient(circle at 50% 8%, rgba(214, 224, 255, .14), rgba(214, 224, 255, 0) 12rem),
       linear-gradient(180deg, rgba(10, 14, 24, .2), rgba(8, 9, 12, .5) 50%, rgba(8, 9, 12, .9) 85%, #0b0d12),
-      url(/watchman/img/tower-night-1100.webp) 64% 30% / cover;
+      url(/watchman/img/tower-night-1100.webp) 50% 30% / cover;
     min-height: 78svh; align-content: end; padding-bottom: 3.5rem;
   }
 }
