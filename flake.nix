@@ -1,22 +1,16 @@
 {
   description = "jackson-wheeler.github.io — Astro dev environment";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachSystem [
-      "x86_64-linux"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ] (system:
-      let pkgs = import nixpkgs { inherit system; };
-      in {
-        devShells.default = pkgs.mkShell {
-          packages = [ pkgs.nodejs_22 ];
+  outputs = { self, nixpkgs }:
+    let
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+    in {
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = [ pkgs.nodejs_26 ];
           shellHook = ''
             # Auto-install deps when node_modules is missing or package-lock.json changed.
             if [ -f package-lock.json ]; then
@@ -30,4 +24,5 @@
           '';
         };
       });
+    };
 }
