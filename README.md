@@ -17,6 +17,10 @@ npm run dev      # http://localhost:4321
 
 The dev shell runs `npm ci` whenever `node_modules` is missing or `package-lock.json` has changed (it compares against a hash saved in `node_modules/.package-lock.sha256`).
 
+## Adding a project
+
+Projects come from `src/data/projects.ts`. Add one entry (`title`, `description`, `url`, `tags`, `status`) and it shows up as a card in the Projects grid. A dashed "Coming soon" card always comes last.
+
 ## Scripts
 
 | Command           | Action                                      |
@@ -33,9 +37,14 @@ The dev shell runs `npm ci` whenever `node_modules` is missing or `package-lock.
 ├── .github/workflows/ci.yml      # Build check on PRs and pushes to master
 ├── .github/workflows/deploy.yml  # Build + deploy to GitHub Pages (master only)
 ├── src/pages/index.astro         # Landing page
+├── src/components/               # Header, Hero, Projects, ProjectCard, Footer
+├── src/layouts/Layout.astro      # HTML shell + meta tags
+├── src/data/projects.ts          # Project list (edit to add cards)
+├── src/styles/global.css         # Theme + base styles
 ├── astro.config.mjs              # Astro config (site URL)
 ├── flake.nix / flake.lock        # Nix dev shell (Node.js from nixpkgs-unstable)
 ├── package.json / package-lock.json
+├── CREDITS.md                    # Scripture, photo, and font attributions
 └── tsconfig.json
 ```
 
