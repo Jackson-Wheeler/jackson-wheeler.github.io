@@ -1,16 +1,23 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer id="contact" class="site-footer" aria-labelledby="contact-title">
+<footer id="contact" class="site-footer glow" aria-labelledby="contact-title">
   <div class="container">
-    <h2 class="section-label" id="contact-title">Contact</h2>
-    <p class="links"><a href="https://github.com/Jackson-Wheeler">GitHub — @Jackson-Wheeler</a></p>
-    <p class="copy">© {year} Jackson Wheeler</p>
+    <p class="section-label">Contact</p>
+    <h2 class="section-title" id="contact-title">Say hello</h2>
+    <p class="links"><a href="https://github.com/Jackson-Wheeler">GitHub ↗</a></p>
+    <div class="fine">
+      <p>© {year}</p>
+      <p>Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.</p>
+      <p>Photo: <a href="https://commons.wikimedia.org/wiki/File:Like_a_candle_flame_(233107630).jpg">“like a candle flame”</a> by Andy / Andrew Fogg, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, resized and darkened.</p>
+    </div>
   </div>
 </footer>
 
 <style>
-  .site-footer { padding-block: 5rem 3rem; border-top: 1px solid var(--line); }
+  .site-footer { position: relative; padding-block: 6rem 3rem; }
   .links { margin: 0; font-size: 1.125rem; }
-  .copy { margin: 4rem 0 0; font-size: .8125rem; color: var(--faint); }
+  .fine { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: .375rem; max-width: 46rem; }
+  .fine p { margin: 0; font-size: .75rem; line-height: 1.6; color: var(--faint); }
+  .fine a { color: var(--muted); }
 </style>
