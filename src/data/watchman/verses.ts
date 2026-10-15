@@ -1,9 +1,9 @@
 import type { Verse } from './types';
 
-/** Featured verse on the landing page (NKJV text exact; leading quote dropped as continuing quotation). */
+/** Featured verse on the landing page (NKJV text exact; unpaired trailing quote dropped). */
 export const featuredVerse: Verse = {
-  cite: 'Ezekiel 33:7 · NKJV',
-  text: 'So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
+  cite: 'Ezekiel 33:6 · NKJV',
+  text: 'But if the watchman sees the sword coming and does not blow the trumpet, and the people are not warned, and the sword comes and takes any person from among them, he is taken away in his iniquity; but his blood I will require at the watchman’s hand.',
 };
 
 export const supportingVerses: Verse[] = [
@@ -16,11 +16,8 @@ export const supportingVerses: Verse[] = [
     text: 'Woe to those who call evil good, and good evil;\nWho put darkness for light, and light for darkness;\nWho put bitter for sweet, and sweet for bitter!',
     poetic: true,
   },
-  // Third card is a TBD pick. Alternative candidates to weigh (verify NKJV text before swapping):
-  //   Ezekiel 3:17, Habakkuk 2:1, Isaiah 62:6, Proverbs 14:15, 1 Thessalonians 5:21.
   {
-    cite: 'Proverbs 18:17 · NKJV',
-    text: 'The first one to plead his cause seems right,\nUntil his neighbor comes and examines him.',
-    poetic: true,
+    cite: 'Ezekiel 33:7 · NKJV',
+    text: 'So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
   },
 ];
