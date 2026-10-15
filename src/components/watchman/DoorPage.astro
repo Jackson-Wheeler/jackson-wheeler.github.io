@@ -22,6 +22,17 @@ const { title, records, groups } = Astro.props;
 function shelfAndList(items: Rec[]) {
   return { shelf: highlights(items), list: allNewestFirst(items) };
 }
+/** No-JS year jump links: anchor id on the first item of each year. */
+function yearAnchors(list: Rec[], prefix: string) {
+  const seen = new Set<string>();
+  const ids = list.map((r) => {
+    const y = r.date.slice(0, 4);
+    if (seen.has(y)) return undefined;
+    seen.add(y);
+    return `${prefix}y${y}`;
+  });
+  return { years: [...seen], ids };
+}
 ---
 <a class="skip" href="#choose">Skip to content</a>
 <WatchmanNav showUp={true} />
@@ -41,13 +52,25 @@ function shelfAndList(items: Rec[]) {
         <section aria-labelledby={g.headingId}>
           <h2 class="gh" id={g.headingId}>{g.heading}</h2>
           <h3 class="sh">Highlight shelf</h3>
-          <ul class="shelf" role="list">
+          {shelf.length > 0 && <ul class="shelf" role="list">
             {shelf.map((item) => <HighlightCard item={item} />)}
-          </ul>
+          </ul>}
           <h3 class="sh">All items, newest first</h3>
-          <ol class="items" role="list">
-            {list.map((item) => <RecordItem item={item} />)}
-          </ol>
+{list.length === 0 ? (
+  <p class="empty">No records yet for this period. Items appear here once each is tied to a primary source.</p>
+) : (() => {
+  const { years, ids } = yearAnchors(list, `${g.headingId}-`);
+  return (
+    <>
+      <nav class="years" aria-label={`Jump to year: ${g.heading}`}>
+        {years.map((y) => <a href={`#${`${g.headingId}-`}y${y}`}>{y}</a>)}
+      </nav>
+      <ol class="items" role="list">
+        {list.map((item, i) => <RecordItem item={item} anchorId={ids[i]} />)}
+      </ol>
+    </>
+  );
+})()}
         </section>
       );
     })
@@ -57,13 +80,25 @@ function shelfAndList(items: Rec[]) {
       return (
         <>
           <h2 class="sh">Highlight shelf</h2>
-          <ul class="shelf" role="list">
+          {shelf.length > 0 && <ul class="shelf" role="list">
             {shelf.map((item) => <HighlightCard item={item} />)}
-          </ul>
+          </ul>}
           <h2 class="sh">All items, newest first</h2>
-          <ol class="items" role="list">
-            {list.map((item) => <RecordItem item={item} />)}
-          </ol>
+{list.length === 0 ? (
+  <p class="empty">No records yet for this period. Items appear here once each is tied to a primary source.</p>
+) : (() => {
+  const { years, ids } = yearAnchors(list, '');
+  return (
+    <>
+      <nav class="years" aria-label="Jump to year">
+        {years.map((y) => <a href={`#${''}y${y}`}>{y}</a>)}
+      </nav>
+      <ol class="items" role="list">
+        {list.map((item, i) => <RecordItem item={item} anchorId={ids[i]} />)}
+      </ol>
+    </>
+  );
+})()}
         </>
       );
     })()
