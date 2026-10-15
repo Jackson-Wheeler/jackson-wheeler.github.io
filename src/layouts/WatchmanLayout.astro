@@ -38,6 +38,7 @@ const ogImage = new URL('/watchman/img/og-tower.jpg', Astro.site);
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0f0d0b" />
+    <meta name="color-scheme" content="dark" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -56,17 +57,17 @@ const ogImage = new URL('/watchman/img/og-tower.jpg', Astro.site);
         <link
           rel="preload"
           as="image"
-          type="image/webp"
+          type="image/avif"
           fetchpriority="high"
-          href="/watchman/img/tower-night.webp"
+          href="/watchman/img/tower-night.avif"
           media="(min-width: 821px)"
         />
         <link
           rel="preload"
           as="image"
-          type="image/webp"
+          type="image/avif"
           fetchpriority="high"
-          href="/watchman/img/tower-night-1100.webp"
+          href="/watchman/img/tower-night-1100.avif"
           media="(max-width: 820px)"
         />
       </>
