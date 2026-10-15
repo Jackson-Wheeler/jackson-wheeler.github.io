@@ -52,7 +52,7 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
   background:
     linear-gradient(180deg, rgba(10, 9, 8, .15) 0%, rgba(10, 9, 8, .35) 45%, #0f0d0b 98%),
     linear-gradient(90deg, rgba(10, 9, 8, .9), rgba(10, 9, 8, .6) 45%, rgba(10, 9, 8, .1) 75%, rgba(10, 9, 8, 0)),
-    url(/watchman/img/tower-night.webp) 60% 40% / cover;
+    image-set(url(/watchman/img/tower-night.avif) type("image/avif"), url(/watchman/img/tower-night.webp) type("image/webp")) 60% 40% / cover;
   padding: 6rem 1.5rem 3rem;
 }
 @media (max-width: 820px) {
@@ -60,7 +60,7 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
     background:
       linear-gradient(180deg, rgba(10, 9, 8, .15) 0%, rgba(10, 9, 8, .35) 45%, #0f0d0b 98%),
       linear-gradient(90deg, rgba(10, 9, 8, .9), rgba(10, 9, 8, .6) 45%, rgba(10, 9, 8, .1) 75%, rgba(10, 9, 8, 0)),
-      url(/watchman/img/tower-night-1100.webp) 60% 40% / cover;
+      image-set(url(/watchman/img/tower-night-1100.avif) type("image/avif"), url(/watchman/img/tower-night-1100.webp) type("image/webp")) 60% 40% / cover;
   }
 }
 .hero-in { max-width: 72rem; margin: auto; width: 100%; }
