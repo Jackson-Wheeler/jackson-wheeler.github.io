@@ -182,3 +182,16 @@ cite {
       image-set(url(/watchman/img/walls-day-1100.avif) type("image/avif"), url(/watchman/img/walls-day.webp) type("image/webp")) center / cover;
   }
 }
+
+/* polish-typography: steadier rhythm and more readable secondary text */
+.s2 .wrap { padding: 6rem 1.5rem 5rem; }
+.s2 .kick { margin: 0 0 2.25rem; }
+.s2 blockquote { line-height: 1.34; text-wrap: pretty; }
+.s2 blockquote p { margin-bottom: 1.4rem; }
+.lex dd { font-size: 1.25rem; line-height: 1.5; }
+.s2 .lex { gap: 1.6rem; align-content: start; }
+.s2 .more { gap: 2.25rem; margin-top: 4rem; padding-top: 2.5rem; }
+.s2 .more p { font-size: 1.2rem; line-height: 1.55; margin-top: .75rem; }
+.door-t { font-size: 1.7rem; }
+.door-d { font-size: 1rem; line-height: 1.55; }
+.credits { line-height: 1.75; }
