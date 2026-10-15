@@ -1,9 +1,9 @@
 import type { Verse } from './types';
 
-/** Featured verse on the landing page (NKJV text exact; leading quote dropped as continuing quotation). */
+/** Featured verse on the landing page (NKJV text exact; unpaired trailing quote dropped). */
 export const featuredVerse: Verse = {
-  cite: 'Ezekiel 33:7 · NKJV',
-  text: 'So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
+  cite: 'Ezekiel 33:6 · NKJV',
+  text: 'But if the watchman sees the sword coming and does not blow the trumpet, and the people are not warned, and the sword comes and takes any person from among them, he is taken away in his iniquity; but his blood I will require at the watchman’s hand.',
 };
 
 export const supportingVerses: Verse[] = [
@@ -17,8 +17,7 @@ export const supportingVerses: Verse[] = [
     poetic: true,
   },
   {
-    cite: 'Proverbs 18:17 · NKJV',
-    text: 'The first one to plead his cause seems right,\nUntil his neighbor comes and examines him.',
-    poetic: true,
+    cite: 'Ezekiel 33:7 · NKJV',
+    text: 'So you, son of man: I have made you a watchman for the house of Israel; therefore you shall hear a word from My mouth and warn them for Me.',
   },
 ];
