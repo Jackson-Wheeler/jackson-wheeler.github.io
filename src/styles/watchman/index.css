@@ -63,13 +63,13 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
 .ch1 {
   background:
     linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
-    url(/watchman/img/tower-night.webp) 60% 35% / cover;
+    image-set(url(/watchman/img/tower-night.avif) type("image/avif"), url(/watchman/img/tower-night.webp) type("image/webp")) 60% 35% / cover;
 }
 @media (max-width: 820px) {
   .ch1 {
     background:
       linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
-      url(/watchman/img/tower-night-1100.webp) 60% 35% / cover;
+      image-set(url(/watchman/img/tower-night-1100.avif) type("image/avif"), url(/watchman/img/tower-night-1100.webp) type("image/webp")) 60% 35% / cover;
   }
 }
 
@@ -132,7 +132,7 @@ cite {
 .ch4 {
   background:
     linear-gradient(180deg, rgba(17, 15, 13, .7), #110f0d),
-    url(/watchman/img/walls-day.webp) center / cover;
+    image-set(url(/watchman/img/walls-day.avif) type("image/avif"), url(/watchman/img/walls-day.webp) type("image/webp")) center / cover;
   min-height: auto; padding-top: 6rem; padding-bottom: 6rem;
 }
 .ch4 > div { max-width: 72rem; margin: auto; width: 100%; }
@@ -173,6 +173,15 @@ cite {
 }
 .credits ul { padding-left: 1.1rem; }
 .credits a { color: #d8bf8c; }
+
+/* accessibility-perf: smaller records background on phones (AVIF 40 KB vs 167 KB WebP) */
+@media (max-width: 820px) {
+  .ch4 {
+    background:
+      linear-gradient(180deg, rgba(17, 15, 13, .7), #110f0d),
+      image-set(url(/watchman/img/walls-day-1100.avif) type("image/avif"), url(/watchman/img/walls-day.webp) type("image/webp")) center / cover;
+  }
+}
 
 /* scripture-presentation: gold reference rule, card frames, lexicon as a quiet panel */
 .s2 blockquote { position: relative; padding-left: 1.5rem; border-left: 2px solid #d9b977; }
