@@ -6,6 +6,7 @@ import Lexicon from '../../components/watchman/Lexicon.astro';
 import VerseCard from '../../components/watchman/VerseCard.astro';
 import RecordsDoors from '../../components/watchman/RecordsDoors.astro';
 import WatchmanCredits from '../../components/watchman/WatchmanCredits.astro';
+import { watchmanGoal } from '../../data/watchman/goal';
 import {
   featuredVerse,
   supportingVerses,
@@ -55,6 +56,11 @@ const description =
     <section class="s2 s-next s-close" aria-labelledby="jer-cite">
       <div class="wrap">
         <VerseCard verse={peaceVerse} variant="featured" citeId="jer-cite" />
+      </div>
+    </section>
+    <section class="s2 s-goal" aria-label="The aim of this record">
+      <div class="wrap">
+        <p class="goal">{watchmanGoal}</p>
       </div>
     </section>
     <RecordsDoors />

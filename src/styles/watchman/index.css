@@ -246,6 +246,15 @@ cite {
 /* Passages after the watchman: the verse and its citation, with no added heading. */
 .s2.s-next .wrap { padding: 4.5rem 1.5rem 2.25rem; }
 .s2.s-next + .s2.s-next .wrap { padding-top: 1.5rem; }
-.s2.s-next.s-close .wrap { padding-bottom: 5.5rem; }
+.s2.s-next.s-close .wrap { padding-bottom: 2.75rem; }
 .s2.s-next blockquote { max-width: 46rem; }
 .s2.s-next .more.pair { margin-top: 2.75rem; }
+.s2.s-goal .wrap { padding-top: 0.25rem; padding-bottom: 5.5rem; }
+.s2.s-goal .goal {
+  max-width: 46rem;
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  line-height: 1.6;
+  color: #e7dcc8;
+  text-wrap: pretty;
+}
