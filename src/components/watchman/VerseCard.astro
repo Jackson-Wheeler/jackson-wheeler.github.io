@@ -6,12 +6,14 @@ interface Props {
   variant?: 'featured' | 'card';
   /** Id on the citation, so a section can be named by the reference itself. */
   citeId?: string;
+  /** Id on the verse, so a reference below can scroll to it. */
+  anchorId?: string;
 }
-const { verse, variant = 'card', citeId } = Astro.props;
+const { verse, variant = 'card', citeId, anchorId } = Astro.props;
 const lines = verse.poetic ? verse.text.split('\n') : null;
 ---
 {variant === 'featured' ? (
-  <blockquote>
+  <blockquote id={anchorId}>
     <p>{verse.text}</p>
     <cite id={citeId}>{verse.cite}</cite>
   </blockquote>
