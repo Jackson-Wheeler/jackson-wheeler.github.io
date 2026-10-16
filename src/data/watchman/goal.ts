@@ -1,3 +1,0 @@
-/** The project's stated aim. Wording is fixed; do not rewrite the quotes, brackets, or LORD. */
-export const watchmanGoal =
-  'To document, in reality, what our government, at every layer, is doing, the good and the bad; that we may "have no fellowship with the unfruitful works of darkness, but rather expose them" (Ephesians 5:11); that we may "blow the trumpet" (Ezekiel 33:6) at the proper time; that we may make "supplications, prayers, intercessions, and giving of thanks" (1 Timothy 2:1) for "kings and all who are in authority" (1 Timothy 2:2) and "pray to the LORD for [the city of our sojourning]" (Jeremiah 29:7) so that "we may lead a quiet and peaceable life in all godliness and reverence" (1 Timothy 2:2).';
