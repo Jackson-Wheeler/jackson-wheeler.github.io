@@ -4,18 +4,20 @@ interface Props {
   verse: Verse;
   /** Featured blockquote (landing section 2 lead) vs supporting card */
   variant?: 'featured' | 'card';
+  /** Id on the citation, so a section can be named by the reference itself. */
+  citeId?: string;
 }
-const { verse, variant = 'card' } = Astro.props;
+const { verse, variant = 'card', citeId } = Astro.props;
 const lines = verse.poetic ? verse.text.split('\n') : null;
 ---
 {variant === 'featured' ? (
   <blockquote>
     <p>{verse.text}</p>
-    <cite>{verse.cite}</cite>
+    <cite id={citeId}>{verse.cite}</cite>
   </blockquote>
 ) : (
   <div>
-    <cite>{verse.cite}</cite>
+    <cite id={citeId}>{verse.cite}</cite>
     <p>
       {lines
         ? lines.map((line, i) => (

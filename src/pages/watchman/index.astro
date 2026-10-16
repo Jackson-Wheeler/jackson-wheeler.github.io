@@ -6,7 +6,14 @@ import Lexicon from '../../components/watchman/Lexicon.astro';
 import VerseCard from '../../components/watchman/VerseCard.astro';
 import RecordsDoors from '../../components/watchman/RecordsDoors.astro';
 import WatchmanCredits from '../../components/watchman/WatchmanCredits.astro';
-import { featuredVerse, supportingVerses } from '../../data/watchman/verses';
+import {
+  featuredVerse,
+  supportingVerses,
+  exposeVerse,
+  exposeSupporting,
+  prayerVerse,
+  peaceVerse,
+} from '../../data/watchman/verses';
 import '../../styles/watchman/index.css';
 
 const title = 'Watchman';
@@ -27,9 +34,27 @@ const description =
           </div>
           <Lexicon />
         </div>
-        <div class="more">
+        <div class="more pair">
           {supportingVerses.map((v) => <VerseCard verse={v} />)}
         </div>
+      </div>
+    </section>
+    <section class="s2 s-next" aria-labelledby="eph-cite">
+      <div class="wrap">
+        <VerseCard verse={exposeVerse} variant="featured" citeId="eph-cite" />
+        <div class="more pair">
+          {exposeSupporting.map((v) => <VerseCard verse={v} />)}
+        </div>
+      </div>
+    </section>
+    <section class="s2 s-next" aria-labelledby="tim-cite">
+      <div class="wrap">
+        <VerseCard verse={prayerVerse} variant="featured" citeId="tim-cite" />
+      </div>
+    </section>
+    <section class="s2 s-next s-close" aria-labelledby="jer-cite">
+      <div class="wrap">
+        <VerseCard verse={peaceVerse} variant="featured" citeId="jer-cite" />
       </div>
     </section>
     <RecordsDoors />

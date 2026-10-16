@@ -118,7 +118,7 @@ cite {
   border-top: 1px solid #3a3128; padding-top: 2rem;
 }
 @media (min-width: 760px) {
-  .s2 .more { grid-template-columns: repeat(3, 1fr); }
+  .s2 .more { grid-template-columns: 1fr 1fr; }
 }
 .s2 .more cite {
   font: 500 .78rem/1 var(--sans); letter-spacing: .14em;
@@ -242,3 +242,10 @@ cite {
 .door:focus-visible { outline: 3px solid #e8c37a; outline-offset: 3px; }
 .credits a:hover { color: #f0d7a4; }
 ::selection { background: rgba(217, 185, 119, .35); color: #fff8ea; }
+
+/* Passages after the watchman: the verse and its citation, with no added heading. */
+.s2.s-next .wrap { padding: 4.5rem 1.5rem 2.25rem; }
+.s2.s-next + .s2.s-next .wrap { padding-top: 1.5rem; }
+.s2.s-next.s-close .wrap { padding-bottom: 5.5rem; }
+.s2.s-next blockquote { max-width: 46rem; }
+.s2.s-next .more.pair { margin-top: 2.75rem; }
