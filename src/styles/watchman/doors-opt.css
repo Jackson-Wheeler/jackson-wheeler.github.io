@@ -1,0 +1,53 @@
+/* Records doors: three jurisdictions, each its own section with one large card. */
+.rd {
+  max-width: 72rem; margin: 0 auto; width: 100%; box-sizing: border-box;
+  padding: 2.75rem 1.5rem 4.5rem; display: grid; gap: 2.75rem;
+}
+.rd-sec { margin: 0; min-width: 0; }
+.rdc { display: block; position: relative; color: #eee3d0; text-decoration: none; min-width: 0; }
+.rdc:focus-visible { outline: 3px solid #e8c37a; outline-offset: 5px; border-radius: 4px; }
+.rd-t {
+  margin: 0; font-family: var(--serif); font-weight: 500; line-height: 1.08;
+  color: #f7f1e6; text-wrap: balance; overflow-wrap: anywhere;
+}
+.rd-d { margin: 0; font: 400 1rem/1.55 var(--sans); color: #c3b7a2; }
+.rd-go {
+  display: inline-flex; gap: .5rem; align-items: center;
+  font: 600 .78rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #e7c27c;
+}
+.rd-k {
+  display: block; font: 600 .7rem/1.3 var(--sans); letter-spacing: .2em;
+  text-transform: uppercase; color: #c6a56e;
+}
+.rd-fig { display: block; }
+.rd-fig img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) {
+  .rd-go { transition: letter-spacing .25s ease, color .25s ease; }
+  .rdc:hover .rd-go, .rdc:focus-visible .rd-go { letter-spacing: .2em; color: #f0d7a2; }
+}
+
+.rd--archival .rdc {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.4rem; align-items: center; padding: 2.4rem;
+  background: url(/watchman/img/doors/paper-tile.webp) repeat, #e6d8b8;
+  color: #2a1d10; border-radius: 2px; box-shadow: 0 1px 0 #f5ecd6 inset, 0 22px 44px -26px rgba(0, 0, 0, .95);
+}
+.rd--archival .rd-print { display: block; background: #f4ecd9; padding: .8rem .8rem 2.2rem; box-shadow: 0 6px 16px -8px rgba(40, 26, 10, .6); position: relative; }
+.rd--archival .rd-fig { aspect-ratio: 4 / 3; }
+.rd--archival .rd-la .rd-fig { aspect-ratio: 5 / 2; }
+.rd--archival .rd-fig img { filter: contrast(1.05); }
+.rd--archival .rd-cap { position: absolute; left: .8rem; right: .8rem; bottom: .7rem; font: italic 400 .85rem/1.2 var(--serif); color: #5a4630; }
+.rd--archival .rd-body { display: grid; gap: .8rem; border-top: 1px solid #8a7250; border-bottom: 1px solid #8a7250; padding: 1.2rem 0; }
+.rd--archival .rd-k { color: #7a5a2c; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing: .12em; }
+.rd--archival .rd-t { color: #20160b; font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
+.rd--archival .rd-d { color: #4d3c27; }
+.rd--archival .rd-go { color: #7a4f17; }
+.rd--archival .rdc:hover, .rd--archival .rdc:focus-visible { background-color: #ecdfc2; }
+.rd--archival .rdc:focus-visible { outline-color: #e8c37a; }
+@media (prefers-reduced-motion: no-preference) {
+  .rd--archival .rd-print { transition: transform .4s ease; transform: rotate(-.8deg); }
+  .rd--archival .rd-sec:nth-child(2) .rd-print { transform: rotate(.7deg); }
+  .rd--archival .rdc:hover .rd-print { transform: rotate(0); }
+}
+@media (max-width: 760px) {
+  .rd--archival .rdc { grid-template-columns: 1fr; padding: 1.2rem; gap: 1.4rem; }
+}
