@@ -5,19 +5,53 @@ import ProjectCard from './ProjectCard.astro';
 <section id="projects" class="glow" aria-labelledby="projects-title">
   <div class="container">
     <h2 class="section-title" id="projects-title">Projects</h2>
+    
+    <!-- Featured Watchman -->
+    <div class="featured-watchman">
+      <div class="featured-content">
+        <span class="status">In progress</span>
+        <h3>Watchman</h3>
+        <p class="pull">“Son of man, I have made you a watchman for the house of Israel; therefore hear a word from My mouth, and give them warning from Me.”</p>
+        <p class="desc">A plain, sourced record of what government has actually done.</p>
+        <a href="/watchman/" class="cta">Enter the records →</a>
+      </div>
+    </div>
+
     <ul class="grid">
-      {projects.map((p) => <ProjectCard project={p} />)}
       <ProjectCard placeholder />
     </ul>
   </div>
 </section>
 
 <style>
+  .featured-watchman {
+    margin-bottom: 2.5rem;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, #131315, #1a191c);
+    border: 1px solid rgb(224 164 88 / .3);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    position: relative;
+  }
+  .featured-watchman .status {
+    font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+  }
+  .featured-watchman h3 {
+    margin: .5rem 0; font-family: var(--serif); font-size: 2.25rem; font-weight: 500;
+  }
+  .featured-watchman .pull {
+    font-family: var(--serif); font-size: 1.15rem; line-height: 1.4; color: var(--text); margin: 1rem 0; font-style: italic;
+  }
+  .featured-watchman .desc { color: var(--muted); margin: 0.5rem 0 1.5rem; }
+  .featured-watchman .cta {
+    display: inline-block; color: var(--accent); font-weight: 600; letter-spacing: .05em; text-decoration: none;
+  }
+  .featured-watchman .cta:hover { text-decoration: underline; }
+
   .grid {
     display: grid; gap: 1.25rem;
     grid-template-columns: 1fr;
     list-style: none; margin: 0; padding: 0;
   }
   @media (min-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 </style>
