@@ -662,3 +662,36 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
   }
 }
 .account .doors-posts.sizes .door { min-height: 0; }
+
+/* Records sizing: wide banner cards (real wide photos, caption over a gradient). */
+.account .doors-posts.doors-banner .door-list { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+.account .doors-posts.doors-banner .door {
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+}
+.account .doors-posts.doors-banner .door::after {
+  background: linear-gradient(to bottom, rgba(8, 7, 6, 0) 25%, rgba(8, 7, 6, .55) 55%, rgba(8, 7, 6, .9) 100%);
+}
+.account .doors-posts.doors-banner .door-copy { gap: .25rem; padding: .85rem 1rem .9rem 1.15rem; }
+.account .doors-posts.doors-banner .door-t { font-size: clamp(1.2rem, 5vw, 1.9rem); }
+.account .doors-posts.doors-banner .door-d { font-size: .9rem; line-height: 1.4; }
+.account .doors-posts.doors-banner .door-img[data-place="federal"] { object-position: 50% 30%; }
+.account .doors-posts.doors-banner .door-img[data-place="california"] { object-position: 50% 30%; }
+.account .doors-posts.doors-banner .door-img[data-place="la"] { object-position: 50% 20%; }
+@media (min-width: 860px) {
+  .account .doors-posts.doors-banner .door-list { grid-template-columns: minmax(0, 1fr); gap: .9rem; }
+  .account .doors-posts.doors-banner .door {
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 1;
+    max-height: 17rem;
+    align-items: center;
+  }
+  .account .doors-posts.doors-banner .door::after {
+    background: linear-gradient(to right, rgba(8, 7, 6, .92) 0%, rgba(8, 7, 6, .7) 30%, rgba(8, 7, 6, .1) 58%, rgba(8, 7, 6, 0) 100%);
+  }
+  .account .doors-posts.doors-banner .door-copy { width: min(26rem, 42%); padding: 1.25rem 1.5rem 1.25rem 1.75rem; gap: .4rem; }
+  .account .doors-posts.doors-banner .door-img,
+  .account .doors-posts.doors-banner .door-img[data-place] { object-position: 50% 4%; }
+}
