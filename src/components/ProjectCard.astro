@@ -34,21 +34,32 @@ const isWatchman = project?.title === 'Watchman';
   }
   .card.watchman {
     min-height: 13.5rem;
-    /* no full-width span — stays in the normal grid */
   }
   .card-bg {
     position: absolute; inset: 0;
     background: url('/watchman/img/tower-night.webp') 55% 45% / cover no-repeat;
     opacity: 0.35;
+    pointer-events: none;
   }
   .card-bg::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(100deg, rgba(11,11,12,0.92) 0%, rgba(11,11,12,0.65) 50%, rgba(11,11,12,0.35) 100%);
+    pointer-events: none;
   }
   .card-content { position: relative; z-index: 1; }
   .card h3 { margin: 0; font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
   .card.watchman h3 { font-size: 1.75rem; color: #f7f1e6; }
-  .card h3 a { text-decoration: none; color: inherit; }
+  .card h3 a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .card h3 a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+  }
   .card p { margin: 0.5rem 0 0; color: var(--muted); font-size: .95rem; line-height: 1.45; }
   .card.watchman p { color: #e8dfd0; font-size: 1rem; }
   .meta { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); opacity: 0.8; }
