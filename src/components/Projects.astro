@@ -1,23 +1,55 @@
 ---
-import { projects } from '../data/projects';
 import ProjectCard from './ProjectCard.astro';
 ---
 <section id="projects" class="glow" aria-labelledby="projects-title">
   <div class="container">
     <h2 class="section-title" id="projects-title">Projects</h2>
+
+    <article class="featured">
+      <div class="featured-bg" aria-hidden="true"></div>
+      <div class="featured-inner">
+        <span class="kicker">Featured Project</span>
+        <h3>Watchman</h3>
+        <p>A plain, sourced record of what government has actually done.</p>
+        <blockquote>“Son of man, I have made you a watchman… whenever you hear a word from My mouth, you shall give them warning from Me.”</blockquote>
+        <cite>Ezekiel 33:7</cite>
+        <a href="/watchman/" class="cta">Enter the records →</a>
+      </div>
+    </article>
+
     <ul class="grid">
-      {projects.map((p) => <ProjectCard project={p} />)}
       <ProjectCard placeholder />
     </ul>
   </div>
 </section>
 
 <style>
-  .grid {
-    display: grid; gap: 1.25rem;
-    grid-template-columns: 1fr;
-    list-style: none; margin: 0; padding: 0;
+  .featured {
+    position: relative;
+    margin: 0 0 3.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #5a4a33;
+    min-height: 22rem;
+    display: grid;
+    align-items: center;
   }
-  @media (min-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .featured-bg {
+    position: absolute; inset: 0;
+    background: url('/watchman/img/tower-night.webp') 60% 40% / cover;
+    opacity: 0.22;
+  }
+  .featured-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(15,13,11,0.92) 0%, rgba(15,13,11,0.6) 50%, rgba(15,13,11,0.3) 100%);
+  }
+  .featured-inner { position: relative; padding: 2.8rem; max-width: 40rem; }
+  .kicker { font: 600 0.72rem/1 var(--sans); letter-spacing: 0.22em; text-transform: uppercase; color: #e8c37a; }
+  .featured h3 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.6rem); margin: 0.4rem 0 0.6rem; color: #fff8ea; font-weight: 400; }
+  .featured p { font-size: 1.15rem; color: #d7ccb8; margin: 0 0 1.2rem; }
+  .featured blockquote { font-style: italic; color: #f0d7a2; margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .featured cite { font-style: normal; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c6a56e; }
+  .cta { display: inline-block; margin-top: 1.5rem; color: #e8c37a; text-decoration: none; font: 600 0.85rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; }
+  .cta:hover { text-decoration: underline; }
+  .grid { display: grid; gap: 1.25rem; list-style: none; padding: 0; margin: 0; }
 </style>
