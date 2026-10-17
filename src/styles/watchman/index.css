@@ -311,7 +311,7 @@ cite {
 .goal-card > .say { margin: 0; }
 .aim {
   list-style: disc;
-  margin: .7rem 0 0;
+  margin: 0;
   padding-left: 1.15rem;
   display: grid;
   gap: .45rem;
