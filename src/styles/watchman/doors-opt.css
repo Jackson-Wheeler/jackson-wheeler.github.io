@@ -1,0 +1,44 @@
+/* Records doors: three jurisdictions, each its own section with one large card. */
+.rd {
+  max-width: 72rem; margin: 0 auto; width: 100%; box-sizing: border-box;
+  padding: 2.75rem 1.5rem 4.5rem; display: grid; gap: 2.75rem;
+}
+.rd-sec { margin: 0; min-width: 0; }
+.rdc { display: block; position: relative; color: #eee3d0; text-decoration: none; min-width: 0; }
+.rdc:focus-visible { outline: 3px solid #e8c37a; outline-offset: 5px; border-radius: 4px; }
+.rd-t {
+  margin: 0; font-family: var(--serif); font-weight: 500; line-height: 1.08;
+  color: #f7f1e6; text-wrap: balance; overflow-wrap: anywhere;
+}
+.rd-d { margin: 0; font: 400 1rem/1.55 var(--sans); color: #c3b7a2; }
+.rd-go {
+  display: inline-flex; gap: .5rem; align-items: center;
+  font: 600 .78rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #e7c27c;
+}
+.rd-k {
+  display: block; font: 600 .7rem/1.3 var(--sans); letter-spacing: .2em;
+  text-transform: uppercase; color: #c6a56e;
+}
+.rd-fig { display: block; }
+.rd-fig img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) {
+  .rd-go { transition: letter-spacing .25s ease, color .25s ease; }
+  .rdc:hover .rd-go, .rdc:focus-visible .rd-go { letter-spacing: .2em; color: #f0d7a2; }
+}
+
+.rd--typographic { gap: 0; }
+.rd--typographic .rd-sec { border-top: 1px solid #5a4a33; }
+.rd--typographic .rd-sec:last-child { border-bottom: 1px solid #5a4a33; }
+.rd--typographic .rdc { display: grid; gap: 1.2rem; padding: 2.6rem .4rem 2.4rem; }
+.rd--typographic .rd-big { display: block; font: 500 clamp(3.4rem, 11vw, 9rem)/.9 var(--serif); letter-spacing: -.02em; background: linear-gradient(180deg, #f3dca7, #b48a49 70%, #7a5a2c); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; }
+.rd--typographic .rd-body { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1.4rem; align-items: center; }
+.rd--typographic .rd-emb { width: 3.6rem; height: 3.6rem; color: #c6a56e; }
+.rd--typographic .rd-txt { display: grid; gap: .4rem; }
+.rd--typographic .rd-t { font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+.rd--typographic .rdc:hover .rd-big, .rd--typographic .rdc:focus-visible .rd-big { background: linear-gradient(180deg, #fff0c8, #d9b16a 70%, #9a7438); -webkit-background-clip: text; background-clip: text; }
+@media (max-width: 700px) {
+  .rd--typographic .rd-body { grid-template-columns: auto minmax(0, 1fr); }
+  .rd--typographic .rd-go { grid-column: 1 / -1; }
+  .rd--typographic .rd-emb { width: 2.8rem; height: 2.8rem; }
+  .rd--typographic .rd-big { font-size: clamp(3rem, 15.5vw, 4.4rem); }
+}
