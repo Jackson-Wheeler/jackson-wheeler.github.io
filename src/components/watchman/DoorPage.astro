@@ -16,8 +16,10 @@ interface Props {
   /** Single jurisdiction (federal/california) or grouped (LA) */
   records?: Rec[];
   groups?: Group[];
+  /** Image basename in /watchman/img. Same picture as this door’s card. */
+  hero?: 'record-federal' | 'record-california' | 'record-la' | 'record-orange-county' | 'record-costa-mesa';
 }
-const { title, records, groups } = Astro.props;
+const { title, records, groups, hero } = Astro.props;
 
 function shelfAndList(items: Rec[]) {
   return { shelf: highlights(items), list: allNewestFirst(items) };
@@ -36,7 +38,7 @@ function yearAnchors(list: Rec[], prefix: string) {
 ---
 <a class="skip" href="#choose">Skip to content</a>
 <WatchmanNav showUp={true} />
-<header class="hero sm">
+<header class:list={['hero', 'sm', hero && `hero-${hero}`]}>
   <div class="hero-in">
     <p class="kick">Watchman · Record</p>
     <h1>{title}</h1>

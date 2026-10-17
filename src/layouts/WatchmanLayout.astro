@@ -15,9 +15,11 @@ interface Props {
   noindex?: boolean;
   /** Preload hero/background images (landing + door pages that use the tower). */
   preloadHero?: boolean;
+  /** Image basename in /watchman/img, without extension. Door pages pass their card picture. */
+  heroImage?: string;
 }
 
-const { title, description, noindex = false, preloadHero = false } = Astro.props;
+const { title, description, noindex = false, preloadHero = false, heroImage = 'tower-night' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/watchman/img/og-tower.jpg', Astro.site);
 ---
@@ -59,7 +61,7 @@ const ogImage = new URL('/watchman/img/og-tower.jpg', Astro.site);
           as="image"
           type="image/avif"
           fetchpriority="high"
-          href="/watchman/img/tower-night.avif"
+          href={`/watchman/img/${heroImage}.avif`}
           media="(min-width: 821px)"
         />
         <link
@@ -67,7 +69,7 @@ const ogImage = new URL('/watchman/img/og-tower.jpg', Astro.site);
           as="image"
           type="image/avif"
           fetchpriority="high"
-          href="/watchman/img/tower-night-1100.avif"
+          href={`/watchman/img/${heroImage}-1100.avif`}
           media="(max-width: 820px)"
         />
       </>

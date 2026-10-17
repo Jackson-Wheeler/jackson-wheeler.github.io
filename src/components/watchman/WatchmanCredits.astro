@@ -4,13 +4,16 @@ interface Props {
   nkjv?: boolean;
   /** Include Hebrew / Strong’s credit (landing). */
   hebrew?: boolean;
-  /** Which photos to credit. */
+  /** Licensed photographs to credit. */
   photos?: ('tower' | 'walls')[];
+  /** Record pictures are studies for review, not photographs for publication. */
+  studies?: boolean;
 }
 const {
   nkjv = false,
   hebrew = false,
-  photos = ['tower'],
+  photos = [],
+  studies = false,
 } = Astro.props;
 ---
 <footer class="credits">
@@ -44,6 +47,11 @@ const {
         )}
       </ul>
     </>
+  )}
+  {studies && (
+    <p>
+      The record pictures on this preview are studies for review. They are not the photographs that will be published.
+    </p>
   )}
   <p>
     Typefaces: EB Garamond, Frank Ruhl Libre, Inter (SIL Open Font License). <a href="/">Home</a>

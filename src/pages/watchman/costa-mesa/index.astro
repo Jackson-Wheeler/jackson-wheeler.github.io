@@ -1,0 +1,16 @@
+---
+import Layout from '../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../components/watchman/WatchmanCredits.astro';
+import { costaMesaRecords } from '../../../data/watchman/records';
+import '../../../styles/watchman/doors.css';
+
+const picture = 'record-costa-mesa';
+const title = 'Costa Mesa — Watchman';
+const description =
+  'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source. Press releases are labeled, and reversed or enjoined items stay and are marked.';
+---
+<Layout title={title} description={description} noindex={true} preloadHero={true} heroImage={picture}>
+  <DoorPage title="Costa Mesa" records={costaMesaRecords} hero={picture} />
+  <WatchmanCredits studies={true} />
+</Layout>

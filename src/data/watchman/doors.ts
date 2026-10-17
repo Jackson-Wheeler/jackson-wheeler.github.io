@@ -1,19 +1,39 @@
-import type { DoorLink } from './types';
+import type { DoorImage, DoorLink } from './types';
+
+/** Wide card picture: 1800 AVIF, 1800 WebP, and a phone AVIF. */
+function picture(name: string): DoorImage {
+  return {
+    avif: `/watchman/img/${name}.avif`,
+    avifSmall: `/watchman/img/${name}-1100.avif`,
+    webp: `/watchman/img/${name}.webp`,
+  };
+}
 
 export const recordDoors: DoorLink[] = [
   {
     href: '/watchman/federal/',
-    title: '2024–2028 Federal Government',
-    description: 'Executive orders, public laws, budget acts, court rulings.',
+    title: 'Federal Government',
+    image: picture('record-federal'),
   },
   {
     href: '/watchman/california/',
-    title: '2011–2027 California Government',
-    description: 'Chaptered bills, executive orders, budgets, rulings.',
+    title: 'California Government',
+    image: picture('record-california'),
+  },
+  {
+    href: '/watchman/orange-county/',
+    title: 'Orange County',
+    image: picture('record-orange-county'),
+  },
+  {
+    href: '/watchman/costa-mesa/',
+    title: 'Costa Mesa',
+    image: picture('record-costa-mesa'),
   },
   {
     href: '/watchman/la/',
-    title: 'LA City/County 2013–2027',
-    description: 'City and county shown separately.',
+    title: 'LA City/County',
+    hidden: true,
+    image: picture('record-la'),
   },
 ];

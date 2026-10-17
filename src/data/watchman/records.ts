@@ -1,6 +1,6 @@
 import type { RecordItem } from './types';
 
-/** Shared placeholder example set used by federal / california / LA doors. */
+/** Shared placeholder example set. Every door still shows EXAMPLE rows only. */
 const sharedExamples: Omit<RecordItem, 'jurisdiction'>[] = [
   {
     date: '2027-03-04',
@@ -56,6 +56,8 @@ export const federalRecords: RecordItem[] = withJurisdiction('federal', sharedEx
 export const californiaRecords: RecordItem[] = withJurisdiction('california', sharedExamples);
 export const laCityRecords: RecordItem[] = withJurisdiction('la-city', sharedExamples);
 export const laCountyRecords: RecordItem[] = withJurisdiction('la-county', sharedExamples);
+export const orangeCountyRecords: RecordItem[] = withJurisdiction('orange-county', sharedExamples);
+export const costaMesaRecords: RecordItem[] = withJurisdiction('costa-mesa', sharedExamples);
 
 export function highlights(records: RecordItem[]): RecordItem[] {
   return records.filter((r) => r.highlight);

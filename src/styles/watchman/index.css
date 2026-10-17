@@ -137,33 +137,6 @@ cite {
 }
 .ch4 > div { max-width: 72rem; margin: auto; width: 100%; }
 .ch4 h2 { margin-top: .8rem; }
-.doors-intro {
-  font: 400 1rem/1.6 var(--sans) !important; color: #c3b7a2 !important;
-  margin: 0 0 1.5rem;
-}
-.door-list {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; gap: 1rem;
-}
-@media (min-width: 760px) {
-  .door-list { grid-template-columns: repeat(3, 1fr); }
-}
-.door {
-  display: flex; flex-direction: column; gap: .5rem;
-  text-decoration: none;
-  background: rgba(20, 17, 14, .88); border: 1px solid #5a4a33;
-  color: #eee3d0; padding: 1.7rem; min-height: 12rem; border-radius: 4px;
-}
-.door:hover, .door:focus-visible { border-color: #e7c27c; }
-.door-t {
-  font-family: var(--serif); font-size: 1.55rem; line-height: 1.15;
-  font-weight: 500; color: #eee3d0;
-}
-.door-d { font: 400 .95rem/1.5 var(--sans); color: #c3b7a2; }
-.door-go {
-  font: 600 .8rem/1 var(--sans); letter-spacing: .12em;
-  text-transform: uppercase; margin-top: auto; color: #e7c27c;
-}
 
 /* Credits */
 .credits {
@@ -192,8 +165,6 @@ cite {
 .s2 .lex { gap: 1.6rem; align-content: start; }
 .s2 .more { gap: 2.25rem; margin-top: 4rem; padding-top: 2.5rem; }
 .s2 .more p { font-size: 1.2rem; line-height: 1.55; margin-top: .75rem; }
-.door-t { font-size: 1.7rem; }
-.door-d { font-size: 1rem; line-height: 1.55; }
 .credits { line-height: 1.75; }
 
 /* hero-atmosphere: phone crop keeps the moon and tower in frame (no brightness/glow changes) */
@@ -217,29 +188,13 @@ cite {
 }
 .s2 .more cite { color: #d9b977; }
 
-/* records-doors: clearer, more inviting door cards */
-.door { position: relative; transition: border-color .2s, background-color .2s; }
-.door::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: #e7c27c; opacity: .35; border-radius: 4px 0 0 4px;
-}
-.door:hover, .door:focus-visible { background: rgba(32, 26, 20, .94); }
-.door:hover::before, .door:focus-visible::before { opacity: 1; }
-.door-go { display: inline-flex; gap: .4rem; align-items: center; padding-top: .8rem; }
-
 /* motion-and-detail: CSS-only, only when the reader has not asked for reduced motion */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes wm-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   .top h1 { animation: wm-rise .9s ease-out both; }
   .hw { animation: wm-rise .9s .25s ease-out both; }
-  .door { transition: border-color .2s, transform .2s, background-color .2s; }
-  .door:hover { transform: translateY(-2px); }
-  .door-go { transition: letter-spacing .2s; }
-  .door:hover .door-go, .door:focus-visible .door-go { letter-spacing: .18em; }
   .wm-nav a.wm-home { transition: opacity .2s; }
 }
-.door:hover, .door:focus-visible { background: rgba(30, 25, 19, .94); }
-.door:focus-visible { outline: 3px solid #e8c37a; outline-offset: 3px; }
 .credits a:hover { color: #f0d7a4; }
 ::selection { background: rgba(217, 185, 119, .35); color: #fff8ea; }
 
@@ -344,15 +299,68 @@ a.sc {
 a.sc:hover,
 a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
 .s2 blockquote[id] { scroll-margin-top: 1.25rem; }
-.account .door { min-height: 0; padding: 1.15rem 1.2rem 1.05rem; }
-.account .door-t { font-size: 1.35rem; }
+/* One wide picture per government. The title sits above the card; the picture fills it. */
+.record-doors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2.75rem;
+}
+.record-door {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.record-door-title {
+  margin: 0 0 .85rem;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.05rem, 3.5vw, 2.9rem);
+  line-height: 1.05;
+  color: #f7f1e6;
+}
+.record-door-frame {
+  display: block;
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border: 1px solid #5a4a33;
+  border-radius: 2px;
+  background: #100e0c;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.record-door-frame picture,
+.record-door-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.record-door-frame img {
+  object-fit: cover;
+  object-position: center;
+}
+.record-door:hover .record-door-frame,
+.record-door:focus-visible .record-door-frame {
+  border-color: rgb(224 164 88 / .45);
+  box-shadow: 0 0 0 1px rgb(224 164 88 / .12), 0 18px 50px -20px rgb(224 164 88 / .35);
+  transform: translateY(-2px);
+}
+.record-door:focus-visible { outline: none; }
+.record-door:focus-visible .record-door-frame {
+  outline: 3px solid #e8c37a;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .record-door-frame { transition: none; }
+  .record-door:hover .record-door-frame,
+  .record-door:focus-visible .record-door-frame { transform: none; }
+}
 
 /* ux-polish (overnight review) */
 /* Hebrew never larger than the English beside it: the lexicon root matches its line. */
 .s2 .lex [lang=he] { font-size: 1em; }
-/* Door cards share one height per row, so "Enter" sits on a common baseline. */
-.door-list > li { display: flex; }
-.door-list .door { flex: 1; }
 /* Reference links in Purpose: readable size, comfortable tap target, no orphaned wrap. */
 .sc { font-size: .72rem; white-space: nowrap; }
 a.sc { display: inline-block; padding: .2rem 0; }
