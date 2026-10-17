@@ -11,6 +11,12 @@ export const recordDoors: DoorLink[] = [
       webp: '/watchman/img/door-federal.webp',
       place: 'federal',
     },
+    wide: {
+      avif: '/watchman/img/wide-federal.avif',
+      avifSmall: '/watchman/img/wide-federal-800.avif',
+      webp: '/watchman/img/wide-federal.webp',
+      webpSmall: '/watchman/img/wide-federal-800.webp',
+    },
   },
   {
     href: '/watchman/california/',
@@ -22,6 +28,12 @@ export const recordDoors: DoorLink[] = [
       webp: '/watchman/img/door-california.webp',
       place: 'california',
     },
+    wide: {
+      avif: '/watchman/img/wide-california.avif',
+      avifSmall: '/watchman/img/wide-california-800.avif',
+      webp: '/watchman/img/wide-california.webp',
+      webpSmall: '/watchman/img/wide-california-800.webp',
+    },
   },
   {
     href: '/watchman/la/',
@@ -32,6 +44,12 @@ export const recordDoors: DoorLink[] = [
       avifSmall: '/watchman/img/door-la-1100.avif',
       webp: '/watchman/img/door-la.webp',
       place: 'la',
+    },
+    wide: {
+      avif: '/watchman/img/wide-la.avif',
+      avifSmall: '/watchman/img/wide-la-800.avif',
+      webp: '/watchman/img/wide-la.webp',
+      webpSmall: '/watchman/img/wide-la-800.webp',
     },
   },
 ];

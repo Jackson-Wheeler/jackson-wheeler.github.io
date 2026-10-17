@@ -5,7 +5,7 @@ interface Props {
   /** Include Hebrew / Strong’s credit (landing). */
   hebrew?: boolean;
   /** Which photos to credit. */
-  photos?: ('tower' | 'walls' | 'federal' | 'california' | 'la')[];
+  photos?: ('tower' | 'walls' | 'federal' | 'california' | 'la' | 'wide')[];
 }
 const {
   nkjv = false,
@@ -41,6 +41,24 @@ const {
             <a href="https://commons.wikimedia.org/wiki/File:Jerusalem,_walls_of_Old_town_(010).JPG">Wikimedia Commons</a>,{' '}
             <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Resized, cropped, compressed.
           </li>
+        )}
+        {photos.includes('wide') && (
+          <>
+            <li>
+              “United States Capitol - east side at night” by APK,{' '}
+              <a href="https://commons.wikimedia.org/wiki/File:United_States_Capitol_-_east_side_at_night.jpg">Wikimedia Commons</a>,{' '}
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Cropped, color-graded, resized, compressed.
+            </li>
+            <li>
+              “CA State Capitol-2” by Santosh7700,{' '}
+              <a href="https://commons.wikimedia.org/wiki/File:CA_State_Capitol-2.jpg">Wikimedia Commons</a>,{' '}
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Cropped, color-graded, resized, compressed.
+            </li>
+            <li>
+              “LA City Hall at night” by LEKI,{' '}
+              <a href="https://commons.wikimedia.org/wiki/File:LA_City_Hall_at_night.JPG">Wikimedia Commons</a>, public domain. Cropped, color-graded, resized, compressed.
+            </li>
+          </>
         )}
         {(photos.includes('federal') || photos.includes('california') || photos.includes('la')) && (
           <li>

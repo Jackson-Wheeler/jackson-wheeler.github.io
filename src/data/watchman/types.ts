@@ -36,6 +36,13 @@ export interface DoorLink {
     webp: string;
     place: 'federal' | 'california' | 'la';
   };
+  /** Wide (21:9 desktop / 16:9 phone) real photo of the same building. */
+  wide: {
+    avif: string;
+    avifSmall: string;
+    webp: string;
+    webpSmall: string;
+  };
 }
 
 /** Return url only when it is a valid https: URL; otherwise undefined. */
