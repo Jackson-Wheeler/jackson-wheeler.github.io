@@ -1,6 +1,6 @@
 import type { RecordItem } from './types';
 
-/** Shared placeholder example set used by federal / california / LA doors. */
+/** Shared placeholder example set. Every door still shows EXAMPLE rows only. */
 const sharedExamples: Omit<RecordItem, 'jurisdiction'>[] = [
   {
     date: '2027-03-04',

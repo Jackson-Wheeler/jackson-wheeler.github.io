@@ -4,13 +4,16 @@ interface Props {
   nkjv?: boolean;
   /** Include Hebrew / Strong’s credit (landing). */
   hebrew?: boolean;
-  /** Which photos to credit. */
-  photos?: ('tower' | 'walls' | 'federal' | 'california' | 'la')[];
+  /** Licensed photographs to credit. */
+  photos?: ('tower' | 'walls')[];
+  /** Record pictures are studies for review, not photographs for publication. */
+  studies?: boolean;
 }
 const {
   nkjv = false,
   hebrew = false,
-  photos = ['tower'],
+  photos = [],
+  studies = false,
 } = Astro.props;
 ---
 <footer class="credits">
@@ -42,13 +45,13 @@ const {
             <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Resized, cropped, compressed.
           </li>
         )}
-        {(photos.includes('federal') || photos.includes('california') || photos.includes('la')) && (
-          <li>
-            The record-card pictures on this preview are studies for review. They are not the photographs that will be published.
-          </li>
-        )}
       </ul>
     </>
+  )}
+  {studies && (
+    <p>
+      The record pictures on this preview are studies for review. They are not the photographs that will be published.
+    </p>
   )}
   <p>
     Typefaces: EB Garamond, Frank Ruhl Libre, Inter (SIL Open Font License). <a href="/">Home</a>

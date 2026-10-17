@@ -16,8 +16,8 @@ interface Props {
   /** Single jurisdiction (federal/california) or grouped (LA) */
   records?: Rec[];
   groups?: Group[];
-  /** Matches the picture on this door’s card. */
-  hero?: 'federal' | 'california' | 'la' | 'orange' | 'costa';
+  /** Image basename in /watchman/img. Same picture as this door’s card. */
+  hero?: 'record-federal' | 'record-california' | 'record-la' | 'record-orange-county' | 'record-costa-mesa';
 }
 const { title, records, groups, hero } = Astro.props;
 

@@ -26,16 +26,18 @@ export interface RecordItem {
   highlight?: boolean;
 }
 
+export interface DoorImage {
+  avif: string;
+  avifSmall: string;
+  webp: string;
+}
+
 export interface DoorLink {
   href: string;
   title: string;
-  description: string;
-  image: {
-    avif: string;
-    avifSmall: string;
-    webp: string;
-    place: 'federal' | 'california' | 'la';
-  };
+  image: DoorImage;
+  /** Kept in the list, omitted from the page until set false. */
+  hidden?: boolean;
 }
 
 /** Return url only when it is a valid https: URL; otherwise undefined. */
