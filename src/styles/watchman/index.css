@@ -662,3 +662,30 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
   }
 }
 .account .doors-posts.sizes .door { min-height: 0; }
+
+/* Records sizing variant: original portrait picture as a side strip, words beside it. */
+.account .doors-posts.doors-strip .door {
+  min-height: 0;
+  align-items: stretch;
+  background: #0c0b0a;
+}
+.account .doors-posts.doors-strip .door::after { display: none; }
+.account .doors-posts.doors-strip .door-photo {
+  position: relative;
+  inset: auto;
+  flex: 0 0 34%;
+  width: 34%;
+  height: auto;
+  min-height: 9.5rem;
+}
+.account .doors-posts.doors-strip .door-img { position: absolute; inset: 0; }
+.account .doors-posts.doors-strip .door-img[data-place="federal"] { object-position: 50% 40%; }
+.account .doors-posts.doors-strip .door-img[data-place="california"] { object-position: 55% 35%; }
+.account .doors-posts.doors-strip .door-img[data-place="la"] { object-position: 60% 25%; }
+.account .doors-posts.doors-strip .door-copy { justify-content: center; gap: .3rem; padding: .9rem 1rem; }
+.account .doors-posts.doors-strip .door-t { font-size: clamp(1.15rem, 1.5vw, 1.4rem); }
+.account .doors-posts.doors-strip .door-d { font-size: .88rem; line-height: 1.4; }
+@media (min-width: 860px) {
+  .account .doors-posts.doors-strip .door { min-height: 12.5rem; }
+  .account .doors-posts.doors-strip .door-photo { flex-basis: 38%; width: 38%; }
+}
