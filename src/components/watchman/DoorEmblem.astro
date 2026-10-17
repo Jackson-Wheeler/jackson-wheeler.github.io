@@ -1,0 +1,41 @@
+---
+/** Original, non-official emblems (not government seals). Decorative. */
+interface Props { kind: 'federal' | 'california' | 'la'; class?: string }
+const { kind, class: cls } = Astro.props;
+const stars = Array.from({ length: 13 }, (_, i) => {
+  const a = Math.PI * (1.12 + (i * 0.76) / 12);
+  return [100 + 78 * Math.cos(a), 100 + 78 * Math.sin(a)];
+});
+---
+<svg class={cls} viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+  <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="2" />
+  <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width=".8" />
+  <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 3" />
+  {kind === 'federal' && (
+    <g fill="currentColor">
+      {stars.map(([x, y]) => <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="2.6" />)}
+      <path d="M62 140h76v6H62zM68 128h64v10H68zM74 112h52v16H74z" />
+      <path d="M78 112a22 24 0 0 1 44 0z" />
+      <path d="M97 84h6v6h-6zM99 78h2v6h-2z" />
+      <path d="M60 156h80v2H60z" />
+    </g>
+  )}
+  {kind === 'california' && (
+    <g fill="currentColor">
+      <path d="M100 52l4.4 13.5h14.2l-11.5 8.4 4.4 13.5-11.5-8.4-11.5 8.4 4.4-13.5-11.5-8.4h14.2z" />
+      <path d="M44 140l26-34 14 16 18-28 22 30 10-12 22 28z" />
+      <path d="M44 146h112v2H44zM54 154h92v2H54z" />
+    </g>
+  )}
+  {kind === 'la' && (
+    <g fill="currentColor">
+      {Array.from({ length: 11 }, (_, i) => {
+        const a = Math.PI * (1.05 + (i * 0.9) / 10);
+        return <path d={`M${(100 + 34 * Math.cos(a)).toFixed(1)} ${(130 + 34 * Math.sin(a)).toFixed(1)}L${(100 + 70 * Math.cos(a)).toFixed(1)} ${(130 + 70 * Math.sin(a)).toFixed(1)}`} stroke="currentColor" stroke-width="1.4" />;
+      })}
+      <path d="M91 60l9-14 9 14z" />
+      <path d="M90 60h20v10H90zM87 70h26v54H87zM78 96h44v28H78zM64 112h72v12H64z" />
+      <path d="M52 128h96v3H52zM60 136h80v2H60z" />
+    </g>
+  )}
+</svg>

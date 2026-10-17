@@ -26,7 +26,10 @@ export interface RecordItem {
   highlight?: boolean;
 }
 
+export type DoorKey = 'federal' | 'california' | 'la';
+
 export interface DoorLink {
+  key: DoorKey;
   href: string;
   title: string;
   description: string;
