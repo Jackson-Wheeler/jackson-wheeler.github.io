@@ -662,3 +662,34 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
   }
 }
 .account .doors-posts.sizes .door { min-height: 0; }
+.account .doors-posts.chosen.wide-set .door {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 2 / 1;
+}
+.account .doors-posts.chosen.wide-set .door-img {
+  object-fit: cover;
+  object-position: center center;
+}
+.account .wide-set .wide-option { margin-top: .85rem; }
+.account .wide-set .wide-option .door-opt { margin-bottom: .4rem; }
+.account .doors-posts.chosen.wide-set .door {
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.account .doors-posts.chosen.wide-set .door:hover,
+.account .doors-posts.chosen.wide-set .door:focus-visible {
+  border-color: rgb(224 164 88 / .45);
+  box-shadow: 0 0 0 1px rgb(224 164 88 / .12), 0 18px 50px -20px rgb(224 164 88 / .35);
+  transform: translateY(-2px);
+  background: transparent;
+}
+.account .doors-posts.chosen.wide-set .door:hover .door-img,
+.account .doors-posts.chosen.wide-set .door:focus-visible .door-img {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .account .doors-posts.chosen.wide-set .door { transition: none; }
+  .account .doors-posts.chosen.wide-set .door:hover,
+  .account .doors-posts.chosen.wide-set .door:focus-visible { transform: none; }
+}

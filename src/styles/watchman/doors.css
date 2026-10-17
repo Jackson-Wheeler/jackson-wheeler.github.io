@@ -87,6 +87,67 @@ h1 {
   .hero.sm { min-height: 56svh; align-content: end; padding-bottom: 3rem; }
 }
 .hero.sm + .wrap { padding-top: 1.5rem; }
+.hero.sm.hero-federal,
+.hero.sm.hero-california,
+.hero.sm.hero-la,
+.hero.sm.hero-orange,
+.hero.sm.hero-costa {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.hero.sm.hero-federal {
+  background-image:
+    linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+    image-set(url(/watchman/img/opt-wide-flag-close-cap.avif) type("image/avif"), url(/watchman/img/opt-wide-flag-close-cap.webp) type("image/webp"));
+}
+.hero.sm.hero-california {
+  background-image:
+    linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+    image-set(url(/watchman/img/opt-wide-bear-dark.avif) type("image/avif"), url(/watchman/img/opt-wide-bear-dark.webp) type("image/webp"));
+}
+.hero.sm.hero-la {
+  background-image:
+    linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+    image-set(url(/watchman/img/opt-wide-hall.avif) type("image/avif"), url(/watchman/img/opt-wide-hall.webp) type("image/webp"));
+}
+.hero.sm.hero-orange {
+  background-image:
+    linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+    image-set(url(/watchman/img/opt-oc-tree.avif) type("image/avif"), url(/watchman/img/opt-oc-tree.webp) type("image/webp"));
+}
+.hero.sm.hero-costa {
+  background-image:
+    linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+    image-set(url(/watchman/img/opt-cm-stone.avif) type("image/avif"), url(/watchman/img/opt-cm-stone.webp) type("image/webp"));
+}
+@media (max-width: 820px) {
+  .hero.sm.hero-federal {
+    background-image:
+      linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+      image-set(url(/watchman/img/opt-wide-flag-close-cap-1100.avif) type("image/avif"), url(/watchman/img/opt-wide-flag-close-cap.webp) type("image/webp"));
+  }
+  .hero.sm.hero-california {
+    background-image:
+      linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+      image-set(url(/watchman/img/opt-wide-bear-dark-1100.avif) type("image/avif"), url(/watchman/img/opt-wide-bear-dark.webp) type("image/webp"));
+  }
+  .hero.sm.hero-la {
+    background-image:
+      linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+      image-set(url(/watchman/img/opt-wide-hall-1100.avif) type("image/avif"), url(/watchman/img/opt-wide-hall.webp) type("image/webp"));
+  }
+  .hero.sm.hero-orange {
+    background-image:
+      linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+      image-set(url(/watchman/img/opt-oc-tree-1100.avif) type("image/avif"), url(/watchman/img/opt-oc-tree.webp) type("image/webp"));
+  }
+  .hero.sm.hero-costa {
+    background-image:
+      linear-gradient(180deg, rgba(10, 9, 8, .08) 0%, rgba(10, 9, 8, .18) 55%, #0f0d0b 100%),
+      image-set(url(/watchman/img/opt-cm-stone-1100.avif) type("image/avif"), url(/watchman/img/opt-cm-stone.webp) type("image/webp"));
+  }
+}
 
 .wrap { max-width: 72rem; margin: auto; padding: 4rem 1.5rem; }
 .exnote {

@@ -7,7 +7,7 @@ export interface Verse {
   poetic?: boolean;
 }
 
-export type Jurisdiction = 'federal' | 'california' | 'la-city' | 'la-county';
+export type Jurisdiction = 'federal' | 'california' | 'la-city' | 'la-county' | 'orange-county' | 'costa-mesa';
 
 export type RecordLabelTone = 'mk' | 'pr';
 

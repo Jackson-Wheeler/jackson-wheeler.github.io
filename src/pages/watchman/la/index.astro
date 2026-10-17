@@ -9,13 +9,14 @@ const title = 'LA City/County 2013–2027 — Watchman';
 const description =
   'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source, such as an executive order, statute, budget, or court ruling. Press releases are labeled, and reversed or enjoined items stay and are marked.';
 ---
-<Layout title={title} description={description} noindex={true} preloadHero={true}>
+<Layout title={title} description={description} noindex={true} preloadHero={true} heroImage="opt-wide-hall">
   <DoorPage
     title="LA City/County 2013–2027"
     groups={[
       { headingId: 'g-city', heading: 'City of Los Angeles', records: laCityRecords },
       { headingId: 'g-county', heading: 'Los Angeles County', records: laCountyRecords },
     ]}
+    hero="la"
   />
-  <WatchmanCredits photos={['tower']} />
+  <WatchmanCredits photos={['la']} />
 </Layout>

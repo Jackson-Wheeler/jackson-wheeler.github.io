@@ -1,0 +1,15 @@
+---
+import Layout from '../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../components/watchman/WatchmanCredits.astro';
+import { orangeCountyRecords } from '../../../data/watchman/records';
+import '../../../styles/watchman/doors.css';
+
+const title = 'Orange County — Watchman';
+const description =
+  'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source. Press releases are labeled, and reversed or enjoined items stay and are marked.';
+---
+<Layout title={title} description={description} noindex={true} preloadHero={true} heroImage="opt-oc-tree">
+  <DoorPage title="Orange County" records={orangeCountyRecords} hero="orange" />
+  <WatchmanCredits photos={['california']} />
+</Layout>

@@ -56,6 +56,8 @@ export const federalRecords: RecordItem[] = withJurisdiction('federal', sharedEx
 export const californiaRecords: RecordItem[] = withJurisdiction('california', sharedExamples);
 export const laCityRecords: RecordItem[] = withJurisdiction('la-city', sharedExamples);
 export const laCountyRecords: RecordItem[] = withJurisdiction('la-county', sharedExamples);
+export const orangeCountyRecords: RecordItem[] = withJurisdiction('orange-county', sharedExamples);
+export const costaMesaRecords: RecordItem[] = withJurisdiction('costa-mesa', sharedExamples);
 
 export function highlights(records: RecordItem[]): RecordItem[] {
   return records.filter((r) => r.highlight);
