@@ -662,3 +662,31 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
   }
 }
 .account .doors-posts.sizes .door { min-height: 0; }
+
+/* Records sizing variant: compact rows, wide photo thumbnail beside the words. */
+.account .doors-posts.doors-row .door-list { grid-template-columns: minmax(0, 1fr); gap: .6rem; }
+.account .doors-posts.doors-row .door {
+  min-height: 0;
+  align-items: stretch;
+  background: #0c0b0a;
+}
+.account .doors-posts.doors-row .door::after { display: none; }
+.account .doors-posts.doors-row .door-photo {
+  position: relative;
+  inset: auto;
+  flex: 0 0 40%;
+  width: 40%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.account .doors-posts.doors-row .door-img { position: absolute; inset: 0; object-position: 50% 30%; }
+.account .doors-posts.doors-row .door-copy { justify-content: center; gap: .2rem; padding: .6rem .85rem; }
+.account .doors-posts.doors-row .door-t { font-size: clamp(1.02rem, 1.6vw, 1.45rem); }
+.account .doors-posts.doors-row .door-d { font-size: .82rem; line-height: 1.35; }
+@media (min-width: 860px) {
+  .account .doors-posts.doors-row .door-list { grid-template-columns: minmax(0, 1fr); }
+  .account .doors-posts.doors-row .door { min-height: 0; }
+  .account .doors-posts.doors-row .door-photo { flex-basis: 15rem; width: 15rem; aspect-ratio: 21 / 9; }
+  .account .doors-posts.doors-row .door-copy { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 1.25rem; padding: .8rem 1.4rem; }
+  .account .doors-posts.doors-row .door-t { flex: 1 1 100%; }
+}
