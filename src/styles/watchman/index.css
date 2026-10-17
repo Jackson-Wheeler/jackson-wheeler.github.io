@@ -363,9 +363,8 @@ a.sc { display: inline-block; padding: .2rem 0; }
 .account .ch4 { padding-top: 2.75rem; }
 .account-h { margin-bottom: 1rem; }
 .aim { gap: .65rem; }
-/* Credits sit on the page's warm ground, full width rule aligned with content. */
+/* Credits sit on the page's warm ground, aligned with content. */
 .credits { padding-left: 1.5rem; padding-right: 1.5rem; }
-.credits p, .credits li { max-width: 70ch; }
 /* Visible keyboard focus for the in-text references and skip link. */
 a.sc:focus-visible { outline-offset: 2px; }
 .skip:focus-visible { outline: 3px solid #e8c37a; outline-offset: 2px; }
