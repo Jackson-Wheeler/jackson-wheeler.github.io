@@ -299,6 +299,8 @@ a.sc {
 a.sc:hover,
 a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
 .s2 blockquote[id] { scroll-margin-top: 1.25rem; }
+#choose-h,
+.record-doors > li { scroll-margin-top: 1.5rem; }
 /* One wide picture per government. The title sits above the card; the picture fills it. */
 .record-doors {
   list-style: none;

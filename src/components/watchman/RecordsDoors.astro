@@ -8,7 +8,7 @@ const doors = recordDoors.filter((door) => !door.hidden);
     <h3 id="choose-h" class="account-h">Government Records</h3>
     <ul class="record-doors" role="list">
       {doors.map((door) => (
-        <li>
+        <li id={door.href.split('/').filter(Boolean).at(-1)}>
           <a class="record-door" href={door.href}>
             <h4 class="record-door-title">{door.title}</h4>
             <span class="record-door-frame">
