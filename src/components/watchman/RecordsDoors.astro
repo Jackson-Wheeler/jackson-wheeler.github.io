@@ -1,19 +1,26 @@
 ---
 import { recordDoors } from '../../data/watchman/doors';
+import { doorArt } from '../../data/watchman/doorArt';
+import DoorPicture from './DoorPicture.astro';
+import DoorEmblem from './DoorEmblem.astro';
+import '../../styles/watchman/doors-opt.css';
+const kicker = { federal: 'I · The United States', california: 'II · State of California', la: 'III · City & County of Los Angeles' } as const;
+const years = { federal: '2024–2028', california: '2011–2027', la: '2013–2027' } as const;
+const place = { federal: 'Federal', california: 'California', la: 'Los Angeles' } as const;
 ---
-<section class="ch ch4" aria-labelledby="choose-h">
-  <div>
-    <h3 id="choose-h" class="account-h">Government Records</h3>
-    <ul class="door-list" role="list">
-      {recordDoors.map((d) => (
-        <li>
-          <a class="door" href={d.href}>
-            <span class="door-t">{d.title}</span>
-            <span class="door-d">{d.description}</span>
-            <span class="door-go" aria-hidden="true">Enter →</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
+<div class="rd rd--emblem">
+  {recordDoors.map((d) => {
+    const a = doorArt[d.key];
+    return (
+      <section class={`rd-sec rd-${d.key}`} aria-labelledby={`rd-${d.key}-t`}>
+        <a class="rdc" href={d.href}>
+          <DoorEmblem kind={d.key} class="rd-emb" />
+          <span class="rd-k" aria-hidden="true">{kicker[d.key]}</span>
+          <h3 class="rd-t" id={`rd-${d.key}-t`}>{d.title}</h3>
+          <p class="rd-d">{d.description}</p>
+          <span class="rd-go" aria-hidden="true">Enter the records <span>→</span></span>
+        </a>
+      </section>
+    );
+  })}
+</div>
