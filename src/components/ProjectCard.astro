@@ -31,6 +31,16 @@ const isWatchman = project?.title === 'Watchman';
     min-height: 11rem; padding: 1.35rem;
     background: linear-gradient(180deg, #151416, var(--surface)); border: 1px solid var(--line); border-radius: 10px;
     position: relative; overflow: hidden;
+    transition: border-color .25s, box-shadow .25s, transform .25s;
+  }
+  .card:not(.placeholder):hover, .card:not(.placeholder):focus-within {
+    border-color: rgb(224 164 88 / .45);
+    box-shadow: 0 0 0 1px rgb(224 164 88 / .12), 0 18px 50px -20px rgb(224 164 88 / .35);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+    .card:hover { transform: none; }
   }
   .card.watchman {
     min-height: 13.5rem;
@@ -46,7 +56,9 @@ const isWatchman = project?.title === 'Watchman';
     background: linear-gradient(100deg, rgba(11,11,12,0.92) 0%, rgba(11,11,12,0.65) 50%, rgba(11,11,12,0.35) 100%);
     pointer-events: none;
   }
-  .card-content { position: relative; z-index: 1; }
+  .card-content {
+    z-index: 1;
+  }
   .card h3 { margin: 0; font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
   .card.watchman h3 { font-size: 1.75rem; color: #f7f1e6; }
   .card h3 a {
