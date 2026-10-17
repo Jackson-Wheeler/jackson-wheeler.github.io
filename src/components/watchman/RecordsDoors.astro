@@ -1,19 +1,45 @@
 ---
 import { recordDoors } from '../../data/watchman/doors';
+
+const images = [
+  '/watchman/img/capitol-night.webp',
+  '/watchman/img/ca-capitol-night.webp',
+  '/watchman/img/la-city-hall-night.webp',
+];
 ---
 <section class="ch ch4" aria-labelledby="choose-h">
   <div>
     <h3 id="choose-h" class="account-h">Government Records</h3>
-    <ul class="door-list" role="list">
-      {recordDoors.map((d) => (
+    <ul class="door-list night-cards" role="list">
+      {recordDoors.map((d, i) => (
         <li>
-          <a class="door" href={d.href}>
-            <span class="door-t">{d.title}</span>
-            <span class="door-d">{d.description}</span>
-            <span class="door-go" aria-hidden="true">Enter →</span>
+          <a class="door night" href={d.href} style={`--bg: url('${images[i] || images[0]}')`}>
+            <div class="door-overlay"></div>
+            <div class="door-content">
+              <span class="door-t">{d.title}</span>
+              <span class="door-d">{d.description}</span>
+              <span class="door-go" aria-hidden="true">Enter →</span>
+            </div>
           </a>
         </li>
       ))}
     </ul>
   </div>
 </section>
+
+<style>
+  .night-cards { display: grid; gap: 1.25rem; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  @media (min-width: 800px) { .night-cards { grid-template-columns: repeat(3, 1fr); } }
+  .door.night {
+    position: relative; display: flex; min-height: 22rem; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(224,164,88,0.35); text-decoration: none; color: #f7f1e6;
+    background: #0b0b0c var(--bg) center 40% / cover no-repeat;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .door.night:hover { transform: translateY(-3px); box-shadow: 0 12px 40px -12px rgba(224,164,88,0.35); }
+  .door-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,0.15) 0%, rgba(11,11,12,0.55) 45%, rgba(11,11,12,0.92) 100%); }
+  .door-content { position: relative; z-index: 1; margin-top: auto; padding: 1.4rem; display: flex; flex-direction: column; gap: .4rem; }
+  .door-t { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; line-height: 1.2; }
+  .door-d { font-size: .9rem; color: #e8dfd0; line-height: 1.4; }
+  .door-go { margin-top: .6rem; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: #e8c37a; }
+</style>
