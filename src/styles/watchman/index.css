@@ -662,3 +662,18 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
   }
 }
 .account .doors-posts.sizes .door { min-height: 0; }
+
+/* Records sizing variant: fixed landscape frame over the original pictures, focal tuned per building. */
+.account .doors-posts.doors-frame .door { min-height: 0; aspect-ratio: 16 / 10; }
+.account .doors-posts.doors-frame .door::after {
+  background: linear-gradient(to bottom, rgba(8, 7, 6, 0) 30%, rgba(8, 7, 6, .6) 58%, rgba(8, 7, 6, .92) 100%);
+}
+.account .doors-posts.doors-frame .door-copy { gap: .25rem; padding: .85rem 1rem .9rem 1.15rem; }
+.account .doors-posts.doors-frame .door-t { font-size: clamp(1.2rem, 1.6vw, 1.5rem); }
+.account .doors-posts.doors-frame .door-d { font-size: .88rem; line-height: 1.4; }
+.account .doors-posts.doors-frame .door-img[data-place="federal"] { object-position: 50% 44%; }
+.account .doors-posts.doors-frame .door-img[data-place="california"] { object-position: 50% 36%; }
+.account .doors-posts.doors-frame .door-img[data-place="la"] { object-position: 50% 22%; }
+@media (min-width: 860px) {
+  .account .doors-posts.doors-frame .door { min-height: 0; aspect-ratio: 5 / 4; }
+}
