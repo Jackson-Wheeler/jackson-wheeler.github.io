@@ -1,0 +1,26 @@
+---
+import DoorFace from './DoorFace.astro';
+import { pictureGroups } from '../../data/watchman/pictureOptions';
+---
+<section class="ch ch4 doors-posts" aria-labelledby="choose-h" id="records">
+  <div>
+    <p class="door-opt">Each picture, in the card</p>
+    <h3 id="choose-h" class="account-h">Government Records</h3>
+    {pictureGroups.map((group) => (
+      <div class="door-set" id={group.id}>
+        <h4 class="account-h">{group.heading}</h4>
+        <ul class="door-list" role="list">
+          {group.cards.map((d) => (
+            <li><DoorFace {...d} /></li>
+          ))}
+        </ul>
+        <h4 class="account-h door-wide-h">Full width</h4>
+        <ul class="door-list door-list-wide" role="list">
+          {group.wide.map((d) => (
+            <li><DoorFace {...d} /></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

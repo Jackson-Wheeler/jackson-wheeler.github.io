@@ -30,6 +30,12 @@ export interface DoorLink {
   href: string;
   title: string;
   description: string;
+  image: {
+    avif: string;
+    avifSmall: string;
+    webp: string;
+    place: 'federal' | 'california' | 'la';
+  };
 }
 
 /** Return url only when it is a valid https: URL; otherwise undefined. */

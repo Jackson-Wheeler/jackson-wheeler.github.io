@@ -1,0 +1,53 @@
+---
+interface Props {
+  place: 'above' | 'card';
+}
+const { place } = Astro.props;
+
+const doors = [
+  {
+    slug: 'flag-hall',
+    href: '/watchman/federal/',
+    title: 'Federal Government',
+    description: 'Executive orders, public laws, budget acts, court rulings.',
+  },
+  {
+    slug: 'grizzly',
+    href: '/watchman/california/',
+    title: 'California Government',
+    description: 'Chaptered bills, executive orders, budgets, rulings.',
+  },
+  {
+    slug: 'civic',
+    href: '/watchman/la/',
+    title: 'LA City/County',
+    description: 'City and county shown separately.',
+  },
+];
+---
+<div class="ch ch4 doors-posts chosen" id="records">
+  <div>
+    <p class="door-opt">{place === 'above' ? 'Title above the card' : 'Title on the card'}</p>
+    {doors.map((d) => (
+      <section class="chosen-block" aria-labelledby={`${place}-${d.slug}-h`}>
+        {place === 'above' && (
+          <h3 id={`${place}-${d.slug}-h`} class="chosen-title">{d.title}</h3>
+        )}
+        <a class="door" href={d.href}>
+          <picture class="door-photo">
+            <source media="(max-width: 820px)" srcset={`/watchman/img/opt-${d.slug}-1100.avif`} type="image/avif" />
+            <source srcset={`/watchman/img/opt-${d.slug}.avif`} type="image/avif" />
+            <img class="door-img" src={`/watchman/img/opt-${d.slug}.webp`} alt="" data-slug={d.slug} />
+          </picture>
+          <span class="door-copy">
+            {place === 'card' && (
+              <h3 id={`${place}-${d.slug}-h`} class="chosen-title chosen-on">{d.title}</h3>
+            )}
+            <span class="door-d">{d.description}</span>
+            <span class="door-go" aria-hidden="true">Enter →</span>
+          </span>
+        </a>
+      </section>
+    ))}
+  </div>
+</div>

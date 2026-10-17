@@ -1,0 +1,57 @@
+---
+const doors = [
+  {
+    slug: 'flag-hall',
+    href: '/watchman/federal/',
+    title: 'Federal Government',
+    description: 'Executive orders, public laws, budget acts, court rulings.',
+  },
+  {
+    slug: 'grizzly',
+    href: '/watchman/california/',
+    title: 'California Government',
+    description: 'Chaptered bills, executive orders, budgets, rulings.',
+  },
+  {
+    slug: 'civic',
+    href: '/watchman/la/',
+    title: 'LA City/County',
+    description: 'City and county shown separately.',
+  },
+];
+
+const modes = [
+  { id: 'quiet', label: 'Image only', line: 'none', enter: false },
+  { id: 'under', label: 'The line under the title', line: 'under', enter: false },
+  { id: 'on', label: 'The line on the card', line: 'on', enter: false },
+  { id: 'both', label: 'The line and Enter', line: 'on', enter: true },
+] as const;
+---
+<div class="ch ch4 doors-posts chosen" id="records">
+  <div>
+    {modes.map((mode) => (
+      <div class="word-trial" id={mode.id}>
+        <p class="door-opt">{mode.label}</p>
+        {doors.map((d) => (
+          <section class="chosen-block" aria-labelledby={`${mode.id}-${d.slug}-h`}>
+            <h3 id={`${mode.id}-${d.slug}-h`} class="chosen-title">{d.title}</h3>
+            {mode.line === 'under' && <p class="chosen-line">{d.description}</p>}
+            <a class:list={['door', { 'door-plain': mode.line !== 'on' }]} href={d.href}>
+              <picture class="door-photo">
+                <source media="(max-width: 820px)" srcset={`/watchman/img/opt-${d.slug}-1100.avif`} type="image/avif" />
+                <source srcset={`/watchman/img/opt-${d.slug}.avif`} type="image/avif" />
+                <img class="door-img" src={`/watchman/img/opt-${d.slug}.webp`} alt="" data-slug={d.slug} />
+              </picture>
+              {(mode.line === 'on' || mode.enter) && (
+                <span class="door-copy">
+                  {mode.line === 'on' && <span class="door-d">{d.description}</span>}
+                  {mode.enter && <span class="door-go" aria-hidden="true">Enter →</span>}
+                </span>
+              )}
+            </a>
+          </section>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

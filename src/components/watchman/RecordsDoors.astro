@@ -1,16 +1,24 @@
 ---
 import { recordDoors } from '../../data/watchman/doors';
 ---
-<section class="ch ch4" aria-labelledby="choose-h">
+<section class="ch ch4 doors-posts" aria-labelledby="choose-h">
   <div>
+    <p class="door-opt">Option B · Night buildings</p>
     <h3 id="choose-h" class="account-h">Government Records</h3>
     <ul class="door-list" role="list">
       {recordDoors.map((d) => (
         <li>
           <a class="door" href={d.href}>
-            <span class="door-t">{d.title}</span>
-            <span class="door-d">{d.description}</span>
-            <span class="door-go" aria-hidden="true">Enter →</span>
+            <picture class="door-photo">
+              <source media="(max-width: 820px)" srcset={d.image.avifSmall} type="image/avif" />
+              <source srcset={d.image.avif} type="image/avif" />
+              <img class="door-img" src={d.image.webp} alt="" data-place={d.image.place} />
+            </picture>
+            <span class="door-copy">
+              <span class="door-t">{d.title}</span>
+              <span class="door-d">{d.description}</span>
+              <span class="door-go" aria-hidden="true">Enter →</span>
+            </span>
           </a>
         </li>
       ))}
