@@ -1,10 +1,8 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer id="contact" class="site-footer glow" aria-labelledby="contact-title">
+<footer class="site-footer" aria-label="Footer">
   <div class="container">
-    <p class="section-label" id="contact-title">Contact</p>
-    <p class="links"><a href="https://github.com/Jackson-Wheeler">GitHub ↗</a></p>
     <div class="fine">
       <p>© {year}</p>
       <p>Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.</p>
@@ -14,9 +12,8 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .site-footer { position: relative; padding-block: 6rem 3rem; }
-  .links { margin: 0; font-size: 1.125rem; }
-  .fine { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: .375rem; max-width: 46rem; }
+  .site-footer { padding-block: 4rem 2.5rem; }
+  .fine { padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: .375rem; max-width: 46rem; }
   .fine p { margin: 0; font-size: .75rem; line-height: 1.6; color: var(--faint); }
   .fine a { color: var(--muted); }
 </style>
