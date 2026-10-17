@@ -20,6 +20,7 @@ interface Props {
   hero?: 'record-federal' | 'record-california' | 'record-la' | 'record-orange-county' | 'record-costa-mesa';
 }
 const { title, records, groups, hero } = Astro.props;
+const shelfId = !hero || hero === 'record-la' ? 'choose-h' : hero.slice('record-'.length);
 
 function shelfAndList(items: Rec[]) {
   return { shelf: highlights(items), list: allNewestFirst(items) };
@@ -37,7 +38,7 @@ function yearAnchors(list: Rec[], prefix: string) {
 }
 ---
 <a class="skip" href="#choose">Skip to content</a>
-<WatchmanNav showUp={true} />
+<WatchmanNav showUp={true} backId={shelfId} />
 <header class:list={['hero', 'sm', hero && `hero-${hero}`]}>
   <div class="hero-in">
     <p class="kick">Watchman · Record</p>

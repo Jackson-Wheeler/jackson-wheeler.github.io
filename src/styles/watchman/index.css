@@ -181,6 +181,7 @@ cite {
   background: rgba(217, 185, 119, .05); border: 1px solid #3f3426; border-radius: 4px;
 }
 .lex dt { color: #d9b977; opacity: 1; }
+.s2 .lex cite { display: block; margin-top: 1.15rem; color: #d9b977; }
 .s2 .more { border-top: 0; }
 .s2 .more > div {
   padding: 1.4rem 1.5rem; border: 1px solid #2f281f; border-top: 2px solid #5a4a33;
@@ -299,6 +300,8 @@ a.sc {
 a.sc:hover,
 a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
 .s2 blockquote[id] { scroll-margin-top: 1.25rem; }
+#choose-h,
+.record-doors > li { scroll-margin-top: 1.5rem; }
 /* One wide picture per government. The title sits above the card; the picture fills it. */
 .record-doors {
   list-style: none;

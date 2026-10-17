@@ -34,18 +34,14 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
   display: inline-block; padding: .75rem 0; min-height: 44px;
 }
 .wm-nav a:hover { text-decoration: underline; }
-.wm-nav a.wm-home {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; padding: 0; opacity: .6;
-}
-.wm-nav a.wm-home:hover,
-.wm-nav a.wm-home:focus-visible { opacity: 1; text-decoration: none; }
-.wm-home svg { width: 18px; height: 18px; }
 .wm-nav a.wm-up {
+  display: inline-flex; align-items: center; gap: .45rem;
   font: 500 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
-  color: #cdbb95; opacity: .65; padding: .9rem .4rem; min-height: 44px; box-sizing: border-box;
+  color: #cdbb95; opacity: .65; padding: 0; min-height: 44px; box-sizing: border-box;
 }
-.wm-nav a.wm-up:hover { opacity: 1; }
+.wm-nav a.wm-up:hover,
+.wm-nav a.wm-up:focus-visible { opacity: 1; color: #e8c37a; text-decoration: none; }
+.wm-arrow { letter-spacing: 0; }
 
 .hero {
   min-height: 100svh; display: grid; align-items: end;
