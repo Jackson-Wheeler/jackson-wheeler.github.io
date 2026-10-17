@@ -1,4 +1,5 @@
 ---
+import { doorCredits } from '../../data/watchman/doorArt';
 interface Props {
   /** Include NKJV scripture notice (landing only). */
   nkjv?: boolean;
@@ -6,11 +7,14 @@ interface Props {
   hebrew?: boolean;
   /** Which photos to credit. */
   photos?: ('tower' | 'walls')[];
+  /** Include the Records door images. */
+  doors?: boolean;
 }
 const {
   nkjv = false,
   hebrew = false,
   photos = ['tower'],
+  doors = false,
 } = Astro.props;
 ---
 <footer class="credits">
@@ -42,6 +46,19 @@ const {
             <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Resized, cropped, compressed.
           </li>
         )}
+      </ul>
+    </>
+  )}
+  {doors && doorCredits.length > 0 && (
+    <>
+      <p>Records images:</p>
+      <ul>
+        {doorCredits.map((c) => (
+          <li>
+            “{c.title}” by {c.author}, <a href={c.page}>Wikimedia Commons</a>,{' '}
+            {c.licenseUrl ? <a href={c.licenseUrl}>{c.license}</a> : c.license}. {c.changes}
+          </li>
+        ))}
       </ul>
     </>
   )}
