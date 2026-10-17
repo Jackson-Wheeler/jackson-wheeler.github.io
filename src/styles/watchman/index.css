@@ -688,10 +688,12 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
     max-height: 17rem;
     align-items: center;
   }
+  .account .doors-posts.doors-banner .door { background: #0c0b0a; }
+  .account .doors-posts.doors-banner .door-photo { left: 36%; width: auto; }
   .account .doors-posts.doors-banner .door::after {
-    background: linear-gradient(to right, rgba(8, 7, 6, .92) 0%, rgba(8, 7, 6, .7) 30%, rgba(8, 7, 6, .1) 58%, rgba(8, 7, 6, 0) 100%);
+    background: linear-gradient(to right, rgba(12, 11, 10, 1) 36%, rgba(12, 11, 10, .55) 44%, rgba(12, 11, 10, 0) 56%);
   }
-  .account .doors-posts.doors-banner .door-copy { width: min(26rem, 42%); padding: 1.25rem 1.5rem 1.25rem 1.75rem; gap: .4rem; }
+  .account .doors-posts.doors-banner .door-copy { width: 38%; padding: 1.25rem 1.5rem 1.25rem 1.75rem; gap: .4rem; }
   .account .doors-posts.doors-banner .door-img,
-  .account .doors-posts.doors-banner .door-img[data-place] { object-position: 50% 4%; }
+  .account .doors-posts.doors-banner .door-img[data-place] { object-position: 50% 35%; }
 }
