@@ -6,18 +6,13 @@ import ProjectCard from './ProjectCard.astro';
   <div class="container">
     <h2 class="section-title" id="projects-title">Projects</h2>
     <ul class="grid">
-      {projects.map((p) => <ProjectCard project={p} />)}
+      {projects.map((project) => <ProjectCard project={project} />)}
       <ProjectCard placeholder />
     </ul>
   </div>
 </section>
 
 <style>
-  .grid {
-    display: grid; gap: 1.25rem;
-    grid-template-columns: 1fr;
-    list-style: none; margin: 0; padding: 0;
-  }
-  @media (min-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .grid { display: grid; gap: 1.25rem; list-style: none; padding: 0; margin: 0; }
+  @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
 </style>
