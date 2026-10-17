@@ -5,7 +5,7 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body { margin: 0; background: #0b0d12; color: #eee3d0; font-family: var(--serif); }
+body { margin: 0; background: #0f0d0b; color: #eee3d0; font-family: var(--serif); }
 img { max-width: 100%; display: block; }
 html, body { overflow-x: clip; }
 [lang=he] {
@@ -62,13 +62,13 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
 
 .ch1 {
   background:
-    linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
+    linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0f0d0b),
     image-set(url(/watchman/img/tower-night.avif) type("image/avif"), url(/watchman/img/tower-night.webp) type("image/webp")) 60% 35% / cover;
 }
 @media (max-width: 820px) {
   .ch1 {
     background:
-      linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
+      linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0f0d0b),
       image-set(url(/watchman/img/tower-night-1100.avif) type("image/avif"), url(/watchman/img/tower-night-1100.webp) type("image/webp")) 60% 35% / cover;
   }
 }
@@ -346,3 +346,31 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
 .s2 blockquote[id] { scroll-margin-top: 1.25rem; }
 .account .door { min-height: 0; padding: 1.15rem 1.2rem 1.05rem; }
 .account .door-t { font-size: 1.35rem; }
+
+/* ux-polish (overnight review) */
+/* Hebrew never larger than the English beside it: the lexicon root matches its line. */
+.s2 .lex [lang=he] { font-size: 1em; }
+/* Door cards share one height per row, so "Enter" sits on a common baseline. */
+.door-list > li { display: flex; }
+.door-list .door { flex: 1; }
+/* Reference links in Purpose: readable size, comfortable tap target, no orphaned wrap. */
+.sc { font-size: .72rem; white-space: nowrap; }
+a.sc { display: inline-block; padding: .2rem 0; }
+/* Goal / Purpose / Records headings: one rhythm between blocks. */
+.account-bar { padding-top: 4rem; }
+.project-copy { padding-top: 2rem; }
+.s-purpose { margin-top: 2.25rem; }
+.account .ch4 { padding-top: 2.75rem; }
+.account-h { margin-bottom: 1rem; }
+.aim { gap: .65rem; }
+/* Credits sit on the page's warm ground, aligned with content. */
+.credits { padding-left: 1.5rem; padding-right: 1.5rem; }
+/* Visible keyboard focus for the in-text references and skip link. */
+a.sc:focus-visible { outline-offset: 2px; }
+.skip:focus-visible { outline: 3px solid #e8c37a; outline-offset: 2px; }
+@media (max-width: 480px) {
+  .s2 .wrap { padding-top: 4.5rem; padding-bottom: 3.75rem; }
+  .s2 .lex { padding: 1.25rem 1.25rem; }
+  .s2 .more > div { padding: 1.2rem 1.15rem; }
+  .account-bar { padding-top: 3rem; }
+}
