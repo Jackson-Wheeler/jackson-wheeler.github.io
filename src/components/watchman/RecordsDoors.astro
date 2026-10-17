@@ -7,10 +7,13 @@ import { recordDoors } from '../../data/watchman/doors';
     <ul class="door-list" role="list">
       {recordDoors.map((d) => (
         <li>
-          <a class="door" href={d.href}>
-            <span class="door-t">{d.title}</span>
-            <span class="door-d">{d.description}</span>
-            <span class="door-go" aria-hidden="true">Enter →</span>
+          <a class="door" href={d.href} style={d.image ? `background-image: url(${d.image})` : ''}>
+            <div class="door-overlay"></div>
+            <div class="door-content">
+              <span class="door-t">{d.title}</span>
+              <span class="door-d">{d.description}</span>
+              <span class="door-go" aria-hidden="true">Enter →</span>
+            </div>
           </a>
         </li>
       ))}
