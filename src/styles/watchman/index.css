@@ -5,7 +5,7 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body { margin: 0; background: #0b0d12; color: #eee3d0; font-family: var(--serif); }
+body { margin: 0; background: #0f0d0b; color: #eee3d0; font-family: var(--serif); }
 img { max-width: 100%; display: block; }
 html, body { overflow-x: clip; }
 [lang=he] {
@@ -62,13 +62,13 @@ a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius
 
 .ch1 {
   background:
-    linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
+    linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0f0d0b),
     image-set(url(/watchman/img/tower-night.avif) type("image/avif"), url(/watchman/img/tower-night.webp) type("image/webp")) 60% 35% / cover;
 }
 @media (max-width: 820px) {
   .ch1 {
     background:
-      linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0b0d12),
+      linear-gradient(180deg, rgba(8, 9, 12, .35), rgba(8, 9, 12, .85) 80%, #0f0d0b),
       image-set(url(/watchman/img/tower-night-1100.avif) type("image/avif"), url(/watchman/img/tower-night-1100.webp) type("image/webp")) 60% 35% / cover;
   }
 }
@@ -311,7 +311,7 @@ cite {
 .goal-card > .say { margin: 0; }
 .aim {
   list-style: disc;
-  margin: .7rem 0 0;
+  margin: 0;
   padding-left: 1.15rem;
   display: grid;
   gap: .45rem;
@@ -347,349 +347,30 @@ a.sc:focus-visible { color: #f0d7a2; text-decoration-color: #f0d7a2; }
 .account .door { min-height: 0; padding: 1.15rem 1.2rem 1.05rem; }
 .account .door-t { font-size: 1.35rem; }
 
-/* Posts doors. .account .doors-posts beats .account .door and the 760px grid. */
-.account .doors-posts .door-opt {
-  margin: 0 0 .4rem;
-  font-family: var(--sans);
-  font-size: .72rem;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #c6a56e;
-}
-.account .doors-posts .door-list {
-  grid-template-columns: minmax(0, 1fr);
-  gap: .85rem;
-}
-.account .doors-posts .door-list > li {
-  min-width: 0;
-  display: flex;
-}
-.account .doors-posts .door {
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-  min-height: 21rem;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid #5a4a33;
-  border-radius: 2px;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 0;
-  background: transparent;
-  transform: none;
-}
-.account .doors-posts .door:hover,
-.account .doors-posts .door:focus-visible {
-  background: transparent;
-  transform: none;
-}
-.account .doors-posts .door:focus-visible {
-  outline: 3px solid #e8c37a;
-  outline-offset: -3px;
-}
-.account .doors-posts .door::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: #e7c27c;
-  opacity: .9;
-  z-index: 2;
-  border-radius: 0;
-}
-.account .doors-posts .door::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(8, 7, 6, .06) 0%,
-    rgba(8, 7, 6, .14) 40%,
-    rgba(8, 7, 6, .72) 67%,
-    rgba(8, 7, 6, .9) 100%
-  );
-}
-.account .doors-posts .door-photo,
-.account .doors-posts .door-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.account .doors-posts .door-photo {
-  z-index: 0;
-  display: block;
-}
-.account .doors-posts .door-img {
-  max-width: none;
-  object-fit: cover;
-}
-.account .doors-posts .door-img { object-position: center center; }
-.account .doors-posts .door-copy {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
-  width: 100%;
-  min-width: 0;
-  padding: 1.15rem 1.1rem 1.1rem 1.25rem;
-}
-.account .doors-posts .door-t {
-  min-width: 0;
-  overflow-wrap: break-word;
-  font-family: var(--serif);
-  font-size: clamp(1.5rem, 1.8vw, 1.9rem);
-  line-height: 1.15;
-  font-weight: 500;
-  color: #f7f1e6;
-}
-.account .doors-posts .door-d {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: .95rem;
-  line-height: 1.45;
-  color: #ddd4c4;
-}
-.account .doors-posts .door-go {
-  margin-top: 0;
-  padding-top: .2rem;
-  color: #e7c27c;
-  text-transform: uppercase;
-}
-.account .doors-posts .door-set { margin-top: 2.2rem; }
-.account .doors-posts .door-kind,
-.realm .door-kind {
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: .68rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #e7c27c;
-}
-.account .doors-posts .door-wide-h { margin-top: 1.6rem; }
-@media (min-width: 860px) {
-  .account .doors-posts .door-list.door-list-wide,
-  .realm-alts.doors-posts .door-list.door-list-wide {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .account .doors-posts .door-list.door-list-wide .door,
-  .realm-alts.doors-posts .door-list.door-list-wide .door {
-    min-height: 22rem;
-  }
-}
-.realm {
-  position: relative;
-  min-height: 86vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
-  background: #0c0b0a;
-}
-.realm-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-.realm::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(12, 10, 8, .18) 8%, rgba(8, 7, 6, .9) 100%);
-}
-.realm-copy {
-  position: relative;
-  z-index: 1;
-  width: min(72rem, 100%);
-  margin: 0 auto;
-  padding: 3rem 1.5rem 2rem;
-}
-.realm-title {
-  margin: .35rem 0 .6rem;
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(2.8rem, 6.4vw, 5rem);
-  line-height: 1.02;
-  color: #f7f1e6;
-}
-.realm-d {
-  max-width: 36rem;
-  margin: 0;
-  font-family: var(--sans);
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: #ddd4c4;
-}
-.realm-go {
-  display: inline-block;
-  margin-top: .9rem;
-  color: #e7c27c;
-  font-family: var(--sans);
-  font-size: .78rem;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-.realm-alts {
-  position: relative;
-  z-index: 1;
-}
-.realm-alts.account {
-  background: #0c0b0a;
-}
-.account .chosen .chosen-block + .chosen-block { margin-top: 2.75rem; }
-.account .chosen .chosen-title {
-  margin: 0 0 .85rem;
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(2.05rem, 3.5vw, 2.9rem);
-  line-height: 1.05;
-  color: #f7f1e6;
-}
-.account .chosen .chosen-on { margin: 0; }
-.account .doors-posts.chosen .door {
-  min-height: 0;
-  width: 100%;
-  aspect-ratio: 2 / 3;
-}
-.account .doors-posts.chosen .door-img { object-position: center center; }
-.account .doors-posts.chosen .door-plain::after {
-  background: linear-gradient(to bottom, rgba(8, 7, 6, .04), rgba(8, 7, 6, .18));
-}
-.account .chosen .chosen-line {
-  max-width: 40rem;
-  margin: -.2rem 0 .9rem;
-  font-family: var(--sans);
-  font-size: 1.02rem;
-  line-height: 1.5;
-  color: #ddd4c4;
-}
-.account .chosen .word-trial + .word-trial { margin-top: 4.5rem; }
-.account .sizes .size-trial + .size-trial { margin-top: 4.5rem; }
-.account .sizes .door-photo,
-.account .sizes .door-img {
-  object-fit: contain;
-  object-position: center center;
-}
-.account .sizes .door {
-  min-height: 0;
-  aspect-ratio: auto;
-  background: #100e0c;
-}
-.account .sizes .size-band .door { height: 16rem; }
-.account .sizes .size-row .chosen-block {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  column-gap: 1.35rem;
-  row-gap: .35rem;
-  align-items: center;
-}
-.account .sizes .size-row .chosen-block + .chosen-block { margin-top: 1.5rem; }
-.account .sizes .size-row .door {
-  grid-column: 1;
-  grid-row: 1 / span 2;
-  width: 11rem;
-  height: 16rem;
-}
-.account .sizes .size-row .chosen-title,
-.account .sizes .size-row .chosen-line { grid-column: 2; margin: 0; }
-.account .sizes .size-row .chosen-title { align-self: end; }
-.account .sizes .size-row .chosen-line { align-self: start; }
-.account .sizes .three-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.4rem;
-}
-.account .sizes .size-three .chosen-block + .chosen-block { margin-top: 0; }
-.account .sizes .size-three .door { height: 15rem; }
-.account .sizes .size-plate .door {
-  width: min(16rem, 100%);
-  height: 22rem;
-  margin-inline: auto;
-}
-@media (min-width: 860px) {
-  .account .sizes .three-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (max-width: 700px) {
-  .account .sizes .size-row .chosen-block { grid-template-columns: 1fr; }
-  .account .sizes .size-row .door {
-    grid-column: 1;
-    grid-row: auto;
-    width: 100%;
-    height: 14rem;
-  }
-  .account .sizes .size-row .chosen-title,
-  .account .sizes .size-row .chosen-line { grid-column: 1; }
-}
-.realm-alts-in {
-  width: min(72rem, 100%);
-  margin: 0 auto;
-  padding: 1.4rem 1.5rem 3.2rem;
-}
-.realm-alts .account-h { color: #f7f1e6; }
-@media (min-width: 860px) {
-  .account .doors-posts .door-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .account .doors-posts .door {
-    min-height: 28rem;
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .account .doors-posts .door:hover,
-  .account .doors-posts .door:focus-visible {
-    transform: none;
-  }
-  .account .doors-posts .door-img {
-    transition: transform .8s ease;
-  }
-  .account .doors-posts .door:hover .door-img,
-  .account .doors-posts .door:focus-visible .door-img {
-    transform: scale(1.04);
-  }
-}
-.account .doors-posts.sizes .door { min-height: 0; }
-.account .doors-posts.chosen.wide-set .door {
-  width: 100%;
-  height: auto;
-  min-height: 0;
-  aspect-ratio: 2 / 1;
-}
-.account .doors-posts.chosen.wide-set .door-img {
-  object-fit: cover;
-  object-position: center center;
-}
-.account .wide-set .wide-option { margin-top: .85rem; }
-.account .wide-set .wide-option .door-opt { margin-bottom: .4rem; }
-.account .doors-posts.chosen.wide-set .door {
-  transition: border-color .25s, box-shadow .25s, transform .25s;
-}
-.account .doors-posts.chosen.wide-set .door:hover,
-.account .doors-posts.chosen.wide-set .door:focus-visible {
-  border-color: rgb(224 164 88 / .45);
-  box-shadow: 0 0 0 1px rgb(224 164 88 / .12), 0 18px 50px -20px rgb(224 164 88 / .35);
-  transform: translateY(-2px);
-  background: transparent;
-}
-.account .doors-posts.chosen.wide-set .door:hover .door-img,
-.account .doors-posts.chosen.wide-set .door:focus-visible .door-img {
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .account .doors-posts.chosen.wide-set .door { transition: none; }
-  .account .doors-posts.chosen.wide-set .door:hover,
-  .account .doors-posts.chosen.wide-set .door:focus-visible { transform: none; }
+/* ux-polish (overnight review) */
+/* Hebrew never larger than the English beside it: the lexicon root matches its line. */
+.s2 .lex [lang=he] { font-size: 1em; }
+/* Door cards share one height per row, so "Enter" sits on a common baseline. */
+.door-list > li { display: flex; }
+.door-list .door { flex: 1; }
+/* Reference links in Purpose: readable size, comfortable tap target, no orphaned wrap. */
+.sc { font-size: .72rem; white-space: nowrap; }
+a.sc { display: inline-block; padding: .2rem 0; }
+/* Goal / Purpose / Records headings: one rhythm between blocks. */
+.account-bar { padding-top: 4rem; }
+.project-copy { padding-top: 2rem; }
+.s-purpose { margin-top: 2.25rem; }
+.account .ch4 { padding-top: 2.75rem; }
+.account-h { margin-bottom: 1rem; }
+.aim { gap: .65rem; }
+/* Credits sit on the page's warm ground, aligned with content. */
+.credits { padding-left: 1.5rem; padding-right: 1.5rem; }
+/* Visible keyboard focus for the in-text references and skip link. */
+a.sc:focus-visible { outline-offset: 2px; }
+.skip:focus-visible { outline: 3px solid #e8c37a; outline-offset: 2px; }
+@media (max-width: 480px) {
+  .s2 .wrap { padding-top: 4.5rem; padding-bottom: 3.75rem; }
+  .s2 .lex { padding: 1.25rem 1.25rem; }
+  .s2 .more > div { padding: 1.2rem 1.15rem; }
+  .account-bar { padding-top: 3rem; }
 }
