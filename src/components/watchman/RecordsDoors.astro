@@ -1,11 +1,12 @@
 ---
 import { recordDoors } from '../../data/watchman/doors';
 
+/** Hidden heading keeps the door titles out of Purpose. #choose-h is the hidden LA page’s back target. */
 const doors = recordDoors.filter((door) => !door.hidden);
 ---
-<section class="ch ch4" aria-labelledby="choose-h">
+<section class="ch ch4" id="choose-h" aria-labelledby="records-h">
   <div>
-    <h3 id="choose-h" class="account-h">Government Records</h3>
+    <h3 id="records-h" class="sr-only">Government Records</h3>
     <ul class="record-doors" role="list">
       {doors.map((door) => (
         <li id={door.href.split('/').filter(Boolean).at(-1)}>

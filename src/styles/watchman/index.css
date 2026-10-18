@@ -20,6 +20,10 @@ html, body { overflow-x: clip; }
   padding: .6rem 1rem; background: #f3e7cf; color: #14110e; z-index: 9;
 }
 .skip:focus { left: 1rem; top: 1rem; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
 a:focus-visible { outline: 3px solid #e8c37a; outline-offset: 4px; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -205,7 +209,7 @@ cite {
 .s2.s-next.s-close .wrap { padding-bottom: 2.75rem; }
 .s2.s-next blockquote { max-width: 46rem; }
 .s2.s-next .more.pair { margin-top: 2.75rem; }
-/* One ground for the project: title, then Goal, then Government Records. */
+/* One ground for the project: title, then Goal, then Purpose, then the record cards. */
 .account {
   background:
     linear-gradient(180deg, rgba(12, 10, 8, .86), rgba(12, 10, 8, .76) 42%, rgba(17, 15, 13, .88)),
