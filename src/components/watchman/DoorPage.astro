@@ -1,9 +1,7 @@
 ---
 import WatchmanNav from './WatchmanNav.astro';
-import HighlightCard from './HighlightCard.astro';
-import RecordItem from './RecordItem.astro';
+import Ledger from './Ledger.astro';
 import type { RecordItem as Rec } from '../../data/watchman/types';
-import { highlights, allNewestFirst } from '../../data/watchman/records';
 
 interface Group {
   headingId: string;
@@ -13,29 +11,19 @@ interface Group {
 
 interface Props {
   title: string;
-  /** Single jurisdiction (federal/california) or grouped (LA) */
+  /** Single jurisdiction, or grouped (LA city and county). */
   records?: Rec[];
   groups?: Group[];
   /** Image basename in /watchman/img. Same picture as this door’s card. */
   hero?: 'record-federal' | 'record-california' | 'record-la' | 'record-orange-county' | 'record-costa-mesa';
+  /** How far the record has been entered. */
+  note?: string;
 }
-const { title, records, groups, hero } = Astro.props;
+const { title, records, groups, hero, note } = Astro.props;
 const shelfId = !hero || hero === 'record-la' ? 'choose-h' : hero.slice('record-'.length);
-
-function shelfAndList(items: Rec[]) {
-  return { shelf: highlights(items), list: allNewestFirst(items) };
-}
-/** No-JS year jump links: anchor id on the first item of each year. */
-function yearAnchors(list: Rec[], prefix: string) {
-  const seen = new Set<string>();
-  const ids = list.map((r) => {
-    const y = r.date.slice(0, 4);
-    if (seen.has(y)) return undefined;
-    seen.add(y);
-    return `${prefix}y${y}`;
-  });
-  return { years: [...seen], ids };
-}
+const hasRecords = groups
+  ? groups.some((group) => group.records.length > 0)
+  : (records?.length ?? 0) > 0;
 ---
 <a class="skip" href="#choose">Skip to content</a>
 <WatchmanNav showUp={true} backId={shelfId} />
@@ -43,67 +31,19 @@ function yearAnchors(list: Rec[], prefix: string) {
   <div class="hero-in">
     <p class="kick">Watchman · Record</p>
     <h1>{title}</h1>
-    <p class="tag">Highlights first, then every item in date order.</p>
+    {!hasRecords && <p class="tag">No actions are entered yet.</p>}
   </div>
 </header>
 <main class="wrap" id="choose">
-  <p class="exnote">All items on this page are EXAMPLE placeholders to show layout. They are not real records.</p>
   {groups ? (
-    groups.map((g) => {
-      const { shelf, list } = shelfAndList(g.records);
-      return (
-        <section aria-labelledby={g.headingId}>
-          <h2 class="gh" id={g.headingId}>{g.heading}</h2>
-          <h3 class="sh">Highlight shelf</h3>
-          {shelf.length > 0 && <ul class="shelf" role="list">
-            {shelf.map((item) => <HighlightCard item={item} />)}
-          </ul>}
-          <h3 class="sh">All items, newest first</h3>
-{list.length === 0 ? (
-  <p class="empty">No records yet for this period. Items appear here once each is tied to a primary source.</p>
-) : (() => {
-  const { years, ids } = yearAnchors(list, `${g.headingId}-`);
-  return (
-    <>
-      <nav class="years" aria-label={`Jump to year: ${g.heading}`}>
-        {years.map((y) => <a href={`#${`${g.headingId}-`}y${y}`}>{y}</a>)}
-      </nav>
-      <ol class="items" role="list">
-        {list.map((item, i) => <RecordItem item={item} anchorId={ids[i]} />)}
-      </ol>
-    </>
-  );
-})()}
-        </section>
-      );
-    })
+    groups.map((group) => (
+      <section aria-labelledby={group.headingId}>
+        <h2 class="gh" id={group.headingId}>{group.heading}</h2>
+        <Ledger records={group.records} id={group.headingId} />
+      </section>
+    ))
   ) : (
-    (() => {
-      const { shelf, list } = shelfAndList(records ?? []);
-      return (
-        <>
-          <h2 class="sh">Highlight shelf</h2>
-          {shelf.length > 0 && <ul class="shelf" role="list">
-            {shelf.map((item) => <HighlightCard item={item} />)}
-          </ul>}
-          <h2 class="sh">All items, newest first</h2>
-{list.length === 0 ? (
-  <p class="empty">No records yet for this period. Items appear here once each is tied to a primary source.</p>
-) : (() => {
-  const { years, ids } = yearAnchors(list, '');
-  return (
-    <>
-      <nav class="years" aria-label="Jump to year">
-        {years.map((y) => <a href={`#${''}y${y}`}>{y}</a>)}
-      </nav>
-      <ol class="items" role="list">
-        {list.map((item, i) => <RecordItem item={item} anchorId={ids[i]} />)}
-      </ol>
-    </>
-  );
-})()}
-        </>
-      );
-    })()
+    <Ledger records={records ?? []} note={note} />
   )}
 </main>
+{hasRecords && <script is:inline defer src="/watchman/ledger.js"></script>}
