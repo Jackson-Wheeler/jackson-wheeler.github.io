@@ -18,23 +18,32 @@ interface Props {
   hero?: 'record-federal' | 'record-california' | 'record-la' | 'record-orange-county' | 'record-costa-mesa';
   /** How far the record has been entered. */
   note?: string;
+  /** Line under the title. Replaces the empty-state line. */
+  tag?: string;
+  /** Up link; defaults to this door’s card on the Watchman shelf. */
+  upHref?: string;
+  upLabel?: string;
+  /** Heading above the ledger when the page has other content in its slot. */
+  ledgerHeading?: string;
 }
-const { title, records, groups, hero, note } = Astro.props;
+const { title, records, groups, hero, note, tag, upHref, upLabel, ledgerHeading } = Astro.props;
 const shelfId = !hero || hero === 'record-la' ? 'choose-h' : hero.slice('record-'.length);
 const hasRecords = groups
   ? groups.some((group) => group.records.length > 0)
   : (records?.length ?? 0) > 0;
 ---
 <a class="skip" href="#choose">Skip to content</a>
-<WatchmanNav showUp={true} backId={shelfId} />
+<WatchmanNav showUp={true} backId={shelfId} upHref={upHref} upLabel={upLabel} />
 <header class:list={['hero', 'sm', hero && `hero-${hero}`]}>
   <div class="hero-in">
     <p class="kick">Watchman · Record</p>
     <h1>{title}</h1>
-    {!hasRecords && <p class="tag">No actions are entered yet.</p>}
+    {tag ? <p class="tag">{tag}</p> : !hasRecords && records && <p class="tag">No actions are entered yet.</p>}
   </div>
 </header>
 <main class="wrap" id="choose">
+  <slot />
+  {ledgerHeading && hasRecords && <h2 class="gh" id="chronicle-h">{ledgerHeading}</h2>}
   {groups ? (
     groups.map((group) => (
       <section aria-labelledby={group.headingId}>
@@ -42,8 +51,8 @@ const hasRecords = groups
         <Ledger records={group.records} id={group.headingId} />
       </section>
     ))
-  ) : (
-    <Ledger records={records ?? []} note={note} />
-  )}
+  ) : records ? (
+    <Ledger records={records} note={note} />
+  ) : null}
 </main>
 {hasRecords && <script is:inline defer src="/watchman/ledger.js"></script>}

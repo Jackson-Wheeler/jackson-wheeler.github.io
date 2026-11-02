@@ -1,0 +1,50 @@
+---
+import type { Stat } from '../../data/watchman/departments';
+import { formatRecordDate } from '../../data/watchman/records';
+
+interface Props {
+  stat: Stat;
+  id: string;
+}
+const { stat, id } = Astro.props;
+const hasGoal = stat.points.some((p) => p.goal !== undefined);
+const max = Math.max(...stat.points.map((p) => Math.max(p.value, p.goal ?? 0)));
+const H = 200;
+const W = 600;
+const slot = W / stat.points.length;
+const bw = slot * 0.56;
+const y = (v: number) => H - (v / max) * (H - 24);
+const fmt = (v: number) => (hasGoal ? v.toLocaleString('en-US') : `${v.toFixed(v % 1 ? 1 : 0)}%`);
+---
+<figure class="stat" aria-labelledby={`${id}-h`}>
+  <h3 id={`${id}-h`}>{stat.title}</h3>
+  <p class="measure">{stat.measure}</p>
+  <svg class="chart" viewBox={`0 0 ${W} ${H + 28}`} aria-hidden="true" focusable="false">
+    {stat.points.map((p, i) => {
+      const cx = slot * i + (slot - bw) / 2;
+      const inAdmin = stat.firstInAdministration !== undefined && i >= stat.firstInAdministration;
+      const met = p.goal === undefined ? p.value >= 100 : p.value >= p.goal;
+      return (
+        <g>
+          <rect class:list={['bar', inAdmin && 'in-admin', met ? 'met' : 'short']} x={cx} y={y(p.value)} width={bw} height={H - y(p.value)} />
+          {p.goal !== undefined && <line class="goal" x1={cx - 4} x2={cx + bw + 4} y1={y(p.goal)} y2={y(p.goal)} />}
+          <text class="lbl" x={cx + bw / 2} y={H + 20} text-anchor="middle">{p.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <table class="stat-table">
+    <caption class="sr-only">{stat.title}</caption>
+    <thead><tr><th scope="col">Period</th><th scope="col">{hasGoal ? 'Actual' : 'Of goal'}</th>{hasGoal && <th scope="col">Goal</th>}</tr></thead>
+    <tbody>
+      {stat.points.map((p, i) => (
+        <tr class:list={[stat.firstInAdministration !== undefined && i >= stat.firstInAdministration && 'in-admin']}>
+          <th scope="row">{p.label}</th><td>{fmt(p.value)}</td>{hasGoal && <td>{p.goal !== undefined ? fmt(p.goal) : '—'}</td>}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {hasGoal && <p class="legend"><span class="sw goal-sw" aria-hidden="true"></span> line marks the goal{stat.firstInAdministration !== undefined && <> · bold rows and bright bars fall in this administration</>}</p>}
+  {stat.gap && <p class="gap"><strong>Gap:</strong> {stat.gap}</p>}
+  <p class="src">Source: <a href={stat.sourceUrl} rel="noopener">{stat.source}</a> · as of <time datetime={stat.asOf}>{formatRecordDate(stat.asOf)}</time></p>
+</figure>

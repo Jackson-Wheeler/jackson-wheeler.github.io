@@ -1,0 +1,24 @@
+---
+import Layout from '../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../components/watchman/WatchmanCredits.astro';
+import { federalRecords, federalNote } from '../../../../data/watchman/records';
+import '../../../../styles/watchman/doors.css';
+
+const picture = 'record-federal';
+const heading = 'Federal Government — Classic Chronicle';
+const title = `${heading} — Watchman`;
+const description =
+  'Presidential actions from January 20, 2025, with the public laws, House vote, and Supreme Court opinions entered beside them. Each item links to its primary text.';
+---
+<Layout title={title} description={description} preloadHero={true} heroImage={picture}>
+  <DoorPage
+    title={heading}
+    records={federalRecords}
+    hero={picture}
+    note={federalNote}
+    upHref="/watchman/federal/"
+    upLabel="Federal"
+  />
+  <WatchmanCredits studies={true} />
+</Layout>

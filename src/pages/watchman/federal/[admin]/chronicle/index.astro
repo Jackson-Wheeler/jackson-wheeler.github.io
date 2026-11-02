@@ -1,0 +1,17 @@
+---
+import Layout from '../../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
+import { administrations, recordsIn, type Administration } from '../../../../../data/watchman/administrations';
+import { federalNote } from '../../../../../data/watchman/records';
+import '../../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  return administrations.filter((a) => a.status === 'recorded').map((a) => ({ params: { admin: a.id }, props: { admin: a } }));
+}
+const { admin } = Astro.props as { admin: Administration };
+---
+<Layout title={`Chronicle — ${admin.name} — Watchman`} description={`Every entered federal action of the ${admin.name}.`} preloadHero={true} heroImage="record-federal">
+  <DoorPage title="Full chronicle" hero="record-federal" tag={admin.name} records={recordsIn(admin)} note={federalNote} upHref={`/watchman/federal/${admin.id}/`} upLabel={admin.name} />
+  <WatchmanCredits studies={true} />
+</Layout>

@@ -1,0 +1,54 @@
+---
+import Layout from '../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../components/watchman/WatchmanCredits.astro';
+import { administrations, congressesIn, ordinal, recordsIn, within, type Administration } from '../../../../data/watchman/administrations';
+import { departments, belongsTo, leaderOn } from '../../../../data/watchman/departments';
+import { formatRecordDate } from '../../../../data/watchman/records';
+import { branchOf } from '../../../../data/watchman/types';
+import '../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  return administrations.filter((a) => a.status === 'recorded').map((a) => ({ params: { admin: a.id }, props: { admin: a } }));
+}
+const { admin } = Astro.props as { admin: Administration };
+const records = recordsIn(admin);
+const today = new Date().toISOString().slice(0, 10);
+const base = `/watchman/federal/${admin.id}`;
+const congresses = congressesIn(admin).map((c) => ({
+  ...c,
+  count: records.filter((r) => branchOf(r.kind) === 'legislative' && within(r.date, c.start, c.end)).length,
+  future: c.start > today,
+}));
+const judicial = records.filter((r) => branchOf(r.kind) === 'judicial').length;
+const title = `${admin.name} — Watchman`;
+---
+<Layout title={title} description={`The federal record of the ${admin.name}, from ${formatRecordDate(admin.start)}.`} preloadHero={true} heroImage="record-federal">
+  <DoorPage title={admin.name} hero="record-federal" tag={`${formatRecordDate(admin.start)} – ${admin.end ? formatRecordDate(admin.end) : 'present'}`} upHref="/watchman/federal/" upLabel="Federal">
+    <nav class="views" aria-label="Views of this record">
+      <a class="view b-executive" href={`${base}/chronicle/`}><strong>Full chronicle</strong><span>{records.length} actions, all branches</span></a>
+      {congresses.map((c) => (
+        c.future ? (
+          <div class="view b-legislative future"><strong>{ordinal(c.number)} Congress</strong><span>{c.start.slice(0, 4)}–{c.end.slice(0, 4)} · convenes {formatRecordDate(c.start)}</span></div>
+        ) : (
+          <a class="view b-legislative" href={`${base}/congress/${c.number}/`}><strong>{ordinal(c.number)} Congress</strong><span>{c.start.slice(0, 4)}–{c.end.slice(0, 4)} · {c.count} laws and votes entered</span></a>
+        )
+      ))}
+      <a class="view b-judicial" href={`${base}/judicial/`}><strong>Judicial actions</strong><span>{judicial} Supreme Court rulings entered</span></a>
+    </nav>
+    <h2 class="gh" id="depts-h">Departments</h2>
+    <ul class="depts" aria-labelledby="depts-h">
+      {departments.map((d) => {
+        const lead = leaderOn(d, today);
+        return (
+          <li><a href={`${base}/departments/${d.id}/`}>
+            <strong>{d.name}</strong>
+            <span>{lead ? `${lead.name}${lead.acting ? ' (acting)' : ''}` : ''}</span>
+            <span class="n">{records.filter((r) => belongsTo(r, d)).length} actions</span>
+          </a></li>
+        );
+      })}
+    </ul>
+  </DoorPage>
+  <WatchmanCredits studies={true} />
+</Layout>

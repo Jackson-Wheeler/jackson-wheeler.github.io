@@ -1,0 +1,23 @@
+---
+import Layout from '../../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
+import { administrations, congressesIn, ordinal, recordsIn, within, type Administration, type Congress } from '../../../../../data/watchman/administrations';
+import { formatRecordDate } from '../../../../../data/watchman/records';
+import { branchOf } from '../../../../../data/watchman/types';
+import '../../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  const today = new Date().toISOString().slice(0, 10);
+  return administrations
+    .filter((a) => a.status === 'recorded')
+    .flatMap((a) => congressesIn(a).filter((c) => c.start <= today).map((c) => ({ params: { admin: a.id, congress: String(c.number) }, props: { admin: a, congress: c } })));
+}
+const { admin, congress } = Astro.props as { admin: Administration; congress: Congress };
+const records = recordsIn(admin).filter((r) => branchOf(r.kind) === 'legislative' && within(r.date, congress.start, congress.end));
+const heading = `${ordinal(congress.number)} Congress`;
+---
+<Layout title={`${heading} — ${admin.name} — Watchman`} description={`Public laws and votes of the ${heading}.`} preloadHero={true} heroImage="record-federal">
+  <DoorPage title={heading} hero="record-federal" tag={`${formatRecordDate(congress.start)} – ${formatRecordDate(congress.end)}`} records={records} note="Public laws approved through April 30, 2025, with their House and Senate passage votes." upHref={`/watchman/federal/${admin.id}/`} upLabel={admin.name} />
+  <WatchmanCredits studies={true} />
+</Layout>

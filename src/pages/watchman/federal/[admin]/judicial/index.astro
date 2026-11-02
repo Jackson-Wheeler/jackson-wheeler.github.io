@@ -1,0 +1,18 @@
+---
+import Layout from '../../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
+import { administrations, recordsIn, type Administration } from '../../../../../data/watchman/administrations';
+import { branchOf } from '../../../../../data/watchman/types';
+import '../../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  return administrations.filter((a) => a.status === 'recorded').map((a) => ({ params: { admin: a.id }, props: { admin: a } }));
+}
+const { admin } = Astro.props as { admin: Administration };
+const records = recordsIn(admin).filter((r) => branchOf(r.kind) === 'judicial');
+---
+<Layout title={`Judicial actions — ${admin.name} — Watchman`} description="Supreme Court rulings entered for this administration." preloadHero={true} heroImage="record-federal">
+  <DoorPage title="Judicial actions" hero="record-federal" tag={admin.name} records={records} note="Supreme Court rulings issued through April 30, 2025. Lower-court orders are not included." upHref={`/watchman/federal/${admin.id}/`} upLabel={admin.name} />
+  <WatchmanCredits studies={true} />
+</Layout>

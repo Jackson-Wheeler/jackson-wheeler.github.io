@@ -1,0 +1,53 @@
+---
+import Layout from '../../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
+import LeaderBand from '../../../../../components/watchman/LeaderBand.astro';
+import StatChart from '../../../../../components/watchman/StatChart.astro';
+import { administrations, recordsIn, type Administration } from '../../../../../data/watchman/administrations';
+import { departments, belongsTo, type Department } from '../../../../../data/watchman/departments';
+import { actionId, federalNote, formatRecordDate } from '../../../../../data/watchman/records';
+import { httpsSourceUrl } from '../../../../../data/watchman/types';
+import '../../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  return administrations
+    .filter((a) => a.status === 'recorded')
+    .flatMap((a) => departments.map((d) => ({ params: { admin: a.id, dept: d.id }, props: { admin: a, dept: d } })));
+}
+const { admin, dept } = Astro.props as { admin: Administration; dept: Department };
+const all = recordsIn(admin);
+const records = all.filter((r) => belongsTo(r, dept));
+const byId = new Map(all.map((r) => [actionId(r), r]));
+const keys = dept.keyActions
+  .map((k) => {
+    if ('recordId' in k) {
+      const r = byId.get(k.recordId);
+      return r ? { date: r.date, title: r.title, note: k.note ?? r.citation ?? '', sourceUrl: httpsSourceUrl(r.sourceUrl) ?? '', anchor: `#${k.recordId}` } : null;
+    }
+    return { ...k, anchor: undefined };
+  })
+  .filter((k) => k !== null)
+  .sort((a, b) => a.date.localeCompare(b.date));
+---
+<Layout title={`${dept.name} — ${admin.name} — Watchman`} description={`Leaders, official statistics, and entered actions of the ${dept.name}.`} preloadHero={true} heroImage="record-federal">
+  <DoorPage title={dept.name} hero="record-federal" tag={admin.name} records={records} note={federalNote} ledgerHeading="Chronicle" upHref={`/watchman/federal/${admin.id}/#depts-h`} upLabel={admin.name}>
+    {dept.aka && <p class="scope">{dept.aka}</p>}
+    <h2 class="gh" id="leaders-h">Leadership</h2>
+    <LeaderBand leaders={dept.leaders} start={admin.start} end={admin.end} id={`${dept.id}-band`} />
+    <h2 class="gh" id="stats-h">Official numbers</h2>
+    {dept.stats.length ? dept.stats.map((s, i) => <StatChart stat={s} id={`${dept.id}-stat-${i}`} />) : <p class="empty">{dept.statsGap}</p>}
+    <h2 class="gh" id="key-h">Key actions</h2>
+    <ol class="keys">
+      {keys.map((k) => (
+        <li>
+          <time datetime={k.date}>{formatRecordDate(k.date)}</time>
+          <strong>{k.anchor ? <a href={k.anchor}>{k.title}</a> : k.title}</strong>
+          {k.note && <span>{k.note}</span>}
+          {k.sourceUrl && <a class="src" href={k.sourceUrl} rel="noopener">Primary source</a>}
+        </li>
+      ))}
+    </ol>
+  </DoorPage>
+  <WatchmanCredits studies={true} />
+</Layout>
