@@ -139,6 +139,8 @@ export interface RecordItem {
   /** Primary source. Only https URLs are linked. */
   sourceUrl: string;
   topics: TopicId[];
+  /** Departments or agencies the document directs, or that are a party. Finding aid; omitted when unclear. */
+  departments?: string[];
   status?: RecordStatus;
 }
 
