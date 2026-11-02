@@ -9,15 +9,15 @@ import '../../../../../styles/watchman/doors.css';
 
 export function getStaticPaths() {
   const today = new Date().toISOString().slice(0, 10);
-  return administrations
-    .filter((a) => a.status === 'recorded')
-    .flatMap((a) => congressesIn(a).filter((c) => c.start <= today).map((c) => ({ params: { admin: a.id, congress: String(c.number) }, props: { admin: a, congress: c } })));
+  return administrations.flatMap((a) => congressesIn(a).filter((c) => c.start <= today).map((c) => ({ params: { admin: a.id, congress: String(c.number) }, props: { admin: a, congress: c } })));
 }
 const { admin, congress } = Astro.props as { admin: Administration; congress: Congress };
 const records = recordsIn(admin).filter((r) => branchOf(r.kind) === 'legislative' && within(r.date, congress.start, congress.end));
 const heading = `${ordinal(congress.number)} Congress`;
 ---
 <Layout title={`${heading} — ${admin.name} — Watchman`} description={`Public laws and votes of the ${heading}.`} preloadHero={true} heroImage="record-federal">
-  <DoorPage title={heading} hero="record-federal" tag={`${formatRecordDate(congress.start)} – ${formatRecordDate(congress.end)}`} records={records} note="Public laws approved through April 30, 2025, with their House and Senate passage votes." upHref={`/watchman/federal/${admin.id}/`} upLabel={admin.name} />
+  <DoorPage title={heading} hero="record-federal" tag={`${formatRecordDate(congress.start)} – ${formatRecordDate(congress.end)}`} records={records} note={records.length ? "Public laws approved through April 30, 2025, with their House and Senate passage votes." : undefined} upHref={`/watchman/federal/${admin.id}/`} upLabel={admin.name}>
+    {records.length === 0 && <p class="empty">No public laws or votes of this Congress are entered yet. The full text of every law is at <a href={`https://www.congress.gov/public-laws/${ordinal(congress.number)}-congress`} rel="noopener">Congress.gov</a>.</p>}
+  </DoorPage>
   <WatchmanCredits studies={true} />
 </Layout>

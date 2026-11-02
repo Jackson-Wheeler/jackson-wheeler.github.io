@@ -343,3 +343,16 @@ a.view:hover, a.view:focus-visible { background: #201a14; }
 .keys time { color: #a59880; font-size: .8rem; }
 .keys strong { font-family: var(--serif); font-size: 1rem; color: #f3eadc; }
 .keys strong a { color: #f3eadc; }
+
+/* Gaps, dense charts, other administrations */
+.band .seg.gap, .sw.gap { fill: transparent; background: transparent; stroke: #6b5a43; stroke-dasharray: 4 3; stroke-width: 1.5; box-shadow: inset 0 0 0 1px #6b5a43; }
+.leader-list .gap-row { color: #a59880; }
+.leader-list .gap-row .who strong { color: #c9bca6; font-style: italic; }
+.stat .delta { color: #f3eadc; font-weight: 600; }
+.stat-details { margin-top: .5rem; }
+.stat-details summary { cursor: pointer; font: 600 .82rem/1.4 var(--sans); color: #d9b77e; }
+.pt-note { font-weight: 400; color: #a59880; font-size: .78rem; }
+.stat-empty { margin: .6rem 0 1rem; font: 400 .88rem/1.5 var(--sans); color: #c9bca6; }
+.stat-empty strong { color: #f3eadc; }
+.admin-card.coming > a { border-left-color: #6b5a43; }
+@media (max-width: 480px) { .pt-note { display: block; } }

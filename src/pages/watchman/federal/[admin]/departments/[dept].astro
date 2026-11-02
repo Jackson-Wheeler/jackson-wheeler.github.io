@@ -4,28 +4,31 @@ import DoorPage from '../../../../../components/watchman/DoorPage.astro';
 import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
 import LeaderBand from '../../../../../components/watchman/LeaderBand.astro';
 import StatChart from '../../../../../components/watchman/StatChart.astro';
-import { administrations, recordsIn, type Administration } from '../../../../../data/watchman/administrations';
-import { departments, belongsTo, type Department } from '../../../../../data/watchman/departments';
+import { administrations, recordsIn, within, type Administration } from '../../../../../data/watchman/administrations';
+import { departments, belongsTo, leadersIn, pointsFor, type Department } from '../../../../../data/watchman/departments';
 import { actionId, federalNote, formatRecordDate } from '../../../../../data/watchman/records';
 import { httpsSourceUrl } from '../../../../../data/watchman/types';
 import '../../../../../styles/watchman/doors.css';
 
 export function getStaticPaths() {
-  return administrations
-    .filter((a) => a.status === 'recorded')
-    .flatMap((a) => departments.map((d) => ({ params: { admin: a.id, dept: d.id }, props: { admin: a, dept: d } })));
+  return administrations.flatMap((a) => departments.map((d) => ({ params: { admin: a.id, dept: d.id }, props: { admin: a, dept: d } })));
 }
 const { admin, dept } = Astro.props as { admin: Administration; dept: Department };
 const all = recordsIn(admin);
 const records = all.filter((r) => belongsTo(r, dept));
 const byId = new Map(all.map((r) => [actionId(r), r]));
+const today = new Date().toISOString().slice(0, 10);
+const segments = leadersIn(dept, admin.start, admin.end, today);
+const stats = dept.stats.map((s) => ({ stat: s, points: pointsFor(s, admin, today) }));
+const shown = stats.filter((s) => s.points.some((p) => p.inAdmin));
+const missing = stats.filter((s) => !s.points.some((p) => p.inAdmin) && !(s.stat.only && !s.stat.only.includes(admin.id)));
 const keys = dept.keyActions
   .map((k) => {
     if ('recordId' in k) {
       const r = byId.get(k.recordId);
       return r ? { date: r.date, title: r.title, note: k.note ?? r.citation ?? '', sourceUrl: httpsSourceUrl(r.sourceUrl) ?? '', anchor: `#${k.recordId}` } : null;
     }
-    return { ...k, anchor: undefined };
+    return within(k.date, admin.start, admin.end) ? { ...k, anchor: undefined } : null;
   })
   .filter((k) => k !== null)
   .sort((a, b) => a.date.localeCompare(b.date));
@@ -34,10 +37,13 @@ const keys = dept.keyActions
   <DoorPage title={dept.name} hero="record-federal" tag={admin.name} records={records} note={federalNote} ledgerHeading="Chronicle" upHref={`/watchman/federal/${admin.id}/#depts-h`} upLabel={admin.name}>
     {dept.aka && <p class="scope">{dept.aka}</p>}
     <h2 class="gh" id="leaders-h">Leadership</h2>
-    <LeaderBand leaders={dept.leaders} start={admin.start} end={admin.end} id={`${dept.id}-band`} />
+    <LeaderBand segments={segments} start={admin.start} end={admin.end} id={`${dept.id}-band`} />
     <h2 class="gh" id="stats-h">Official numbers</h2>
-    {dept.stats.length ? dept.stats.map((s, i) => <StatChart stat={s} id={`${dept.id}-stat-${i}`} />) : <p class="empty">{dept.statsGap}</p>}
+    {shown.map((s, i) => <StatChart stat={s.stat} points={s.points} id={`${dept.id}-stat-${i}`} />)}
+    {missing.map((s) => <p class="stat-empty"><strong>{s.stat.title}:</strong> no figures for this administration in the source used. {s.stat.gap}</p>)}
+    {!shown.length && !missing.length && <p class="empty">{dept.statsGap ?? 'No statistic entered for this administration.'}</p>}
     <h2 class="gh" id="key-h">Key actions</h2>
+    {keys.length === 0 && <p class="empty">No key actions entered for this administration yet.</p>}
     <ol class="keys">
       {keys.map((k) => (
         <li>

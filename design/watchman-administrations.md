@@ -60,3 +60,8 @@ Sub-routes are generated only for administrations with `status: 'recorded'`.
 
 Strict CSP (no `style=`, no inline script; SVG sizes via attributes); the existing palette, type and branch
 swatches; no Scripture on these pages (none shown, so no NKJV notice needed); door labels untouched; 390px first.
+
+## Round 2 — all four administrations
+- Obama, Trump-1, Biden now have full routes (Congresses 111–118, judicial, departments, chronicle); empty states say plainly when no actions are entered.
+- Leader bands are built from global tenure lists; gaps without a Senate-confirmed head are drawn dashed and listed ("acting officials not entered").
+- Official numbers: CBP southwest encounters (monthly), total public debt (FY-end and inauguration day), US Courts criminal defendants filed (FY), Navy/Air Force/Marine Corps/Space Force recruiting vs goal. A period counts for the administration that held office for most of it.

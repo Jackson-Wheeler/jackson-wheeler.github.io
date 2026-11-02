@@ -17,7 +17,7 @@ const description =
     <h2 class="gh" id="admins-h">Administrations</h2>
     <ul class="admins" aria-labelledby="admins-h">
       {administrations.map((a) => {
-        const count = a.status === 'recorded' ? recordsIn(a).length : 0;
+        const count = recordsIn(a).length;
         const dates = (
           <p class="admin-dates">
             <time datetime={a.start}>{formatRecordDate(a.start)}</time> – {a.end ? <time datetime={a.end}>{formatRecordDate(a.end)}</time> : 'present'}
@@ -25,21 +25,12 @@ const description =
         );
         return (
           <li class:list={['admin-card', a.status]}>
-            {a.status === 'recorded' ? (
-              <a href={`/watchman/federal/${a.id}/`}>
-                <span class="admin-years">{yearSpan(a)}</span>
-                <h3>{a.name}</h3>
-                {dates}
-                <p class="admin-count">{count} actions entered</p>
-              </a>
-            ) : (
-              <div>
-                <span class="admin-years">{yearSpan(a)}</span>
-                <h3>{a.name}</h3>
-                {dates}
-                <p class="admin-count">Records coming</p>
-              </div>
-            )}
+            <a href={`/watchman/federal/${a.id}/`}>
+              <span class="admin-years">{yearSpan(a)}</span>
+              <h3>{a.name}</h3>
+              {dates}
+              <p class="admin-count">{count ? `${count} actions entered` : 'Leaders, Congresses and official numbers · actions not yet entered'}</p>
+            </a>
           </li>
         );
       })}

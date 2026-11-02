@@ -1,50 +1,65 @@
 ---
-import type { Stat } from '../../data/watchman/departments';
+import type { ShownPoint, Stat } from '../../data/watchman/departments';
 import { formatRecordDate } from '../../data/watchman/records';
 
 interface Props {
   stat: Stat;
+  points: ShownPoint[];
   id: string;
 }
-const { stat, id } = Astro.props;
-const hasGoal = stat.points.some((p) => p.goal !== undefined);
-const max = Math.max(...stat.points.map((p) => Math.max(p.value, p.goal ?? 0)));
+const { stat, points, id } = Astro.props;
+const hasGoal = points.some((p) => p.goal !== undefined);
+const dense = points.length > 16;
+const max = Math.max(...points.map((p) => Math.max(p.value, p.goal ?? 0)));
 const H = 200;
 const W = 600;
-const slot = W / stat.points.length;
-const bw = slot * 0.56;
+const slot = W / points.length;
+const bw = slot * (dense ? 0.8 : 0.56);
 const y = (v: number) => H - (v / max) * (H - 24);
-const fmt = (v: number) => (hasGoal ? v.toLocaleString('en-US') : `${v.toFixed(v % 1 ? 1 : 0)}%`);
+const fmt = (v: number) =>
+  stat.unit === 'trillion' ? `$${v.toFixed(2)}T` : stat.unit === 'percent' ? `${v.toFixed(v % 1 ? 1 : 0)}%` : v.toLocaleString('en-US');
+const showLabel = (p: ShownPoint, i: number) => (dense ? (p.tick ?? false) || i === 0 : true);
+const label = (p: ShownPoint) => (dense && p.tick ? p.label.slice(-4) : p.label);
+const inside = points.filter((p) => p.inAdmin);
+const first = inside[0];
+const last = inside[inside.length - 1];
+const judged = !hasGoal && stat.unit !== 'percent';
 ---
 <figure class="stat" aria-labelledby={`${id}-h`}>
   <h3 id={`${id}-h`}>{stat.title}</h3>
   <p class="measure">{stat.measure}</p>
   <svg class="chart" viewBox={`0 0 ${W} ${H + 28}`} aria-hidden="true" focusable="false">
-    {stat.points.map((p, i) => {
+    {points.map((p, i) => {
       const cx = slot * i + (slot - bw) / 2;
-      const inAdmin = stat.firstInAdministration !== undefined && i >= stat.firstInAdministration;
-      const met = p.goal === undefined ? p.value >= 100 : p.value >= p.goal;
+      const met = judged || (p.goal === undefined ? p.value >= 100 : p.value >= p.goal);
       return (
         <g>
-          <rect class:list={['bar', inAdmin && 'in-admin', met ? 'met' : 'short']} x={cx} y={y(p.value)} width={bw} height={H - y(p.value)} />
+          <rect class:list={['bar', p.inAdmin && 'in-admin', met ? 'met' : 'short']} x={cx} y={y(p.value)} width={bw} height={H - y(p.value)} />
           {p.goal !== undefined && <line class="goal" x1={cx - 4} x2={cx + bw + 4} y1={y(p.goal)} y2={y(p.goal)} />}
-          <text class="lbl" x={cx + bw / 2} y={H + 20} text-anchor="middle">{p.label}</text>
+          {showLabel(p, i) && <text class="lbl" x={dense ? cx : cx + bw / 2} y={H + 20} text-anchor={dense ? 'start' : 'middle'}>{label(p)}</text>}
         </g>
       );
     })}
   </svg>
-  <table class="stat-table">
-    <caption class="sr-only">{stat.title}</caption>
-    <thead><tr><th scope="col">Period</th><th scope="col">{hasGoal ? 'Actual' : 'Of goal'}</th>{hasGoal && <th scope="col">Goal</th>}</tr></thead>
-    <tbody>
-      {stat.points.map((p, i) => (
-        <tr class:list={[stat.firstInAdministration !== undefined && i >= stat.firstInAdministration && 'in-admin']}>
-          <th scope="row">{p.label}</th><td>{fmt(p.value)}</td>{hasGoal && <td>{p.goal !== undefined ? fmt(p.goal) : '—'}</td>}
-        </tr>
-      ))}
-    </tbody>
-  </table>
-  {hasGoal && <p class="legend"><span class="sw goal-sw" aria-hidden="true"></span> line marks the goal{stat.firstInAdministration !== undefined && <> · bold rows and bright bars fall in this administration</>}</p>}
+  {first && last && first !== last && judged && (
+    <p class="delta">In this administration: {first.label} {fmt(first.value)} → {last.label} {fmt(last.value)}.</p>
+  )}
+  <details class="stat-details" open={!dense}>
+    <summary>Table of {points.length} figures</summary>
+    <table class="stat-table">
+      <caption class="sr-only">{stat.title}</caption>
+      <thead><tr><th scope="col">Period</th><th scope="col">{hasGoal ? 'Actual' : 'Value'}</th>{hasGoal && <th scope="col">Goal</th>}</tr></thead>
+      <tbody>
+        {points.map((p) => (
+          <tr class:list={[p.inAdmin && 'in-admin']}>
+            <th scope="row">{p.label}{p.note && <span class="pt-note"> · {p.note}</span>}</th><td>{fmt(p.value)}</td>{hasGoal && <td>{p.goal !== undefined ? fmt(p.goal) : '—'}</td>}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </details>
+  <p class="legend">{hasGoal && <><span class="sw goal-sw" aria-hidden="true"></span> line marks the goal · </>}bright bars and bold rows fall in this administration; dim ones are the years before it.</p>
   {stat.gap && <p class="gap"><strong>Gap:</strong> {stat.gap}</p>}
   <p class="src">Source: <a href={stat.sourceUrl} rel="noopener">{stat.source}</a> · as of <time datetime={stat.asOf}>{formatRecordDate(stat.asOf)}</time></p>
+  {stat.more && <p class="src more">Also: {stat.more.map((m, i) => <>{i > 0 && ' · '}<a href={m.url} rel="noopener">{m.label}</a></>)}</p>}
 </figure>
