@@ -2,8 +2,9 @@ import type { RecordBranch, RecordItem } from './types';
 import { branchOf } from './types';
 import { federalActions } from './federal';
 import { otherBranchActions } from './branches';
+import { earlyTermActions } from './early-term';
 
-export const federalRecords: RecordItem[] = [...federalActions, ...otherBranchActions];
+export const federalRecords: RecordItem[] = [...federalActions, ...otherBranchActions, ...earlyTermActions];
 export const californiaRecords: RecordItem[] = [];
 export const laCityRecords: RecordItem[] = [];
 export const laCountyRecords: RecordItem[] = [];
