@@ -9,9 +9,14 @@ const picture = 'record-federal';
 const heading = 'Federal Government';
 const title = `${heading} — Watchman`;
 const description =
-  'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source, such as an executive order, statute, budget, or court ruling. Press releases are labeled, and reversed or enjoined items stay and are marked.';
+  'Presidential actions from January 20, 2025, with the public laws, House vote, and Supreme Court opinions entered beside them. Each item links to its primary text.';
 ---
-<Layout title={title} description={description} noindex={true} preloadHero={true} heroImage={picture}>
-  <DoorPage title={heading} records={federalRecords} hero={picture} />
+<Layout title={title} description={description} preloadHero={true} heroImage={picture}>
+  <DoorPage
+    title={heading}
+    records={federalRecords}
+    hero={picture}
+    note="Entered so far: presidential actions signed January 20–22, 2025; public laws approved through March 15, 2025, with their House and Senate passage votes; and Supreme Court opinions issued January 21–March 5, 2025. Nominations are not included."
+  />
   <WatchmanCredits studies={true} />
 </Layout>
