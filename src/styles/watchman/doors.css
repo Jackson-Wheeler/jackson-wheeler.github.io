@@ -356,3 +356,55 @@ a.view:hover, a.view:focus-visible { background: #201a14; }
 .stat-empty strong { color: #f3eadc; }
 .admin-card.coming > a { border-left-color: #6b5a43; }
 @media (max-width: 480px) { .pt-note { display: block; } }
+.table-scroll { overflow-x: auto; }
+.table-scroll .stat-table td { white-space: nowrap; }
+
+/* Picker v3: full-width numbered cards with official portraits */
+.admins { grid-template-columns: 1fr; gap: 1rem; }
+.admin-card > a { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1.4rem; align-items: center; padding: 0; overflow: hidden; border-left-width: 1px; background: linear-gradient(100deg, #241b12 0%, #17130f 55%); }
+.admin-card.tint-even > a { background: linear-gradient(100deg, #1b1f24 0%, #17130f 55%); }
+.admin-card > a:hover, .admin-card > a:focus-visible { background: linear-gradient(100deg, #2e2316 0%, #201a14 60%); }
+.admin-portrait { display: block; width: 7.5rem; height: 9.375rem; object-fit: cover; filter: saturate(.85); border-right: 3px solid #d39a4a; }
+.admin-card.coming .admin-portrait { border-right-color: #6b5a43; }
+.admin-body { display: flex; flex-direction: column; gap: .15rem; padding: 1rem 1.2rem 1rem 0; }
+.admin-num { font: italic 400 1.05rem/1.2 var(--serif, Georgia, serif); color: #d39a4a; }
+.admin-card h3 { margin: .1rem 0 .15rem; font-size: 1.45rem; }
+.admin-who { font: 400 .95rem/1.4 var(--sans); color: #e2d6c3; }
+.admin-dates, .admin-count { display: block; }
+.credits-line { font-size: .78rem; }
+@media (max-width: 30rem) {
+  .admin-card > a { grid-template-columns: 5.5rem 1fr; gap: .9rem; }
+  .admin-portrait { width: 5.5rem; height: 100%; min-height: 8rem; }
+  .admin-card h3 { font-size: 1.15rem; }
+}
+
+/* Administration page layouts */
+.layout-switch { display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: baseline; margin: 1rem 0 0; font: 400 .85rem/1.4 var(--sans); color: #a59880; }
+.layout-switch a { color: #c9bca6; }
+.layout-switch a[aria-current="page"] { color: #f3eadc; font-weight: 600; text-decoration: none; border-bottom: 2px solid #d39a4a; }
+.muted { color: #a59880; }
+.ov-hero { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; align-items: center; margin-top: 1.5rem; padding: 1.2rem; border: 1px solid #3a3128; border-radius: 10px; background: linear-gradient(100deg, #241b12 0%, #17130f 60%); }
+.ov-portrait { display: block; width: 9rem; height: 11.25rem; object-fit: cover; border-radius: 6px; filter: saturate(.85); }
+.ov-hero .admin-num { margin: 0; }
+.ov-who { margin: .2rem 0; font-size: 1.6rem; line-height: 1.2; color: #f3eadc; }
+.ov-range { margin: 0 0 .6rem; font: 400 .95rem/1.4 var(--sans); color: #c9bca6; }
+.ov-links { display: flex; flex-wrap: wrap; gap: .3rem 1rem; margin: 0; font: 400 .9rem/1.5 var(--sans); }
+.keystats { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+.keystats a { display: flex; flex-direction: column; gap: .2rem; height: 100%; box-sizing: border-box; padding: .9rem 1rem; border: 1px solid #3a3128; border-top: 3px solid #d39a4a; border-radius: 8px; background: #17130f; color: inherit; text-decoration: none; }
+.keystats a:hover, .keystats a:focus-visible { background: #201a14; }
+.keystats strong { font-size: 1.5rem; line-height: 1.15; color: #f3eadc; }
+.keystats span { font: 400 .85rem/1.4 var(--sans); color: #c9bca6; }
+.ov-sections section { margin-top: 1.2rem; }
+.ov-lede { font-size: 1.15rem; line-height: 1.5; max-width: 46rem; }
+.plain { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .45rem; font: 400 .95rem/1.5 var(--sans); color: #c9bca6; max-width: 52rem; }
+.spine { list-style: none; margin: 1.5rem 0 0; padding: 0 0 0 1.2rem; border-left: 2px solid #3a3128; }
+.spine > li { position: relative; padding: 0 0 1.6rem 1rem; }
+.spine > li::before { content: ""; position: absolute; left: -1.75rem; top: .45rem; width: .8rem; height: .8rem; border-radius: 50%; background: #d39a4a; }
+.spine-year { margin: 0; font-size: 1.5rem; color: #f3eadc; }
+.spine-body { margin-top: .4rem; }
+.band { display: inline-block; margin: .2rem .4rem .2rem 0; padding: .2rem .6rem; border-left: 4px solid var(--swatch); background: #17130f; font: 400 .85rem/1.4 var(--sans); }
+@media (max-width: 30rem) {
+  .ov-hero { grid-template-columns: 5.5rem 1fr; gap: .9rem; padding: .9rem; }
+  .ov-portrait { width: 5.5rem; height: 6.9rem; }
+  .ov-who { font-size: 1.2rem; }
+}

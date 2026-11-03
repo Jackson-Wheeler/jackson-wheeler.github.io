@@ -65,3 +65,11 @@ swatches; no Scripture on these pages (none shown, so no NKJV notice needed); do
 - Obama, Trump-1, Biden now have full routes (Congresses 111–118, judicial, departments, chronicle); empty states say plainly when no actions are entered.
 - Leader bands are built from global tenure lists; gaps without a Senate-confirmed head are drawn dashed and listed ("acting officials not entered").
 - Official numbers: CBP southwest encounters (monthly), total public debt (FY-end and inauguration day), US Courts criminal defendants filed (FY), Navy/Air Force/Marine Corps/Space Force recruiting vs goal. A period counts for the administration that held office for most of it.
+
+## Round 3 (picker, layouts, longer charts)
+
+References used as guidance only (nothing installed): Anthropic `frontend-design` skill (ground in subject, avoid AI tells, numbering only for real sequences, one bold move) and the cursor/plugins pstack principles `experience-first`, `exhaust-the-design-space`, `subtract-before-you-add`, `minimize-reader-load`.
+
+- Picker: tag line removed; newest first; full-width cards numbered 44th–47th presidency; official public-domain portraits self-hosted in `public/watchman/img/portrait-*.webp`, credited under the list.
+- Administration page prototypes: `option-a/` dashboard (portrait hero, key-stats strip, department tiles), `option-b/` sections (Overview, Congress, Courts, Departments, Chronicle), `option-c/` year-by-year spine with Congress bands and leader changes. Default (`/watchman/federal/<admin>/`) is A: the portrait and four numbers answer "what happened" in one screen, the tiles keep departments one tap away, and it holds up at 390px. B reads like a report; C is thin while most terms have no actions entered.
+- Charts: recruiting is one all-services total (per-service actual/goal in the table), FY00–FY25 with FY15 missing; debt FY80–FY26 (Historical Debt Outstanding) and inauguration days 2001–2025; border adds USBP southwest apprehensions FY77–FY20 beside monthly CBP encounters (FY19–); federal criminal defendants FY00, FY06–FY25.

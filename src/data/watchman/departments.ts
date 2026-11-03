@@ -1,7 +1,7 @@
 import type { RecordItem } from './types';
 import { actionId } from './records';
 import type { Administration, AdministrationId } from './administrations';
-import { debtFyEnd, swEncounters } from './series';
+import { debtFyEnd, recruitingTotal, swEncounters, usbpSwAnnual } from './series';
 
 export type DepartmentId = 'war' | 'homeland-security' | 'state' | 'justice' | 'treasury' | 'hhs';
 
@@ -25,6 +25,8 @@ export interface StatPoint {
   /** Label this point on the chart axis when the series is dense. */
   tick?: boolean;
   note?: string;
+  /** Per-part [actual, goal] pairs that sum to value and goal, shown as table columns. */
+  breakdown?: Record<string, [number, number]>;
 }
 
 export interface Stat {
@@ -78,33 +80,31 @@ const fy25War = 'https://www.war.gov/News/News-Stories/Article/Article/4365687/f
 
 const fy = (n: number) => ({ label: `FY${String(n).slice(2)}`, start: `${n - 1}-10-01` });
 
-/** Active-component accessions against goal, from the year-end DoD/War recruiting releases. FY19's year-end release was not found. */
-const accessions = (rows: [number, number, number][]): StatPoint[] => rows.map(([year, value, goal]) => ({ ...fy(year), value, goal }));
+const gao = 'https://www.govinfo.gov/content/pkg/GAOREPORTS-GAO-05-419T/html/GAOREPORTS-GAO-05-419T.htm';
+const dodRelease = (label: string, url: string) => ({ label, url });
 const recruitingSources = [
-  { label: 'FY16 release', url: `${prhome}/Press%20Release_FY2016%20EOY%20September%202016.pdf` },
-  { label: 'FY17 release', url: `${prhome}/Press%20Release_FY2017%20EOY%20Sep%202017.pdf` },
-  { label: 'FY18 release', url: `${prhome}/Press%20Release%20Sep%202018%20FY18%20End%20of%20FY%20Report.pdf` },
-  { label: 'FY20 release', url: `${prhome}/2020/12%20-%20Press%20Release%20Sep%202020%20FY20%20EOY.pdf` },
-  { label: 'FY21 release', url: `${prhome}/2021/2021%20EOY%20Press%20Release%20September%202021.pdf` },
-  { label: 'FY22 release', url: `${prhome}/2022/Press%20Release%20September%202022%20-%20FY%202022.pdf` },
-  { label: 'FY23 release', url: `${prhome}/2023/TAB%20A%20-%20Press%20Release%20EOM%20SEP%2023%20Recruiting%20and%20Retention%20Report.pdf` },
-  { label: 'FY24 release', url: 'https://prhome.defense.gov/Portals/52/TAB%20A%20-%20Press%20Release_10172024_v4forMPP.pdf' },
-  { label: 'FY25 (Department of War)', url: fy25War },
+  dodRelease('FY00–FY04 (GAO-05-419T, Table 1)', gao),
+  dodRelease('FY05 release No. 1034-05 (GlobalSecurity copy)', 'https://www.globalsecurity.org/military/library/news/2005/10/mil-051011-dod01.htm'),
+  dodRelease('FY06 release No. 1009-06 (GlobalSecurity copy)', 'https://www.globalsecurity.org/military/library/news/2006/10/mil-061010-dod01.htm'),
+  dodRelease('FY07 release No. 1202-07 (GlobalSecurity copy)', 'https://www.globalsecurity.org/military/library/news/2007/10/mil-071010-dod01.htm'),
+  dodRelease('FY08 release No. 861-08 (GlobalSecurity copy)', 'https://www.globalsecurity.org/military/library/news/2008/10/mil-081010-dod02.htm'),
+  dodRelease('FY09 release (No. 794-09)', 'https://web.archive.org/web/2012/http://www.defense.gov/releases/release.aspx?releaseid=13041'),
+  dodRelease('FY10 release (No. 927-10)', 'https://web.archive.org/web/2012/http://www.defense.gov/releases/release.aspx?releaseid=13961'),
+  dodRelease('FY11 release (No. 892-11)', 'https://www.dvidshub.net/news/512180'),
+  dodRelease('FY12 release (No. 913-12)', 'https://content.govdelivery.com/accounts/USDOD/bulletins/5d8ff2'),
+  dodRelease('FY13 release', 'https://web.archive.org/web/2014/http://www.defense.gov/releases/release.aspx?releaseid=16381'),
+  dodRelease('FY14 release', 'https://www.defense.gov/News/Releases/Release/Article/605268/'),
+  dodRelease('FY16 release', `${prhome}/Press%20Release_FY2016%20EOY%20September%202016.pdf`),
+  dodRelease('FY17 release', `${prhome}/Press%20Release_FY2017%20EOY%20Sep%202017.pdf`),
+  dodRelease('FY18 release', `${prhome}/Press%20Release%20Sep%202018%20FY18%20End%20of%20FY%20Report.pdf`),
+  dodRelease('FY19 release (archived copy)', 'https://web.archive.org/web/2020/https://prhome.defense.gov/Portals/52/September%202019.pdf'),
+  dodRelease('FY20 release', `${prhome}/2020/12%20-%20Press%20Release%20Sep%202020%20FY20%20EOY.pdf`),
+  dodRelease('FY21 release', `${prhome}/2021/2021%20EOY%20Press%20Release%20September%202021.pdf`),
+  dodRelease('FY22 release', `${prhome}/2022/Press%20Release%20September%202022%20-%20FY%202022.pdf`),
+  dodRelease('FY23 release', `${prhome}/2023/TAB%20A%20-%20Press%20Release%20EOM%20SEP%2023%20Recruiting%20and%20Retention%20Report.pdf`),
+  dodRelease('FY24 release', 'https://prhome.defense.gov/Portals/52/TAB%20A%20-%20Press%20Release_10172024_v4forMPP.pdf'),
+  dodRelease('FY25 (Department of War)', fy25War),
 ];
-const recruitingGap = 'Each fiscal year runs October through September and is counted with the administration that held office for most of it. FY19’s year-end release was not found and is left out. Releases before FY16 were not entered.';
-const recruitingStat = (service: string, rows: [number, number, number][], extraGap = ''): Stat => ({
-  title: `${service} recruits against goal`,
-  measure: `Active-duty ${service} accessions (new enlistees shipped to training) by fiscal year, against the service’s goal.`,
-  points: accessions(rows),
-  period: 'fy',
-  unit: 'count',
-  lookback: 8,
-  gap: `${recruitingGap}${extraGap ? ` ${extraGap}` : ''}`,
-  source: 'Department of Defense / Department of War year-end recruiting and retention releases (Office of the Under Secretary for Personnel and Readiness)',
-  sourceUrl: 'https://prhome.defense.gov/M-RA/Inside-M-RA/MPP/Accession-Policy/Recruiting-and-Retention/',
-  more: recruitingSources,
-  asOf: '2025-12-22',
-});
 
 export const departments: Department[] = [
   {
@@ -129,30 +129,18 @@ export const departments: Department[] = [
       { name: 'Pete Hegseth', title: 'Secretary of Defense; Secretary of War from September 5, 2025', start: '2025-01-25', sourceUrl: 'https://www.defense.gov/About/Biographies/Biography/Article/4040890/hon-pete-hegseth/' },
     ],
     stats: [
-      recruitingStat('Navy', [[2016, 30606, 30606], [2017, 35225, 35200], [2018, 39018, 39000], [2020, 39678, 39600], [2021, 33559, 33400], [2022, 33442, 33400], [2023, 30236, 37700], [2024, 35804, 40600], [2025, 44096, 40600]],
-        'In FY24 the Navy contracted past its goal but could not ship all recruits to training within the year, per the FY24 release.'),
-      recruitingStat('Air Force', [[2016, 31757, 31461], [2017, 31296, 31250], [2018, 30343, 29450], [2020, 26373, 26373], [2021, 26656, 26641], [2022, 26196, 26196], [2023, 24100, 26977], [2024, 27303, 27200], [2025, 30166, 30100]]),
-      recruitingStat('Marine Corps', [[2016, 30508, 30500], [2017, 32059, 31994], [2018, 31567, 31556], [2020, 28048, 28028], [2021, 30617, 30607], [2022, 28608, 28600], [2023, 28921, 28900], [2024, 27500, 27500], [2025, 26600, 26600]]),
-      recruitingStat('Space Force', [[2022, 532, 521], [2023, 537, 492], [2024, 716, 704], [2025, 819, 796]],
-        'The Space Force was established December 20, 2019; its first year-end figures in the releases are FY22.'),
       {
-        title: 'Regular Army recruits against goal',
-        measure: 'Active-duty (Regular Army) accessions by fiscal year, October through September.',
-        points: [
-          { ...fy(2021), value: 57606, goal: 57500 },
-          { ...fy(2022), value: 44901, goal: 60000 },
-          { ...fy(2023), value: 50181, goal: 65500 },
-          { ...fy(2024), value: 55150, goal: 55000 },
-          { ...fy(2025), value: 62050, goal: 60500 },
-          { ...fy(2026), value: 61530, goal: 61500 },
-        ],
+        title: 'Military recruits against goal, all services',
+        measure: 'Active-duty enlisted accessions (new recruits shipped to training) for the Army, Navy, Marine Corps, Air Force and, from FY22, Space Force, summed, against the sum of their goals, by fiscal year.',
+        points: recruitingTotal,
         period: 'fy',
         unit: 'count',
-        only: ['biden', 'trump-2'],
-        gap: 'FY25 began October 1, 2024, almost four months before the second Trump administration. The Department of War’s FY25 release states the Army goal as 61,000; Army Recruiting Command lists 60,500.',
-        source: 'U.S. Army Recruiting Command, Facts and Figures',
-        sourceUrl: 'https://recruiting.army.mil/pao/facts_figures/',
-        asOf: '2026-11-01',
+        lookback: 40,
+        gap: 'Each fiscal year runs October through September and is counted with the administration that held office for most of it. FY15 is missing: its year-end release was not found, so that year is left out rather than estimated. FY00–FY04 come from a GAO table of DoD data; later years from the year-end DoD and Department of War releases (FY05–FY08 read from GlobalSecurity.org copies of the releases; FY09, FY10, FY13 and FY19 from Internet Archive copies). FY25’s Army goal is the Department of War’s 61,000; Army Recruiting Command lists 60,500. FY26 totals are not yet published for every service. Reserve and Guard recruiting is not included.',
+        source: 'Department of Defense / Department of War year-end recruiting and retention releases; GAO-05-419T for FY00–FY04',
+        sourceUrl: 'https://prhome.defense.gov/M-RA/Inside-M-RA/MPP/Accession-Policy/Recruiting-and-Retention/',
+        more: recruitingSources,
+        asOf: '2025-12-22',
       },
     ],
     keyActions: [
@@ -194,6 +182,18 @@ export const departments: Department[] = [
           { label: 'FY19–FY22 CSV', url: 'https://www.cbp.gov/sites/default/files/assets/documents/2022-Oct/sbo-encounters-fy19-fy22.csv' },
         ],
         asOf: '2026-09-04',
+      },
+      {
+        title: 'Border Patrol southwest border apprehensions by year',
+        measure: 'U.S. Border Patrol apprehensions in the nine southwest border sectors, by fiscal year. A narrower count than the monthly chart above: it leaves out people stopped at ports of entry.',
+        points: usbpSwAnnual,
+        period: 'fy',
+        unit: 'count',
+        lookback: 40,
+        gap: 'CBP stopped updating this long-run table after FY20, and later years are published only in the broader encounter series above, so the two are not joined. FY20 includes Title 42 expulsions from March 2020. The table goes back to FY60; FY77 on is shown.',
+        source: 'U.S. Customs and Border Protection, U.S. Border Patrol Fiscal Year Southwest Border Sector Apprehensions (FY 1960 – FY 2020)',
+        sourceUrl: 'https://www.cbp.gov/document/stats/us-border-patrol-fiscal-year-southwest-border-sector-apprehensions-fy-1960-fy-2020',
+        asOf: '2020-09-30',
       },
     ],
     keyActions: [
@@ -239,18 +239,20 @@ export const departments: Department[] = [
         title: 'Federal criminal defendants charged',
         measure: 'Criminal defendants filed in the U.S. district courts each fiscal year, including defendants transferred from other districts. Nearly every federal prosecution brought by the Justice Department’s U.S. Attorneys is counted here.',
         points: [
+          [2000, 83963], [2006, 88216], [2007, 89306], [2008, 92355], [2009, 97982], [2010, 100366],
           [2011, 102931], [2012, 94121], [2013, 91266], [2014, 81226], [2015, 80069],
           [2016, 77357], [2017, 77018], [2018, 87149], [2019, 92678], [2020, 73879],
           [2021, 74465], [2022, 68482], [2023, 66147], [2024, 69802], [2025, 79129],
         ].map(([year, value]) => ({ ...fy(year), value })),
         period: 'fy',
         unit: 'count',
-        lookback: 6,
-        gap: 'Chosen over the Justice Department’s own Executive Office for U.S. Attorneys reports because the courts count every case on their dockets the same way across administrations and publish on a fixed schedule. Filings measure charges brought, not convictions. FY09–FY10 were not retrieved (the Judicial Business 2010 page did not load) and are left out; FY26 is published after September 30, 2026.',
+        lookback: 40,
+        gap: 'Chosen over the Justice Department’s own Executive Office for U.S. Attorneys reports because the courts count every case on their dockets the same way across administrations and publish on a fixed schedule. Filings measure charges brought, not convictions. FY01–FY05 were not retrieved and are left out, so FY00 sits beside FY06 with no years between; FY26 is published after September 30, 2026.',
         source: 'Administrative Office of the U.S. Courts, Judicial Business, Table 5 (U.S. District Courts — Criminal Defendants Filed), 2025 edition',
         sourceUrl: 'https://www.uscourts.gov/data-news/reports/statistical-reports/judicial-business-united-states-courts/judicial-business-2025/us-district-courts-judicial-business-2025',
         more: [
           { label: 'FY16–FY20 (Judicial Business 2020)', url: 'https://www.uscourts.gov/data-news/reports/statistical-reports/judicial-business-united-states-courts/judicial-business-2020/us-district-courts-judicial-business-2020' },
+          { label: 'FY00, FY06–FY10 (Judicial Facts and Figures 2010, Table 5.1)', url: 'https://www.uscourts.gov/data-news/data-tables/2010/09/30/judicial-facts-and-figures/51' },
           { label: 'FY11–FY15 (Judicial Business 2015)', url: 'https://www.uscourts.gov/data-news/reports/statistical-reports/judicial-business-united-states/judicial-business-2015/us-district-courts-judicial-business-2015' },
         ],
         asOf: '2025-09-30',
@@ -282,16 +284,19 @@ export const departments: Department[] = [
         points: debtFyEnd,
         period: 'fy',
         unit: 'trillion',
-        lookback: 4,
+        lookback: 40,
         gap: 'A fiscal year is counted with the administration that held office for most of it. Not adjusted for inflation or the size of the economy. The latest daily figure is $40.59 trillion on October 29, 2026.',
-        source: 'U.S. Treasury, Fiscal Data — Debt to the Penny',
-        sourceUrl: 'https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/',
+        source: 'U.S. Treasury, Fiscal Data — Historical Debt Outstanding',
+        sourceUrl: 'https://fiscaldata.treasury.gov/datasets/historical-debt-outstanding/',
+        more: [{ label: 'Latest daily figure (Debt to the Penny)', url: 'https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/' }],
         asOf: '2026-10-29',
       },
       {
         title: 'Total public debt on inauguration day',
         measure: 'Total public debt outstanding, in trillions of dollars, on the record date at or just before each inauguration.',
         points: [
+          { label: '2001', start: '2001-01-20', value: 5.728, note: 'Recorded January 19, 2001 (January 20 was a Saturday)' },
+          { label: '2005', start: '2005-01-20', value: 7.613, note: 'Recorded January 20, 2005' },
           { label: '2009', start: '2009-01-20', value: 10.627, note: 'Recorded January 20, 2009' },
           { label: '2013', start: '2013-01-20', value: 16.433, note: 'Recorded January 18, 2013 (last business day before the January 20–21 inauguration)' },
           { label: '2017', start: '2017-01-20', value: 19.947, note: 'Recorded January 20, 2017' },
@@ -301,7 +306,7 @@ export const departments: Department[] = [
         period: 'date',
         unit: 'trillion',
         lookback: 40,
-        gap: 'Treasury records the debt on business days only, so holidays and weekends use the prior record date.',
+        gap: 'Treasury records the debt on business days only, so holidays and weekends use the prior record date. Daily records begin April 1, 1993, so the 1993 and 1997 inaugurations are not shown.',
         source: 'U.S. Treasury, Fiscal Data — Debt to the Penny',
         sourceUrl: 'https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/',
         asOf: '2026-10-29',
