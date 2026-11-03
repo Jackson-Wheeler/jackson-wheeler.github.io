@@ -1,0 +1,64 @@
+---
+import type { Segment } from '../../data/watchman/departments';
+import { formatRecordDate } from '../../data/watchman/records';
+
+interface Props {
+  segments: Segment[];
+  /** Band runs from the administration's start to its end, or to the build date. */
+  start: string;
+  end?: string;
+  id: string;
+}
+const { segments, start, end, id } = Astro.props;
+const today = new Date().toISOString().slice(0, 10);
+const stop = end ?? today;
+const t = (d: string) => Date.parse(`${d}T00:00:00Z`);
+const span = t(stop) - t(start);
+const W = 1000;
+const clamp = (d: string) => (d < start ? start : d > stop ? stop : d);
+const x = (d: string) => Math.round(((t(clamp(d)) - t(start)) / span) * W * 10) / 10;
+let n = 0;
+const bars = segments.map((s) => {
+  const x0 = x(s.start);
+  const x1 = x(s.end ?? stop);
+  const tone = !s.tenure ? 'gap' : s.tenure.acting ? 'acting' : `t${n++ % 3}`;
+  return { ...s, x0, w: Math.max(x1 - x0, 3), tone };
+});
+const firstYear = Number(start.slice(0, 4)) + 1;
+const years: string[] = [];
+for (let y = firstYear; `${y}-01-01` < stop; y += 1) years.push(`${y}-01-01`);
+---
+<figure class="leaders" aria-labelledby={`${id}-cap`}>
+  <figcaption id={`${id}-cap`} class="sr-only">Who led the department, {formatRecordDate(start)} to {end ? formatRecordDate(end) : 'today'}.</figcaption>
+  <svg class="band" viewBox={`0 0 ${W} 40`} preserveAspectRatio="none" width="100%" height="28" aria-hidden="true" focusable="false">
+    {bars.map((b) => <rect class={`seg ${b.tone}`} x={b.x0} y="4" width={b.w} height="24" />)}
+    {years.map((y) => <line class="tick" x1={x(y)} x2={x(y)} y1="0" y2="40" />)}
+  </svg>
+  <div class="band-years" aria-hidden="true">
+    <span>{start.slice(0, 4)}</span>
+    {years.length > 6 ? years.filter((_, i) => i % 2 === 1).map((y) => <span>{y.slice(0, 4)}</span>) : years.map((y) => <span>{y.slice(0, 4)}</span>)}
+  </div>
+  <ol class="leader-list">
+    {bars.map((b) => (
+      <li class:list={[!b.tenure && 'gap-row']}>
+        <span class={`sw ${b.tone}`} aria-hidden="true"></span>
+        {b.tenure ? (
+          <>
+            <span class="who"><strong>{b.tenure.name}</strong>{b.tenure.acting && <span class="acting-tag"> acting</span>}</span>
+            <span class="role">{b.tenure.title}</span>
+            <span class="when">
+              <time datetime={b.start}>{formatRecordDate(b.start)}</time> – {b.end ? <time datetime={b.end}>{formatRecordDate(b.end)}</time> : 'present'}
+              {' · '}<a href={b.tenure.sourceUrl} rel="noopener">source</a>
+            </span>
+          </>
+        ) : (
+          <>
+            <span class="who"><strong>No confirmed head</strong></span>
+            <span class="role">Acting or vacant; acting officials for this stretch are not entered.</span>
+            <span class="when"><time datetime={b.start}>{formatRecordDate(b.start)}</time> – {b.end ? <time datetime={b.end}>{formatRecordDate(b.end)}</time> : 'present'}</span>
+          </>
+        )}
+      </li>
+    ))}
+  </ol>
+</figure>

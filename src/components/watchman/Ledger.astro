@@ -1,0 +1,101 @@
+---
+import RecordItem from './RecordItem.astro';
+import type { RecordItem as Rec } from '../../data/watchman/types';
+import { branchLabels, recordBranches, topicLabels, type TopicId } from '../../data/watchman/types';
+import { actionCountLabel, ledgerTree } from '../../data/watchman/records';
+
+interface Props {
+  records: Rec[];
+  note?: string;
+  id?: string;
+}
+
+const { records, note, id = 'actions' } = Astro.props;
+const tree = ledgerTree(records);
+const branches = recordBranches.filter((branch) =>
+  tree.some((year) => year.months.some((month) => month.totals[branch] > 0)),
+);
+const topics = (Object.keys(topicLabels) as TopicId[])
+  .filter((topic) =>
+    tree.some((year) =>
+      year.months.some((month) =>
+        month.days.some((day) => day.records.some((item) => item.topics.includes(topic))),
+      ),
+    ),
+  )
+  .sort((a, b) => topicLabels[a].localeCompare(topicLabels[b]));
+const total = tree.reduce(
+  (sum, year) => sum + year.months.reduce((inner, month) => inner + month.days.reduce((n, day) => n + day.records.length, 0), 0),
+  0,
+);
+---
+{total === 0 ? (
+  <p class="empty">No actions in this record yet.</p>
+) : (
+  <div class="ledger" data-ledger id={id}>
+    <div class="filterbar">
+      <div class="date-picks">
+        <label class="sr-only" for={`${id}-year`}>Year</label>
+        <select id={`${id}-year`} class="pill" data-part="year">
+          <option value="">All years</option>
+          {tree.map((year) => <option value={year.year}>{year.year}</option>)}
+        </select>
+        <label class="sr-only" for={`${id}-month`}>Month</label>
+        <select id={`${id}-month`} class="pill" data-part="month">
+          <option value="">All months</option>
+          {tree.flatMap((year) => year.months.map((month) => (
+            <option value={month.key} data-year={year.year}>{month.label}</option>
+          )))}
+        </select>
+        <label class="sr-only" for={`${id}-day`}>Day</label>
+        <select id={`${id}-day`} class="pill" data-part="day">
+          <option value="">All days</option>
+          {tree.flatMap((year) => year.months.flatMap((month) => month.days.map((day) => (
+            <option value={day.date} data-month={month.key}>{day.label}</option>
+          ))))}
+        </select>
+      </div>
+      {branches.length > 1 && (
+        <div class="pills" role="group" aria-label="Branch">
+          {branches.map((branch) => (
+            <button type="button" class:list={['pill', 'b-btn', `b-${branch}`]} data-dim="branch" data-value={branch} aria-pressed="false">{branchLabels[branch]}</button>
+          ))}
+        </div>
+      )}
+      {topics.length > 1 && (
+        <details class="topic-menu">
+          <summary class="pill" data-topic-label>Topics</summary>
+          <div class="topic-panel" role="group" aria-label="Topic">
+            {topics.map((topic) => (
+              <button type="button" class:list={['pill', 't-btn', `t-${topic}`]} data-dim="topic" data-value={topic} aria-pressed="false">{topicLabels[topic]}</button>
+            ))}
+          </div>
+        </details>
+      )}
+      <span class="count" data-count aria-live="polite">{actionCountLabel(total)}</span>
+    </div>
+    <p class="empty" data-empty hidden>
+      <span data-empty-text>No actions match.</span>
+      <button type="button" class="pill" data-reset>Reset filters</button>
+    </p>
+    {tree.map((year) => year.months.map((month) => (
+      <section class="month" data-month={month.key}>
+        <h2 class="month-h">
+          <span class="month-name">{month.label}</span>
+          {recordBranches.map((branch) => month.totals[branch] > 0 && (
+            <span class:list={['tot', `b-${branch}`]} data-total={branch}>
+              <span data-n>{month.totals[branch]}</span> {branchLabels[branch]}
+            </span>
+          ))}
+        </h2>
+        {month.days.map((day) => (
+          <section class="day" data-day={day.date}>
+            <h3 class="day-h">{day.label}</h3>
+            {day.records.map((item) => <RecordItem item={item} />)}
+          </section>
+        ))}
+      </section>
+    )))}
+    {note && <p class="scope">{note}</p>}
+  </div>
+)}

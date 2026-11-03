@@ -2,16 +2,45 @@
 import Layout from '../../../layouts/WatchmanLayout.astro';
 import DoorPage from '../../../components/watchman/DoorPage.astro';
 import WatchmanCredits from '../../../components/watchman/WatchmanCredits.astro';
-import { federalRecords } from '../../../data/watchman/records';
+import { administrations, ordinal, recordsIn } from '../../../data/watchman/administrations';
+import { formatRecordDate } from '../../../data/watchman/records';
 import '../../../styles/watchman/doors.css';
 
 const picture = 'record-federal';
 const heading = 'Federal Government';
 const title = `${heading} — Watchman`;
 const description =
-  'Example layout (placeholder data): Watchman is a plain, sourced record of what government has actually done, so readers can see it for themselves. Every item is a dated claim tied to its primary source, such as an executive order, statute, budget, or court ruling. Press releases are labeled, and reversed or enjoined items stay and are marked.';
+  'The federal record by administration: presidential actions, public laws, and Supreme Court rulings, each linked to its primary text.';
 ---
-<Layout title={title} description={description} noindex={true} preloadHero={true} heroImage={picture}>
-  <DoorPage title={heading} records={federalRecords} hero={picture} />
+<Layout title={title} description={description} preloadHero={true} heroImage={picture}>
+  <DoorPage title={heading} hero={picture}>
+    <h2 class="gh" id="admins-h">Administrations</h2>
+    <ul class="admins" aria-labelledby="admins-h">
+      {administrations.map((a) => {
+        const count = recordsIn(a).length;
+        const dates = (
+          <span class="admin-dates">
+            <time datetime={a.start}>{formatRecordDate(a.start)}</time> – {a.end ? <time datetime={a.end}>{formatRecordDate(a.end)}</time> : 'present'}
+          </span>
+        );
+        return (
+          <li class:list={['admin-card', a.status, `tint-${a.number % 2 ? 'odd' : 'even'}`]}>
+            <a href={`/watchman/federal/${a.id}/`}>
+              <img class="admin-portrait" src={a.portrait.src} alt="" width="320" height="400" loading="lazy" decoding="async" />
+              <div class="admin-body">
+                <span class="admin-num">{ordinal(a.number)} presidency</span>
+                <h3>{a.name}</h3>
+                <span class="admin-who">{a.president}</span>
+                {dates}
+                <span class="admin-count">{count ? `${count} actions entered` : 'Leaders, Congresses and official numbers; actions not yet entered'}</span>
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="scope credits-line">Portraits are official White House photographs in the public domain, copied here from Wikimedia Commons: {administrations.map((a, i) => <>{i > 0 && '; '}<a href={a.portrait.url} rel="noopener">{a.portrait.credit}</a></>)}.</p>
+    <p class="scope">The earlier single-page view stays at <a href="/watchman/federal/chronicle-classic/">the classic chronicle</a>.</p>
+  </DoorPage>
   <WatchmanCredits studies={true} />
 </Layout>

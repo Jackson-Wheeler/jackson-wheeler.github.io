@@ -3,14 +3,17 @@ interface Props {
   showUp?: boolean;
   /** Id of this door’s card on the Watchman shelf. */
   backId?: string;
+  /** Up link for pages below a door (e.g. a department under an administration). */
+  upHref?: string;
+  upLabel?: string;
 }
-const { showUp = false, backId = 'choose-h' } = Astro.props;
+const { showUp = false, backId = 'choose-h', upHref, upLabel = 'Records' } = Astro.props;
 ---
 <nav class="wm-nav" aria-label="Site">
   {showUp ? (
-    <a class="wm-up" href={`/watchman/#${backId}`}>
+    <a class="wm-up" href={upHref ?? `/watchman/#${backId}`}>
       <span class="wm-arrow" aria-hidden="true">←</span>
-      Records
+      {upLabel}
     </a>
   ) : (
     <a class="wm-home" href="/" aria-label="Home" title="Home">

@@ -1,21 +1,68 @@
 ---
 import type { RecordItem as Rec } from '../../data/watchman/types';
-import { httpsSourceUrl } from '../../data/watchman/types';
-interface Props { item: Rec; anchorId?: string }
-const { item, anchorId } = Astro.props;
-const href = !item.isExample ? httpsSourceUrl(item.sourceUrl) : undefined;
+import { branchLabels, branchOf, httpsSourceUrl, kindMark, statusLabels, topicLabels } from '../../data/watchman/types';
+import { actionId, formatRecordDate } from '../../data/watchman/records';
+
+interface Props {
+  item: Rec;
+}
+const { item } = Astro.props;
+const id = actionId(item);
+const mark = kindMark[item.kind];
+const href = httpsSourceUrl(item.sourceUrl);
+const statusHref = item.status ? httpsSourceUrl(item.status.sourceUrl) : undefined;
+const cite = [item.citation, item.frCitation].filter((part, index, all) => part && all.indexOf(part) === index);
+const branch = branchOf(item.kind);
+const statusClass = item.status ? `s-${item.status.value}` : '';
+const votes = [...(item.votes ?? [])].sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 ---
-<li class="it" id={anchorId}>
-  <time datetime={item.date}>{item.date}</time>
-  <div>
-    {item.isExample && <span class="ex">EXAMPLE</span>}{' '}
-    <span class="kind">{item.kind}</span>
-    {item.label && <span class={`lbl ${item.label.tone}`}>{item.label.text}</span>}
-    <p class="it-t">{item.title}</p>
-    {href ? (
-      <a class="src" href={href} rel="noopener noreferrer">Primary source</a>
-    ) : (
-      <span class="src">(example)</span>
+<details
+  class:list={['action', `b-${branch}`, statusClass]}
+  id={id}
+  data-date={item.date}
+  data-kind={item.kind}
+  data-branch={branch}
+  data-topics={item.topics.join(' ')}
+>
+  <summary>
+    <span class="kind-plain">{mark.short}</span>
+    <span class="title">{item.title}</span>
+    {item.topics.length > 0 && (
+      <span class="row-topics">
+        {item.topics.map((topic) => (
+          <span class:list={['topic-chip', `t-${topic}`]}>{topicLabels[topic]}</span>
+        ))}
+      </span>
+    )}
+    {item.status && <span class:list={['badge', statusClass]}>{statusLabels[item.status.value]}</span>}
+  </summary>
+  <div class="action-body">
+    {item.summary && <p>{item.summary}</p>}
+    <p class="meta">{branchLabels[branch]} · {item.office}</p>
+    {item.addressedTo && <p class="meta">To {item.addressedTo}</p>}
+    {cite.length > 0 && <p class="meta">{cite.join(' · ')}</p>}
+    {href && <p><a href={href} rel="noopener noreferrer">Primary source</a></p>}
+    {votes.length > 0 && (
+      <ul class="passage">
+        {votes.map((vote) => {
+          const voteHref = httpsSourceUrl(vote.sourceUrl);
+          return (
+            <li>
+              <span class="passage-who">{vote.chamber}</span>
+              <time datetime={vote.date}>{formatRecordDate(vote.date)}</time>
+              <span class="passage-tally">{vote.yeas}–{vote.nays}</span>
+              {voteHref && <a href={voteHref} rel="noopener noreferrer">{vote.citation}</a>}
+            </li>
+          );
+        })}
+      </ul>
+    )}
+    {item.status && (
+      <p class="status-note">
+        <span class:list={['badge', statusClass]}>{statusLabels[item.status.value]}</span>
+        {item.status.note}
+        {statusHref && <> <a href={statusHref} rel="noopener noreferrer">Status source</a></>}
+      </p>
     )}
   </div>
-</li>
+</details>

@@ -1,0 +1,20 @@
+---
+import Layout from '../../../../../layouts/WatchmanLayout.astro';
+import DoorPage from '../../../../../components/watchman/DoorPage.astro';
+import WatchmanCredits from '../../../../../components/watchman/WatchmanCredits.astro';
+import AdminOverview from '../../../../../components/watchman/AdminOverview.astro';
+import { administrations, type Administration } from '../../../../../data/watchman/administrations';
+import { formatRecordDate } from '../../../../../data/watchman/records';
+import '../../../../../styles/watchman/doors.css';
+
+export function getStaticPaths() {
+  return administrations.map((a) => ({ params: { admin: a.id }, props: { admin: a } }));
+}
+const { admin } = Astro.props as { admin: Administration };
+---
+<Layout title={`${admin.name} (layout b) — Watchman`} description={`The federal record of the ${admin.name}, from ${formatRecordDate(admin.start)}.`} noindex={true} preloadHero={true} heroImage="record-federal">
+  <DoorPage title={admin.name} hero="record-federal" tag={`${formatRecordDate(admin.start)} – ${admin.end ? formatRecordDate(admin.end) : 'present'}`} upHref="/watchman/federal/" upLabel="Federal">
+    <AdminOverview admin={admin} layout="b" />
+  </DoorPage>
+  <WatchmanCredits studies={true} />
+</Layout>

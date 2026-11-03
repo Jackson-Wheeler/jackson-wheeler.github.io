@@ -1,0 +1,146 @@
+---
+import { congressesIn, ordinal, recordsIn, within, type Administration } from '../../data/watchman/administrations';
+import { departments, belongsTo, leaderOn, leadersIn, pointsFor, type Stat } from '../../data/watchman/departments';
+import { actionId, formatRecordDate } from '../../data/watchman/records';
+import { branchOf } from '../../data/watchman/types';
+
+interface Props {
+  admin: Administration;
+  layout: 'a' | 'b' | 'c';
+}
+const { admin, layout } = Astro.props;
+const records = recordsIn(admin);
+const today = new Date().toISOString().slice(0, 10);
+const base = `/watchman/federal/${admin.id}`;
+const stop = admin.end ?? today;
+const congresses = congressesIn(admin).map((c) => ({
+  ...c,
+  count: records.filter((r) => branchOf(r.kind) === 'legislative' && within(r.date, c.start, c.end)).length,
+  future: c.start > today,
+}));
+const judicial = records.filter((r) => branchOf(r.kind) === 'judicial').length;
+const fmt = (stat: Stat, v: number) =>
+  stat.unit === 'trillion' ? `$${v.toFixed(2)} trillion` : stat.unit === 'percent' ? `${v}%` : v.toLocaleString('en-US');
+
+const depts = departments.map((d) => {
+  const lead = admin.end ? undefined : leaderOn(d, today);
+  const heads = leadersIn(d, admin.start, admin.end, today).filter((s) => s.tenure && (s.end ?? today) > admin.start);
+  const confirmed = heads.filter((s) => !s.tenure!.acting);
+  const names = lead ? `${lead.name}${lead.acting ? ' (acting)' : ''}` : [...new Set(confirmed.map((s) => s.tenure!.name))].join(', ');
+  const stat = d.stats[0];
+  const pts = stat ? pointsFor(stat, admin, today).filter((p) => p.inAdmin) : [];
+  const last = pts[pts.length - 1];
+  return { d, names, heads, stat, last, count: records.filter((r) => belongsTo(r, d)).length };
+});
+const keyStats = depts.filter((x) => x.stat && x.last);
+const latest = [...records].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+
+// Option C: one row per calendar year of the term.
+const y0 = Number(admin.start.slice(0, 4));
+const y1 = Number(stop.slice(0, 4));
+const years = Array.from({ length: y1 - y0 + 1 }, (_, i) => y0 + i).reverse().map((year) => {
+  const from = `${year}-01-01`;
+  const to = `${year}-12-31`;
+  const congress = congresses.filter((c) => c.start <= to && c.end >= from);
+  const changes = departments.flatMap((d) =>
+    leadersIn(d, admin.start, admin.end, today)
+      .filter((s) => s.tenure && s.start >= admin.start && s.start.slice(0, 4) === String(year))
+      .map((s) => ({ dept: d.name, tenure: s.tenure!, start: s.start })),
+  ).sort((a, b) => a.start.localeCompare(b.start));
+  const acts = records.filter((r) => r.date.slice(0, 4) === String(year)).length;
+  return { year, congress, changes, acts };
+});
+const range = `${formatRecordDate(admin.start)} – ${admin.end ? formatRecordDate(admin.end) : 'present'}`;
+---
+<nav class="layout-switch" aria-label="Page layout prototypes">
+  <span>Layout:</span>
+  <a href={`${base}/option-a/`} aria-current={layout === 'a' ? 'page' : undefined}>A, dashboard</a>
+  <a href={`${base}/option-b/`} aria-current={layout === 'b' ? 'page' : undefined}>B, sections</a>
+  <a href={`${base}/option-c/`} aria-current={layout === 'c' ? 'page' : undefined}>C, timeline</a>
+</nav>
+
+{records.length === 0 && <p class="empty">No actions of this administration are entered yet. Its Congresses, departments, leaders and official numbers are here; the chronicle fills in as records are added.</p>}
+
+{layout === 'a' && (
+  <>
+    <section class="ov-hero" aria-label="Overview">
+      <img class="ov-portrait" src={admin.portrait.src} alt={`Official portrait of ${admin.president}`} width="320" height="400" decoding="async" />
+      <div>
+        <p class="admin-num">{ordinal(admin.number)} presidency</p>
+        <p class="ov-who">{admin.president}</p>
+        <p class="ov-range">{range}</p>
+        <p class="ov-links">
+          <a href={`${base}/chronicle/`}>Full chronicle</a>{records.length ? ` (${records.length} actions)` : ''}
+          {congresses.map((c) => c.future ? <span class="muted">{ordinal(c.number)} Congress convenes {formatRecordDate(c.start)}</span> : <a href={`${base}/congress/${c.number}/`}>{ordinal(c.number)} Congress</a>)}
+          <a href={`${base}/judicial/`}>Supreme Court ({judicial})</a>
+        </p>
+      </div>
+    </section>
+    {keyStats.length > 0 && (
+      <ul class="keystats" aria-label="Key official numbers, latest in this administration">
+        {keyStats.map((x) => (
+          <li><a href={`${base}/departments/${x.d.id}/`}>
+            <strong>{fmt(x.stat!, x.last!.value)}</strong>
+            <span>{x.stat!.title}</span>
+            <span class="muted">{x.last!.label}{x.last!.goal !== undefined ? `, goal ${fmt(x.stat!, x.last!.goal)}` : ''}</span>
+          </a></li>
+        ))}
+      </ul>
+    )}
+    <h2 class="gh" id="depts-h">Departments</h2>
+    <ul class="depts" aria-labelledby="depts-h">
+      {depts.map((x) => (
+        <li><a href={`${base}/departments/${x.d.id}/`}>
+          <strong>{x.d.name}</strong>
+          <span>{x.names}</span>
+          <span class="n">{x.count} actions{x.d.stats.length ? `, ${x.d.stats.length} chart${x.d.stats.length > 1 ? 's' : ''}` : ''}</span>
+        </a></li>
+      ))}
+    </ul>
+  </>
+)}
+
+{layout === 'b' && (
+  <div class="ov-sections">
+    <section aria-labelledby="ov-h"><h2 class="gh" id="ov-h">Overview</h2>
+      <p class="ov-lede">The {ordinal(admin.number)} presidency: {admin.president}, {range}. {records.length} actions entered.</p>
+    </section>
+    <section aria-labelledby="cg-h"><h2 class="gh" id="cg-h">Congress</h2>
+      <ul class="plain">{congresses.map((c) => <li>{c.future ? <>{ordinal(c.number)} Congress, convenes {formatRecordDate(c.start)}</> : <><a href={`${base}/congress/${c.number}/`}>{ordinal(c.number)} Congress</a>, {c.start.slice(0, 4)}–{c.end.slice(0, 4)}: {c.count} laws and votes entered</>}</li>)}</ul>
+    </section>
+    <section aria-labelledby="ct-h"><h2 class="gh" id="ct-h">Courts</h2>
+      <p><a href={`${base}/judicial/`}>Supreme Court rulings</a>: {judicial} entered.</p>
+    </section>
+    <section aria-labelledby="dp-h"><h2 class="gh" id="dp-h">Departments</h2>
+      <ul class="plain">{depts.map((x) => <li><a href={`${base}/departments/${x.d.id}/`}>{x.d.name}</a>: {x.names || 'no confirmed head'}{x.last ? <>; {x.stat!.title.toLowerCase()}, {fmt(x.stat!, x.last.value)} ({x.last.label})</> : ''}</li>)}</ul>
+    </section>
+    <section aria-labelledby="ch-h"><h2 class="gh" id="ch-h">Chronicle</h2>
+      {latest.length ? (
+        <ul class="plain">{latest.map((r) => <li><time datetime={r.date}>{formatRecordDate(r.date)}</time>: <a href={`${base}/chronicle/#${actionId(r)}`}>{r.title}</a></li>)}</ul>
+      ) : <p>No actions entered yet.</p>}
+      <p><a href={`${base}/chronicle/`}>The full chronicle</a></p>
+    </section>
+  </div>
+)}
+
+{layout === 'c' && (
+  <ol class="spine" aria-label="The term year by year, newest first">
+    {years.map((y) => (
+      <li>
+        <h2 class="spine-year">{y.year}</h2>
+        <div class="spine-body">
+          {y.congress.map((c) => <p class="band b-legislative">{c.future ? `${ordinal(c.number)} Congress (convenes ${formatRecordDate(c.start)})` : <a href={`${base}/congress/${c.number}/`}>{ordinal(c.number)} Congress</a>}</p>)}
+          {y.changes.length > 0 && (
+            <ul class="plain">{y.changes.map((c) => <li><time datetime={c.start}>{formatRecordDate(c.start)}</time>: {c.tenure.name} takes office as {c.tenure.title.toLowerCase().startsWith('acting') ? 'acting head' : 'head'}, {c.dept}</li>)}</ul>
+          )}
+          <p class="muted">{y.acts} actions entered{y.acts ? <>, <a href={`${base}/chronicle/`}>in the chronicle</a></> : ''}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+)}
+
+{layout !== 'a' && (
+  <p class="scope">Departments: {depts.map((x, i) => <>{i > 0 && ', '}<a href={`${base}/departments/${x.d.id}/`}>{x.d.name}</a></>)}.</p>
+)}
+<p class="scope credits-line">Portrait: <a href={admin.portrait.url} rel="noopener">{admin.portrait.credit}</a>, public domain.</p>
