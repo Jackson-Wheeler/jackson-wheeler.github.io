@@ -379,9 +379,16 @@ a.view:hover, a.view:focus-visible { background: #201a14; }
 }
 
 /* Administration page layouts */
-.layout-switch { display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: baseline; margin: 1rem 0 0; font: 400 .85rem/1.4 var(--sans); color: #a59880; }
-.layout-switch a { color: #c9bca6; }
-.layout-switch a[aria-current="page"] { color: #f3eadc; font-weight: 600; text-decoration: none; border-bottom: 2px solid #d39a4a; }
+.dating {
+  margin: 1rem 0 0;
+  max-width: 46rem;
+  padding: .65rem .85rem;
+  border-left: 3px solid #8a7355;
+  background: #1a1612;
+  font: 400 .88rem/1.45 var(--sans);
+  color: #c9bca6;
+}
+.dating time { color: #e8dfd0; }
 .muted { color: #a59880; }
 .ov-hero { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; align-items: center; margin-top: 1.5rem; padding: 1.2rem; border: 1px solid #3a3128; border-radius: 10px; background: linear-gradient(100deg, #241b12 0%, #17130f 60%); }
 .ov-portrait { display: block; width: 9rem; height: 11.25rem; object-fit: cover; border-radius: 6px; filter: saturate(.85); }
