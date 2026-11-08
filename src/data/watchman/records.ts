@@ -128,6 +128,27 @@ export function ledgerTree(records: RecordItem[]): YearNode[] {
   return years;
 }
 
+/** Inclusive end of the entered federal chronicle window (Trump second term so far). */
+export const chronicleEnteredThrough = '2025-04-30';
+
 /** How far the federal record has been entered. One sentence, shown under every federal chronicle. */
 export const federalNote =
   'Entered so far: presidential documents signed January 20–April 30, 2025; public laws approved through April 30, 2025, with their House and Senate passage votes; and Supreme Court rulings issued through April 30, 2025. Nominations are not included.';
+
+/**
+ * Dating clarity for dashboards and department pages: charts and leaders may run past the
+ * chronicle window. Keep charts current; do not freeze them to the entered actions.
+ */
+export function datingClarity(opts: { hasEnteredActions: boolean; hasOfficialNumbers: boolean }): string {
+  const through = formatRecordDate(chronicleEnteredThrough);
+  if (opts.hasEnteredActions && opts.hasOfficialNumbers) {
+    return `Chronicle actions are entered through ${through}. Leaders and official numbers keep their own as-of dates and can be newer than the entered actions.`;
+  }
+  if (opts.hasOfficialNumbers) {
+    return `No chronicle actions are entered for this administration yet. Official numbers and leaders show their own as-of dates from the sources cited.`;
+  }
+  if (opts.hasEnteredActions) {
+    return `Chronicle actions are entered through ${through}.`;
+  }
+  return 'No chronicle actions are entered for this administration yet.';
+}

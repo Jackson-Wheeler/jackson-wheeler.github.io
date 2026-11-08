@@ -106,6 +106,30 @@ const recruitingSources = [
   dodRelease('FY25 (Department of War)', fy25War),
 ];
 
+/** Executive Order 14347 authorized “Department of War” as a secondary name. */
+export const warRenameDate = '2025-09-05';
+
+/**
+ * Display name for a department in an administration’s window.
+ * Defense before the War rename applies; War only where that rename applies.
+ */
+export function departmentNameFor(dept: Department, admin: Administration): string {
+  if (dept.id !== 'war') return dept.name;
+  const end = admin.end ?? '9999-12-31';
+  return admin.start < warRenameDate && end <= warRenameDate
+    ? 'Department of Defense'
+    : 'Department of War';
+}
+
+/** Admin-aware subtitle under the department name (War / Defense rename). */
+export function departmentAkaFor(dept: Department, admin: Administration): string | undefined {
+  if (dept.id !== 'war') return dept.aka;
+  if (departmentNameFor(dept, admin) === 'Department of War') {
+    return 'Department of Defense in statute; “Department of War” is a secondary name under Executive Order 14347 (September 5, 2025).';
+  }
+  return 'Called the Department of Defense throughout this administration. Executive Order 14347 (September 5, 2025) later authorized “Department of War” as a secondary name, after this term.';
+}
+
 export const departments: Department[] = [
   {
     id: 'war',
