@@ -1,6 +1,7 @@
 ---
 import { congressesIn, ordinal, recordsIn, within, type Administration } from '../../data/watchman/administrations';
 import { departments, belongsTo, departmentNameFor, leaderOn, leadersIn, pointsFor, type Stat } from '../../data/watchman/departments';
+import { outcomeKeyStats } from '../../data/watchman/outcomeKeyStats';
 import { actionId, datingClarity, formatRecordDate } from '../../data/watchman/records';
 import { branchOf } from '../../data/watchman/types';
 
@@ -34,9 +35,14 @@ const depts = departments.map((d) => {
   const name = departmentNameFor(d, admin);
   return { d, name, names, heads, stat, last, count: records.filter((r) => belongsTo(r, d)).length };
 });
+/** Trump-2 Layout A uses outcome-anchored comparables; other admins keep latest in-admin levels. */
+const outcomeStats = outcomeKeyStats(admin);
 const keyStats = depts.filter((x) => x.stat && x.last);
 const latest = [...records].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
-const dating = datingClarity({ hasEnteredActions: records.length > 0, hasOfficialNumbers: keyStats.length > 0 });
+const dating = datingClarity({
+  hasEnteredActions: records.length > 0,
+  hasOfficialNumbers: outcomeStats.length > 0 || keyStats.length > 0,
+});
 
 // Option C (dev/noindex only): one row per calendar year of the term.
 const y0 = Number(admin.start.slice(0, 4));
@@ -73,7 +79,24 @@ const range = `${formatRecordDate(admin.start)} – ${admin.end ? formatRecordDa
       </div>
     </section>
     <p class="dating">{dating}</p>
-    {keyStats.length > 0 && (
+    {outcomeStats.length > 0 ? (
+      <ul class="keystats" aria-label="Key comparable official outcomes">
+        {outcomeStats.map((t) => {
+          const href = t.deptId ? `${base}/departments/${t.deptId}/` : t.sourceUrl;
+          const external = !t.deptId;
+          return (
+            <li>
+              <a href={href} {...(external ? { rel: 'noopener', target: '_blank' } : {})}>
+                <strong>{t.headline}</strong>
+                <span>{t.title}</span>
+                <span class="muted">{t.detail}</span>
+                <span class="keystat-asof">As of {formatRecordDate(t.asOf)}. {t.caveat}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    ) : keyStats.length > 0 && (
       <ul class="keystats" aria-label="Key official numbers, latest in this administration">
         {keyStats.map((x) => (
           <li><a href={`${base}/departments/${x.d.id}/`}>
