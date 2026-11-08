@@ -401,6 +401,7 @@ a.view:hover, a.view:focus-visible { background: #201a14; }
 .keystats a:hover, .keystats a:focus-visible { background: #201a14; }
 .keystats strong { font-size: 1.5rem; line-height: 1.15; color: #f3eadc; }
 .keystats span { font: 400 .85rem/1.4 var(--sans); color: #c9bca6; }
+.keystat-asof { font: 400 .75rem/1.45 var(--sans); color: #a59880; }
 .ov-sections section { margin-top: 1.2rem; }
 .ov-lede { font-size: 1.15rem; line-height: 1.5; max-width: 46rem; }
 .plain { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .45rem; font: 400 .95rem/1.5 var(--sans); color: #c9bca6; max-width: 52rem; }
@@ -414,4 +415,5 @@ a.view:hover, a.view:focus-visible { background: #201a14; }
   .ov-hero { grid-template-columns: 5.5rem 1fr; gap: .9rem; padding: .9rem; }
   .ov-portrait { width: 5.5rem; height: 6.9rem; }
   .ov-who { font-size: 1.2rem; }
+  .keystats { grid-template-columns: 1fr; }
 }
