@@ -9,9 +9,15 @@
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.3.0",
+    "@fontsource/figtree": "^5.3.0",
     "@fontsource/frank-ruhl-libre": "^5.3.0",
+    "@fontsource/fraunces": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
-    "astro": "^7.3.8"
+    "@lucide/astro": "^1.78.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.3.8",
+    "daisyui": "^5.8.2",
+    "tailwindcss": "^4.3.5"
   },
   "engines": {
     "node": ">=22.12"
