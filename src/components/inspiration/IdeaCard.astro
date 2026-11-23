@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import { externalLinkIcon, type Idea } from '../../data/inspiration';
+
+interface Props {
+  idea: Idea;
+}
+
+const { idea } = Astro.props;
+---
+
+<li class="card idea-card border bg-base-200 shadow-none">
+  <div class="card-body">
+    <div class="card-top">
+      <span class="idea-icon"><Icon icon={idea.icon} /></span>
+      {idea.maybe && <span class="badge badge-outline badge-primary badge-sm">Maybe</span>}
+    </div>
+    <h3 class="card-title">{idea.title}</h3>
+    <p>{idea.note}</p>
+    {
+      idea.href && idea.linkLabel && (
+        <a class="idea-link" href={idea.href} target="_blank" rel="noopener noreferrer">
+          {idea.linkLabel}
+          <Icon icon={externalLinkIcon} size={15} />
+          <span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      )
+    }
+  </div>
+</li>

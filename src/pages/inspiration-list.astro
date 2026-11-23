@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/InspirationLayout.astro';
+import IdeaCard from '../components/inspiration/IdeaCard.astro';
+import Icon from '../components/inspiration/Icon.astro';
+import { notes, sections } from '../data/inspiration';
+
+const title = "A few ideas, if you're stuck — Jackson Wheeler";
+const description =
+  "A relaxed list of gift ideas for Jackson, if you're stuck. Nothing is expected — anything thoughtful is welcome.";
+---
+
+<Layout title={title} description={description}>
+  <div class="shell">
+    <header class="py-4 sm:py-5">
+      <a class="wordmark" href="/">
+        <span class="lamp" aria-hidden="true"></span>
+        Jackson Wheeler
+      </a>
+    </header>
+
+    <main id="main">
+      <header class="intro mt-6 sm:mt-14">
+        <p class="eyebrow">For family and friends</p>
+        <h1>A few ideas,<br /> if you're stuck.</h1>
+        <p>
+          This isn’t a wish list. It’s just a few things Jackson would genuinely use, in case a
+          gift has you stuck. No pressure at all — anything thoughtful is welcome, including a
+          surprise of your own, or no gift. If you do pick something, simple and well-made is
+          exactly right.
+        </p>
+      </header>
+
+      <div class="sections">
+        {
+          sections.map((section) => (
+            <section aria-labelledby={section.id}>
+              <div class="section-head">
+                <h2 id={section.id}>{section.label}</h2>
+                <span class="rule" aria-hidden="true"></span>
+              </div>
+              <p class="lede">{section.lede}</p>
+              <ul class="idea-grid">
+                {section.ideas.map((idea) => (
+                  <IdeaCard idea={idea} />
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+
+        <section aria-labelledby="good-to-know">
+          <div class="section-head">
+            <h2 id="good-to-know">Good to know</h2>
+            <span class="rule" aria-hidden="true"></span>
+          </div>
+          <p class="lede">A couple of practical notes, if they help.</p>
+          <div class="card notes-card border bg-base-200 shadow-none">
+            <div class="card-body">
+              <dl class="notes">
+                {
+                  notes.map((note) => (
+                    <div>
+                      <dt>
+                        <span class="idea-icon idea-icon-sm">
+                          <Icon icon={note.icon} size={18} />
+                        </span>
+                        {note.title}
+                      </dt>
+                      <dd>{note.body}</dd>
+                    </div>
+                  ))
+                }
+              </dl>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="colophon">
+      <p>No pressure, and no need to finish the list. Anything thoughtful is welcome.</p>
+      <p class="mt-3">
+        <a href="/">Back to the site</a>
+      </p>
+    </footer>
+  </div>
+</Layout>
