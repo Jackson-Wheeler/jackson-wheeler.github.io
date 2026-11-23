@@ -1,0 +1,68 @@
+---
+import { Icon } from 'astro-icon/components';
+import { notes, sections } from '../../data/inspiration';
+import IdeaCard from './IdeaCard.astro';
+---
+<header class="topbar sticky top-0 z-20 border-b border-line bg-header backdrop-blur-xl">
+  <div class="shell flex h-14 items-center justify-between">
+    <p class="text-[0.95rem] font-medium tracking-[-0.011em] text-ink">Jackson</p>
+    <button
+      type="button"
+      id="theme-toggle"
+      class="no-print grid size-11 shrink-0 place-items-center rounded-full text-ink ring-1 ring-line hover:bg-chip"
+      aria-label="Use dark appearance"
+    >
+      <Icon name="lucide:moon" is:inline class="theme-icon theme-icon-moon size-5" aria-hidden="true" />
+      <Icon name="lucide:sun" is:inline class="theme-icon theme-icon-sun size-5" aria-hidden="true" />
+    </button>
+  </div>
+</header>
+
+<main id="main" class="shell pb-20 pt-12 md:pt-20 lg:pt-24">
+  <section aria-labelledby="page-title" class="mx-auto max-w-3xl text-center">
+    <p class="rise text-[0.8125rem] font-medium tracking-[0.01em] text-faint">
+      An inspiration list, for family and friends
+    </p>
+    <h1
+      id="page-title"
+      class="rise rise-late mx-auto mt-4 max-w-[16ch] text-[2.65rem] font-semibold leading-[1.05] tracking-[-0.038em] text-balance text-ink sm:text-6xl md:text-7xl"
+    >
+      A few ideas, if you’re stuck.
+    </h1>
+    <p class="rise rise-later mx-auto mt-6 max-w-[36rem] text-[1.0625rem] leading-relaxed text-pretty text-muted sm:text-[1.2rem] sm:leading-relaxed">
+      This isn’t a wish list. If a gift is already on your mind, these are a few things I’d be glad to use — unordered, and entirely optional. Anything thoughtful is welcome. No pressure at all.
+    </p>
+  </section>
+
+  {sections.map((section) => (
+    <section class="mt-16 md:mt-24" aria-labelledby={section.id}>
+      <h2 id={section.id} class="mb-5 text-[1.5rem] font-semibold tracking-[-0.025em] text-ink md:mb-6 md:text-[1.75rem]">
+        {section.heading}
+      </h2>
+      <ul class="m-0 grid list-none grid-cols-1 gap-3 p-0 md:grid-cols-12 md:gap-4">
+        {section.ideas.map((idea) => <IdeaCard idea={idea} />)}
+      </ul>
+    </section>
+  ))}
+
+  <section class="mt-16 border-t border-line pt-12 md:mt-24 md:pt-16" aria-labelledby={notes.id}>
+    <h2 id={notes.id} class="text-[1.5rem] font-semibold tracking-[-0.025em] text-ink md:text-[1.75rem]">
+      {notes.heading}
+    </h2>
+    <p class="mt-3 max-w-xl text-[1.0625rem] leading-relaxed text-muted">{notes.intro}</p>
+    <dl class="mt-8 grid gap-8 sm:grid-cols-2 sm:gap-12">
+      <div>
+        <dt class="text-[0.8125rem] font-medium text-faint">{notes.shoesLabel}</dt>
+        <dd class="mt-1 text-[1.75rem] font-semibold tracking-[-0.03em] text-ink">{notes.shoesValue}</dd>
+      </div>
+      <div>
+        <dt class="text-[0.8125rem] font-medium text-faint">{notes.materialsLabel}</dt>
+        <dd class="mt-2 max-w-md text-[1.0625rem] leading-relaxed text-pretty text-muted">{notes.materials}</dd>
+      </div>
+    </dl>
+  </section>
+</main>
+
+<footer class="shell pb-14">
+  <p class="border-t border-line pt-8 text-[0.95rem] text-faint">Thank you for thinking of me.</p>
+</footer>

@@ -1,0 +1,63 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Idea } from '../../data/inspiration';
+
+interface Props {
+  idea: Idea;
+}
+
+const { idea } = Astro.props;
+const wide = idea.span === 12;
+const spanClass = {
+  5: 'md:col-span-6 lg:col-span-5',
+  6: 'md:col-span-6',
+  7: 'md:col-span-6 lg:col-span-7',
+  12: 'md:col-span-12',
+}[idea.span];
+---
+<li class:list={['reveal min-w-0', spanClass]}>
+  <article
+    class:list={[
+      'idea flex h-full flex-col rounded-[1.35rem] bg-card p-6 ring-1 ring-ring sm:rounded-[1.75rem] sm:p-8',
+      wide && 'md:flex-row md:items-center md:gap-10 md:px-10 md:py-8',
+    ]}
+  >
+    <div class:list={['flex shrink-0 items-center justify-between gap-3', wide ? 'mb-6 md:mb-0' : 'mb-7']}>
+      <span class="grid size-12 place-items-center rounded-full bg-chip text-ink">
+        <Icon name={idea.icon} is:inline class="size-5" aria-hidden="true" />
+      </span>
+      {idea.maybe && (
+        <span class="rounded-full bg-chip px-2.5 py-1 text-[0.8125rem] font-medium text-muted md:hidden" aria-hidden="true">
+          Maybe
+        </span>
+      )}
+    </div>
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <h3 class="text-[1.375rem] font-semibold leading-tight tracking-[-0.022em] text-ink sm:text-[1.6rem]">
+          {idea.title}
+        </h3>
+        {idea.maybe && (
+          <span class="hidden rounded-full bg-chip px-2.5 py-1 text-[0.8125rem] font-medium text-muted md:inline-flex" aria-hidden="true">
+            Maybe
+          </span>
+        )}
+      </div>
+      <p class:list={['mt-2.5 text-[1.0625rem] leading-relaxed text-pretty text-muted', wide && 'max-w-[40rem]']}>
+        {idea.note}
+      </p>
+      {idea.href && idea.linkLabel && (
+        <a
+          class="mt-4 inline-flex min-h-11 items-center gap-1 self-start text-[1.02rem] font-medium text-link underline decoration-link underline-offset-[0.22em]"
+          href={idea.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {idea.linkLabel}
+          <Icon name="lucide:arrow-up-right" is:inline class="size-4" aria-hidden="true" />
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      )}
+    </div>
+  </article>
+</li>
