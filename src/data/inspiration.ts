@@ -40,7 +40,7 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'layer',
     title: 'A sweater, sweatshirt, or jacket',
-    note: 'For work, or for other days. Something easy to throw on and actually wear.',
+    note: 'For work or just in general.',
     category: 'style',
     art: 'knit',
   },
