@@ -1,0 +1,147 @@
+---
+import {
+  ArrowLeft,
+  Dumbbell,
+  ExternalLink,
+  House,
+  LayoutGrid,
+  Luggage,
+  Shirt,
+} from '@lucide/astro';
+import {
+  categories,
+  categoryLabels,
+  inspirationItems,
+  type CategoryId,
+} from '../../data/inspiration';
+import GiftArt from './GiftArt.astro';
+
+const iconFor: Record<CategoryId, typeof LayoutGrid> = {
+  all: LayoutGrid,
+  active: Dumbbell,
+  style: Shirt,
+  travel: Luggage,
+  home: House,
+};
+
+const tilts = ['tilt-a', 'tilt-b', 'tilt-c'] as const;
+const pins = ['pin-clay', 'pin-pine', 'pin-brass'] as const;
+const delays = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8'] as const;
+const ideaCount = inspirationItems.length;
+---
+
+<div class="shell" data-inspiration>
+  <header>
+    <a class="home-link" href="/">
+      <ArrowLeft size={18} aria-hidden="true" stroke-width={1.75} />
+      Jackson Wheeler
+    </a>
+    <div class="hero-top">
+      <div>
+        <p class="kicker">For family and friends</p>
+        <h1>Inspiration list</h1>
+      </div>
+      <div class="ornament" aria-hidden="true">
+        <svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M40 16c0-8-12-10-14-2s8 6 14 2" />
+          <path d="M40 16c0-8 12-10 14-2s-8 6-14 2" />
+          <path d="M40 16v9" />
+          <path d="M22 32h28l12 12v34a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8V40a8 8 0 0 1 8-8Z" />
+          <circle cx="38" cy="46" r="3.1" />
+          <path d="M28 66h22M32 74h14" />
+        </svg>
+      </div>
+    </div>
+    <p class="lede">Not a wishlist. He would be more than happy to be surprised by whatever is on your heart to give him. But in case you do want some inspiration or some thoughts, here are some rough ideas of things that could be useful to him.</p>
+  </header>
+
+  <section class="ideas" aria-labelledby="ideas-heading">
+    <div class="ideas-head">
+      <h2 id="ideas-heading">A few ideas</h2>
+    </div>
+
+    <div class="filter-row">
+    <div class="filters" role="radiogroup" aria-label="Filter ideas" aria-controls="inspiration-board">
+      {categories.map((category, index) => {
+        const Icon = iconFor[category.id];
+        const selected = index === 0;
+        return (
+          <button
+            class="btn btn-sm chip"
+            type="button"
+            role="radio"
+            data-filter={category.id}
+            aria-checked={selected ? 'true' : 'false'}
+            tabindex={selected ? 0 : -1}
+          >
+            <Icon size={18} aria-hidden="true" stroke-width={1.75} />
+            {category.label}
+          </button>
+        );
+      })}
+    </div>
+    <p class="status" data-status aria-live="polite" aria-atomic="true">All {ideaCount} ideas</p>
+    </div>
+
+    <div class="board-frame">
+      <div id="inspiration-board" data-board>
+        <div class="board">
+          {inspirationItems.map((item, index) => (
+            <article
+              class:list={[
+                'card',
+                'tag',
+                tilts[index % tilts.length],
+                pins[index % pins.length],
+                delays[index % delays.length],
+                !item.note && 'is-title-only',
+              ]}
+              data-category={item.category}
+            >
+              <div class="fastener" aria-hidden="true">
+                <span class="pinhead"></span>
+                <span class="thread"></span>
+                <span class="hole"></span>
+              </div>
+              <div class="card-body">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <span class="medallion">
+                    <GiftArt name={item.art} />
+                  </span>
+                  <span class:list={['badge', 'cat-badge', `cat-${item.category}`]}>{categoryLabels[item.category]}</span>
+                </div>
+                <h3 class="tag-title">{item.title}</h3>
+                {(item.note || item.size) && (
+                  <div class="tag-copy">
+                    {item.note && <p class="tag-note">{item.note}</p>}
+                    {item.size && <p class="tag-size">{item.size}</p>}
+                  </div>
+                )}
+                {item.href && item.linkLabel && (
+                  <a
+                    class="btn btn-sm tag-link"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.linkLabel}
+                    <ExternalLink size={16} aria-hidden="true" stroke-width={1.75} />
+                    <span class="sr-only"> (opens in a new tab)</span>
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+        <p class="empty" data-empty hidden>Nothing in this group. Try another filter.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <p><a href="/">Jackson Wheeler</a></p>
+    <p>Ideas, not obligations.</p>
+  </footer>
+</div>
+
+<script is:inline src="/inspiration-list.js" defer></script>
