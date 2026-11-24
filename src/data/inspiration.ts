@@ -49,7 +49,7 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'iron',
     title: 'A portable iron and board',
-    note: 'The folding kind. An iron and a board that can tuck away when they aren’t needed.',
+    note: 'A simple iron and iron board.',
     category: 'home',
     art: 'iron',
   },
