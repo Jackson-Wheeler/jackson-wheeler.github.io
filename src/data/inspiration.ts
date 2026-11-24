@@ -56,14 +56,12 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'watch',
     title: 'A simple watch',
-    note: 'A clear face and a comfortable strap.',
     category: 'style',
     art: 'watch',
   },
   {
     id: 'sandals',
     title: 'Shower shoes',
-    note: 'For the gym or a shared shower.',
     category: 'active',
     art: 'sandals',
   },
@@ -86,7 +84,6 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'massage',
     title: 'Massage gun?',
-    note: 'He’s not sure about it.',
     category: 'active',
     art: 'massage',
     maybe: true,
