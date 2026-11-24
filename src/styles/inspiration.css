@@ -294,6 +294,15 @@ body.hearth {
   display: none !important;
 }
 
+.tag.card.is-title-only {
+  height: auto;
+  align-self: start;
+}
+
+.tag.card.is-title-only .card-body {
+  height: auto;
+}
+
 .tag.card {
   overflow: visible;
   height: 100%;

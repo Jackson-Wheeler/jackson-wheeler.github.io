@@ -54,10 +54,7 @@ const ideaCount = inspirationItems.length;
         </svg>
       </div>
     </div>
-    <p class="lede">
-      If you’re picking out a gift for Jackson and want a nudge, here are a few things he’d genuinely use.
-      This isn’t a wish list. There’s no order to follow and no pressure to pick from it — a kind, thoughtful gift of any kind is always welcome.
-    </p>
+    <p class="lede">Not a wishlist. I would be more than happy to be surprised by whatever is on your heart to give me. But in case you do want some inspiration or some thoughts, here are some rough ideas of things that could be useful to me.</p>
   </header>
 
   <section class="ideas" aria-labelledby="ideas-heading">
@@ -100,6 +97,7 @@ const ideaCount = inspirationItems.length;
                 pins[index % pins.length],
                 delays[index % delays.length],
                 item.maybe && 'is-maybe',
+                !item.note && 'is-title-only',
               ]}
               data-category={item.category}
             >
@@ -119,7 +117,7 @@ const ideaCount = inspirationItems.length;
                   {item.title}
                   {item.maybe && <span class="badge maybe-badge">Maybe</span>}
                 </h3>
-                <p class="tag-note">{item.note}</p>
+                {item.note && <p class="tag-note">{item.note}</p>}
                 {item.href && item.linkLabel && (
                   <a
                     class="btn btn-sm tag-link"

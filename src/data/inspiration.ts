@@ -21,7 +21,7 @@ export type GiftArtName = 'tee' | 'massage' | 'knit' | 'iron' | 'watch' | 'sanda
 export interface InspirationItem {
   id: string;
   title: string;
-  note: string;
+  note?: string;
   category: ItemCategory;
   art: GiftArtName;
   /** He's unsure — show it as a maybe, not a request. */
@@ -34,7 +34,6 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'tee',
     title: 'A simple workout tee',
-    note: 'Non-cotton, and easy on the details. One is plenty; a small stack is welcome too.',
     category: 'active',
     art: 'tee',
   },
