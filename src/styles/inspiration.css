@@ -447,13 +447,29 @@ body.hearth {
   color: var(--color-ink);
 }
 
-.tag-note {
-  margin: 0;
+.tag-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
   flex: 1;
+  min-width: 0;
+}
+
+.tag-note,
+.tag-size {
+  margin: 0;
   color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+.tag-note {
   font-size: 1rem;
   line-height: 1.55;
-  text-wrap: pretty;
+}
+
+.tag-size {
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .tag-link.btn {

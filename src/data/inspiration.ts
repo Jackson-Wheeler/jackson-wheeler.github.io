@@ -22,6 +22,7 @@ export interface InspirationItem {
   id: string;
   title: string;
   note?: string;
+  size?: string;
   category: ItemCategory;
   art: GiftArtName;
   /** Uncertain item: dashed border. The question mark lives in the title. */
@@ -41,6 +42,7 @@ export const inspirationItems: InspirationItem[] = [
     id: 'layer',
     title: 'A sweater, sweatshirt, or jacket',
     note: 'For work or just in general.',
+    size: 'Size: a tall large (extra length in arms and waist) or an extra large, depending on the brand and fit.',
     category: 'style',
     art: 'knit',
   },
