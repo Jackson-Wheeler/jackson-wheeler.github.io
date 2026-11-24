@@ -113,10 +113,7 @@ const ideaCount = inspirationItems.length;
                   </span>
                   <span class:list={['badge', 'cat-badge', `cat-${item.category}`]}>{categoryLabels[item.category]}</span>
                 </div>
-                <h3 class="tag-title">
-                  {item.title}
-                  {item.maybe && <span class="badge maybe-badge">Maybe</span>}
-                </h3>
+                <h3 class="tag-title">{item.title}</h3>
                 {item.note && <p class="tag-note">{item.note}</p>}
                 {item.href && item.linkLabel && (
                   <a

@@ -432,18 +432,6 @@ body.hearth {
 .cat-travel.badge { background: #e4eddc; color: #31422c; }
 .cat-home.badge { background: #f3ead0; color: #5c4314; }
 
-.maybe-badge.badge {
-  height: auto;
-  border: 1px dashed rgb(106 74 22 / 0.45);
-  background: #f4e3c0;
-  color: #5c3b12;
-  padding: 0.12rem 0.45rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .tag-title {
   margin: 0.15rem 0 0;
   display: flex;

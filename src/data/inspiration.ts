@@ -24,7 +24,7 @@ export interface InspirationItem {
   note?: string;
   category: ItemCategory;
   art: GiftArtName;
-  /** He's unsure — show it as a maybe, not a request. */
+  /** Uncertain item: dashed border. The question mark lives in the title. */
   maybe?: boolean;
   href?: string;
   linkLabel?: string;
@@ -36,14 +36,6 @@ export const inspirationItems: InspirationItem[] = [
     title: 'A simple workout tee',
     category: 'active',
     art: 'tee',
-  },
-  {
-    id: 'massage',
-    title: 'A massage gun, maybe',
-    note: 'He’s unsure about this one. A straightforward model might be a yes — no need to hunt for the fanciest.',
-    category: 'active',
-    art: 'massage',
-    maybe: true,
   },
   {
     id: 'layer',
@@ -88,5 +80,13 @@ export const inspirationItems: InspirationItem[] = [
     note: 'Travel-size shampoo, conditioner, and body wash — or a case that keeps a bar of soap from making a mess.',
     category: 'travel',
     art: 'kit',
+  },
+  {
+    id: 'massage',
+    title: 'Massage gun?',
+    note: 'He’s unsure about this one. A straightforward model might be a yes — no need to hunt for the fanciest.',
+    category: 'active',
+    art: 'massage',
+    maybe: true,
   },
 ];
