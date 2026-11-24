@@ -3,8 +3,6 @@ import {
   ArrowLeft,
   Dumbbell,
   ExternalLink,
-  Feather,
-  Footprints,
   House,
   LayoutGrid,
   Luggage,
@@ -96,7 +94,6 @@ const ideaCount = inspirationItems.length;
                 tilts[index % tilts.length],
                 pins[index % pins.length],
                 delays[index % delays.length],
-                item.maybe && 'is-maybe',
                 !item.note && 'is-title-only',
               ]}
               data-category={item.category}
@@ -138,33 +135,6 @@ const ideaCount = inspirationItems.length;
         </div>
         <p class="empty" data-empty hidden>Nothing in this group. Try another filter.</p>
       </div>
-    </div>
-  </section>
-
-  <section class="know" aria-labelledby="good-heading">
-    <h2 id="good-heading">Good to know</h2>
-    <div class="note-card">
-      <p class="know-lede">A couple of details, if you’re choosing a size or a fabric.</p>
-      <ul class="facts">
-        <li class="fact">
-          <span class="fact-icon" aria-hidden="true">
-            <Footprints size={22} stroke-width={1.75} />
-          </span>
-          <div>
-            <h3>Shoe size</h3>
-            <p>US 11</p>
-          </div>
-        </li>
-        <li class="fact">
-          <span class="fact-icon" aria-hidden="true">
-            <Feather size={22} stroke-width={1.75} />
-          </span>
-          <div>
-            <h3>Materials</h3>
-            <p>He prefers real leather and breathable materials over synthetics that trap sweat.</p>
-          </div>
-        </li>
-      </ul>
     </div>
   </section>
 

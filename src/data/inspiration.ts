@@ -16,7 +16,7 @@ export const categoryLabels: Record<ItemCategory, string> = {
   home: 'Home',
 };
 
-export type GiftArtName = 'tee' | 'massage' | 'knit' | 'iron' | 'watch' | 'sandals' | 'soap' | 'kit';
+export type GiftArtName = 'tee' | 'knit' | 'iron' | 'watch' | 'sandals' | 'soap';
 
 export interface InspirationItem {
   id: string;
@@ -25,8 +25,6 @@ export interface InspirationItem {
   size?: string;
   category: ItemCategory;
   art: GiftArtName;
-  /** Uncertain item: dashed border. The question mark lives in the title. */
-  maybe?: boolean;
   href?: string;
   linkLabel?: string;
 }
@@ -62,30 +60,17 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'sandals',
     title: 'Shower shoes',
+    size: 'Size: US 11',
     category: 'active',
     art: 'sandals',
   },
   {
     id: 'squatch',
     title: 'Dr. Squatch',
-    note: 'Soaps and other products he uses.',
+    note: 'Any product from Dr. Squatch!',
     category: 'travel',
     art: 'soap',
     href: 'https://www.drsquatch.com',
     linkLabel: 'Visit Dr. Squatch',
-  },
-  {
-    id: 'kit',
-    title: 'A travel wash kit',
-    note: 'Travel-size shampoo, conditioner, and body wash, or a case for bar soap.',
-    category: 'travel',
-    art: 'kit',
-  },
-  {
-    id: 'massage',
-    title: 'Massage gun?',
-    category: 'active',
-    art: 'massage',
-    maybe: true,
   },
 ];
