@@ -60,6 +60,7 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'sandals',
     title: 'Shower shoes',
+    note: 'For retreats and other similar outings or trips.',
     size: 'Size: US 11',
     category: 'active',
     art: 'sandals',
