@@ -77,7 +77,7 @@ export const inspirationItems: InspirationItem[] = [
   {
     id: 'socks',
     title: 'Darn Tough socks',
-    note: 'Merino wool, with a lifetime guarantee. Lightweight or regular cushioning is fine.',
+    note: 'Merino wool, with a lifetime guarantee. Lightweight or regular cushioning — both would be found useful.',
     size: 'Size: men’s L (US 11)',
     category: 'active',
     art: 'socks',
