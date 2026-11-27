@@ -16,7 +16,7 @@ export const categoryLabels: Record<ItemCategory, string> = {
   home: 'Home',
 };
 
-export type GiftArtName = 'tee' | 'knit' | 'iron' | 'watch' | 'sandals' | 'soap';
+export type GiftArtName = 'tee' | 'knit' | 'iron' | 'watch' | 'sandals' | 'soap' | 'socks';
 
 export interface InspirationItem {
   id: string;
@@ -73,5 +73,15 @@ export const inspirationItems: InspirationItem[] = [
     art: 'soap',
     href: 'https://www.drsquatch.com',
     linkLabel: 'Visit Dr. Squatch',
+  },
+  {
+    id: 'socks',
+    title: 'Darn Tough socks',
+    note: 'Merino wool, with a lifetime guarantee. Lightweight for everyday wear, or regular cushioning for colder situations, either would be found useful.',
+    size: 'Size: men’s L (US 11)',
+    category: 'active',
+    art: 'socks',
+    href: 'https://darntough.com/collections/men',
+    linkLabel: 'Visit Darn Tough',
   },
 ];
